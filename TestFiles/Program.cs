@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace _123ver2;
 
 static class Program
