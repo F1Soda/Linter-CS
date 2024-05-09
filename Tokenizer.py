@@ -72,7 +72,7 @@ class Tokenizer:
 		self.rfile = rfile
 		self.abs_index_char = 0
 		self.index_line = 1
-		self.index_char = -1
+		self.index_char = 0
 		self.current_char = ""
 		self.next_char = ""
 		self._tokenize()
@@ -81,13 +81,13 @@ class Tokenizer:
 		token = ""
 		while self.abs_index_char < len(self.rfile):
 			self._update_data()
-
 			# Token
 			if self.current_char.isalpha():
 				token += self.current_char
 				continue
 			elif token != '':
 				self.tokens.append(Token(self.index_char, self.index_line, token))
+				self.index_char += len(token)
 				token = ""
 
 			if (self._check_white_spaces() or
@@ -101,11 +101,12 @@ class Tokenizer:
 				"Undefined char = " +
 				f'"{self.current_char}"\nLine was:' +
 				f"...{''.join(self.rfile[self.abs_index_char - 10:self.abs_index_char + 10])}...")
+		pass
 
 	def _update_data(self):
 		self.current_char = self.rfile[self.abs_index_char]
 		self.next_char = self.rfile.at(self.abs_index_char + 1)
-		self.index_char += 1
+		#self.index_char += 1
 		self.abs_index_char += 1
 
 	def _check_string_literal(self, nested=False):
@@ -114,6 +115,7 @@ class Tokenizer:
 			if nested:
 				return res
 			self.tokens.append(Token(self.index_char, self.index_line, res))
+			self.index_char += len(res)
 			return True
 
 		elif self.current_char == '$':
@@ -123,6 +125,7 @@ class Tokenizer:
 			if nested:
 				return res
 			self.tokens.append(Token(index, self.index_line, res))
+			self.index_char += len(res)
 			return True
 
 		elif self.current_char == '@':
@@ -132,6 +135,7 @@ class Tokenizer:
 			if nested:
 				return res
 			self.tokens.append(Token(index, self.index_line, res))
+			self.index_char += len(res)
 			return True
 
 		return False
@@ -145,11 +149,13 @@ class Tokenizer:
 	def _check_operators(self) -> bool:
 		if self.current_char in operators:
 			self.tokens.append(Token(self.index_char, self.index_line, self.current_char))
+			self.index_char += 1
 			return True
 
 		elif self.next_char is not None and self.current_char + self.next_char in operators:
 			self.tokens.append(Token(self.index_char, self.index_line, self.current_char + self.next_char))
 			self.abs_index_char += 1
+			self.index_char += 2
 			return True
 
 		return False
@@ -159,31 +165,35 @@ class Tokenizer:
 			if self.current_char == '<' and self.next_char is not None and self.next_char == '<':
 				self.tokens.append(Token(self.index_char, self.index_line, '<<'))
 				self.abs_index_char += 1
+				self.index_char += 2
 				return True
 			elif self.current_char == '>' and self.next_char is not None and self.next_char == '>':
 				self.tokens.append(Token(self.index_char, self.index_line, '>>'))
 				self.abs_index_char += 1
+				self.index_char += 2
 				return True
 			else:
 				self.tokens.append(Token(self.index_char, self.index_line, self.current_char))
+				self.index_char += 1
 				return True
 		return False
 
 	def _check_white_spaces(self) -> bool:
 		if self.current_char.isspace():
 			self.tokens.append(Token(self.index_char, self.index_line, self.current_char))
+			self.index_char += 1
 			return True
 		elif self.next_char is not None:
 			if self.current_char + self.next_char == r'\n':
 				self.tokens.append(Token(self.index_char, self.index_line, self.current_char + self.next_char))
 				self.index_line += 1
-				self.index_char = -1
+				self.index_char = 0
 				self.abs_index_char += 1
 				return True
 			elif self.current_char + self.next_char in backslash_character_literals:
 				self.tokens.append(Token(self.index_char, self.index_line, self.current_char + self.next_char))
 				self.abs_index_char += 1
-				self.index_char += 1
+				self.index_char += 2
 				return True
 		return False
 
@@ -203,8 +213,10 @@ class Tokenizer:
 			char = self.rfile[self.abs_index_char]  # type: str
 			next_char = self.rfile.at(self.abs_index_char + 1)
 			if char.isspace() or next_char is not None and char + next_char in backslash_character_literals:
+				self.index_char += len(literal)
 				return literal
 			if not char.isdigit() and char not in number_postfixes + ['E', 'e', '.']:
+				self.index_char += len(literal)
 				return literal
 			literal += char
 			self.abs_index_char += 1
