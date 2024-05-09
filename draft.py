@@ -1,29 +1,24 @@
-import networkx as nx
-
-# Создание графа
-G = nx.DiGraph()
-G.add_edge(1, 2)
-G.add_edge(2, 3)
+import argparse
 
 
-def direct_successors(graph, node):
-	descendants = list(graph.successors(node))
-	direct_successors = [n for n in descendants if graph.has_edge(node, n)]
-	return direct_successors
+def main():
+	parser = argparse.ArgumentParser(description='Простое консольное приложение')
+
+	parser.add_argument("file", help="Путь до файла", type=str, nargs='?')
+	parser.add_argument("-v", "--verbose", help="Вывести подробный вывод", action="store_true")
+	parser.add_argument("-n", "--name", help="Указать имя")
+
+	args = parser.parse_args()
+
+	if args.verbose:
+		print("Подробный вывод")
+
+	if args.name:
+		print(f"Привет, {args.name}!")
+
+	if args.file:
+		print(f"Путь до файла: {args.file}")
 
 
-print(direct_successors(G, 3))  # Выведет [3]
-
-
-def check_tokens_by_graph(graph: nx.DiGraph):
-	index_node = 0
-	while index_node < len(graph.nodes):
-		neighbors = list(direct_successors(graph, index_node))
-		print(index_node, neighbors)
-
-		index_node += 1
-
-
-graph = nx.convert_node_labels_to_integers(nx.read_gml("Graphs/DiGraph.gml"))
-print(graph.is_directed())
-check_tokens_by_graph(graph)
+if __name__ == '__main__':
+	main()

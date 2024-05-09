@@ -1,15 +1,15 @@
-import sys
+import argparse
+import networkx as nx
 
 from Settings import Settings
 from Utils import CustomList
 from CSFile import CSFile
 from Tokenizer import Token
 from Flag import CategoryStyleRule
-import networkx as nx
 
 # temporary
 config_file_path = r'.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/test2.cs'
+cs_file_path = r'TestFiles/Linter/test1.cs'
 
 
 class Mismatch:
@@ -251,18 +251,43 @@ class Linter:
 		print()
 
 
-def main(arguments):
+def main():
 	""" Main program """
+	parser = argparse.ArgumentParser(description='Linter для C#')
+
+	parser.add_argument("-f", "--file",
+						help="Путь до CS файла(Если ничего не указать, запустится один из заготовленных)", type=str,
+						nargs='?', default="")
+	parser.add_argument("-conf", "--config", help="Путь до файла .EditorConfig(Пока не работает)", type=str, nargs='?',
+						default="TestFiles/Linter/test1.cs")
+	parser.add_argument("-sf", "--save_file", help="Путь, куда сохранять. По умолчанию в файл mismatches.txt", type=str,
+						nargs='?',
+						default="mismatches.txt")
+	parser.add_argument("-p", "--print", help="Вывести результат в консоль", action="store_true")
+
+	args = parser.parse_args()
+
 	linter = Linter(Settings([]))
-	linter.analyze_file(arguments[0])
-	for miss in linter.mismatches:
-		print(miss)
+
+	if args.file:
+		linter.analyze_file(args.file)
+	else:
+		linter.analyze_file(cs_file_path)
+
+	if args.save_file:
+		with open(args.save_file, "w") as f:
+			for miss in linter.mismatches:
+				if args.print:
+					print(miss)
+				f.write(f"{miss}\n")
+
 	return 0
 
 
 if __name__ == "__main__":
-	args = sys.argv[1:]
-	if len(args) == 0:
-		main([cs_file_path, config_file_path])
-	else:
-		main(args)
+	main()
+# args = sys.argv[1:]
+# if len(args) == 0:
+#	main([cs_file_path, config_file_path])
+# else:
+#	main(args)
