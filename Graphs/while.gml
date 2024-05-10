@@ -3,130 +3,130 @@ graph [
   node [
     id 0
     label "1"
-    pos 110
-    pos 341
-    name "if"
-    data "if"
+    pos 70
+    pos 311
+    name "while"
+    data "while"
   ]
   node [
     id 1
     label "2"
-    pos 178
-    pos 342
+    pos 135
+    pos 311
     name "_"
     data " "
   ]
   node [
     id 2
     label "3"
-    pos 220
-    pos 342
+    pos 198
+    pos 311
     name "("
     data "("
   ]
   node [
     id 3
     label "4"
-    pos 260
-    pos 344
+    pos 254
+    pos 310
     name "expression"
     data "expression"
   ]
   node [
     id 4
     label "5"
-    pos 301
-    pos 344
+    pos 312
+    pos 310
     name ")"
     data ")"
   ]
   node [
     id 5
     label "6"
-    pos 360
-    pos 305
+    pos 361
+    pos 309
     name "\n"
     data "\n"
   ]
   node [
     id 6
-    label "8"
-    pos 595
-    pos 344
-    name "block"
-    data "block"
+    label "7"
+    pos 394
+    pos 273
+    name "{"
+    data "{"
   ]
   node [
     id 7
-    label "10"
-    pos 493
-    pos 303
-    name "line"
-    data "line"
+    label "8"
+    pos 436
+    pos 201
+    name "\n"
+    data "\n"
   ]
   node [
     id 8
-    label "11"
-    pos 412
-    pos 303
+    label "9"
+    pos 514
+    pos 251
     name "increase_offset"
     data "increase_offset"
   ]
   node [
     id 9
-    label "12"
-    pos 565
-    pos 303
-    name "decrease_offset"
-    data "decrease_offset"
+    label "10"
+    pos 582
+    pos 253
+    name "block"
+    data "block"
   ]
   node [
     id 10
-    label "13"
-    pos 529
-    pos 344
-    name "increase_offset"
-    data "increase_offset"
-  ]
-  node [
-    id 11
-    label "14"
-    pos 662
-    pos 342
+    label "11"
+    pos 642
+    pos 252
     name "decrease_offset"
     data "decrease_offset"
   ]
   node [
+    id 11
+    label "12"
+    pos 711
+    pos 230
+    name "\n"
+    data "\n"
+  ]
+  node [
     id 12
-    label "15"
-    pos 467
-    pos 423
-    name "\n"
-    data "\n"
-  ]
-  node [
-    id 13
-    label "16"
-    pos 722
-    pos 343
-    name "\n"
-    data "\n"
-  ]
-  node [
-    id 14
-    label "17"
-    pos 779
-    pos 343
+    label "13"
+    pos 716
+    pos 177
     name "}"
     data "}"
   ]
   node [
+    id 13
+    label "14"
+    pos 419
+    pos 378
+    name "increase_offset"
+    data "increase_offset"
+  ]
+  node [
+    id 14
+    label "15"
+    pos 485
+    pos 378
+    name "line"
+    data "line"
+  ]
+  node [
     id 15
-    label "18"
-    pos 398
-    pos 348
-    name "{"
-    data "{"
+    label "16"
+    pos 551
+    pos 376
+    name "decrease_offset"
+    data "decrease_offset"
   ]
   edge [
     source 0
@@ -150,46 +150,46 @@ graph [
   ]
   edge [
     source 5
-    target 8
-  ]
-  edge [
-    source 5
-    target 15
-  ]
-  edge [
-    source 6
-    target 11
-  ]
-  edge [
-    source 7
-    target 9
-  ]
-  edge [
-    source 8
-    target 7
-  ]
-  edge [
-    source 10
     target 6
   ]
   edge [
-    source 11
+    source 5
     target 13
   ]
   edge [
-    source 12
+    source 6
+    target 7
+  ]
+  edge [
+    source 7
+    target 8
+  ]
+  edge [
+    source 7
+    target 12
+  ]
+  edge [
+    source 8
+    target 9
+  ]
+  edge [
+    source 9
     target 10
   ]
   edge [
-    source 12
-    target 14
+    source 10
+    target 11
+  ]
+  edge [
+    source 11
+    target 12
   ]
   edge [
     source 13
     target 14
   ]
   edge [
-    source 15
-    target 12
+    source 14
+    target 15
   ]
 ]

@@ -1,0 +1,20 @@
+index = 9 Line : \tcase a == 10:
+                          ^
+Expected 'Need white Space', but was '='
+
+index = 9 Line : \t\tif ((a<c) && (a > b))
+                          ^
+Expected 'Need white Space', but was 'a'
+
+index = 10 Line : \t\tif ((a<c) && (a > b))
+                            ^
+Expected 'Need white Space', but was '<'
+
+index = 14 Line : \t\tif ((a<c) && (a > b))
+                                ^
+Expected 'Need white Space', but was '&'
+
+index = 12 Line : \t\tConsole.WriteLine();
+                              ^
+Expected 'Need white Space', but was 'WriteLine'
+
