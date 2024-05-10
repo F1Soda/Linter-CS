@@ -1,0 +1,20 @@
+index = 1 Line : {Console.WriteLine(  "  1 + 1 == 2"); var a = 10;
+                  ^
+Expected '\n', but was 'Console'
+
+index = 1 Line : {Console.WriteLine(  "  1 + 1 == 2"); var a = 10;
+                  ^
+Expected 'more offset', but was 'Console'
+
+index = 37 Line : {Console.WriteLine(  "  1 + 1 == 2"); var a = 10;
+                                                       ^
+Expected '\n', but was ' '
+
+index = 38 Line : {Console.WriteLine(  "  1 + 1 == 2"); var a = 10;
+                                                        ^
+Expected 'more offset', but was 'var'
+
+index = 2 Line : \t\tConsole.WriteLine("  1 + 1 == 2");
+                   ^
+Expected 'less offset', but was '\t'
+

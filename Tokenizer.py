@@ -1,8 +1,6 @@
 import enum
 from Utils import CustomList
 
-# TODO: Пока токенайзер работает с файлами без комментариев
-
 keywords = ['abstract', 'as', 'base', 'bool', 'break', 'byte', 'case', 'catch', 'char', 'checked', 'class', 'const',
 			'continue', 'decimal', 'default', 'delegate', 'do', 'double', 'else', 'enum', 'event', 'explicit', 'extern',
 			'false', 'finally', 'fixed', 'float', 'for', 'foreach', 'goto', 'if', 'implicit', 'in', 'int', 'interface',
@@ -11,10 +9,8 @@ keywords = ['abstract', 'as', 'base', 'bool', 'break', 'byte', 'case', 'catch', 
 			'sizeof', 'stackalloc', 'static', 'string', 'struct', 'switch', 'this', 'throw', 'true', 'try', 'typeof',
 			'uint', 'ulong', 'unchecked', 'unsafe', 'ushort', 'using', 'virtual', 'void', 'volatile', 'while']
 
-# TODO: Я короче ленивая жопа и потому механизм ? : просто сюда вставлю пока ↓
 punctuations = [';', ':', ',', '.', '(', ')', '[', ']', '{', '}', '<', '>', '?']
 
-# TODO: И ещё не работает ++ и --. Парсятся как '-','-'
 operators = ['+', '-', '*', '/', '%', '=', '>>', '<<', '&', '&&', '|', '||', '!', '^', '>', '>=', '<', '<=', '==', '!=',
 			 '~', '+=', '-=', '/=', '*=', '%=', '++', '--']
 
@@ -62,6 +58,7 @@ class Token:
 
 	def _str_v1(self):
 		return f"'{self.value}' is {self.kind.name} token at {self.line_index} line, {self.start_index} char"
+
 	def _str_v2(self):
 		return f"'{self.value}'"
 
@@ -90,11 +87,11 @@ class Tokenizer:
 				self.index_char += len(token)
 				token = ""
 
-			if (self._check_white_spaces() or
+			if (self._check_comments() or
+				self._check_white_spaces() or
 				self._check_punctuation() or
 				self._check_operators() or
-				self._check_string_literal() or
-				self._check_integer_literal()):
+				self._check_string_literal()):
 				continue
 
 			raise Exception(
@@ -106,7 +103,6 @@ class Tokenizer:
 	def _update_data(self):
 		self.current_char = self.rfile[self.abs_index_char]
 		self.next_char = self.rfile.at(self.abs_index_char + 1)
-		#self.index_char += 1
 		self.abs_index_char += 1
 
 	def _check_string_literal(self, nested=False):
@@ -147,15 +143,15 @@ class Tokenizer:
 		return False
 
 	def _check_operators(self) -> bool:
-		if self.current_char in operators:
-			self.tokens.append(Token(self.index_char, self.index_line, self.current_char))
-			self.index_char += 1
-			return True
-
-		elif self.next_char is not None and self.current_char + self.next_char in operators:
+		if self.next_char is not None and self.current_char + self.next_char in operators:
 			self.tokens.append(Token(self.index_char, self.index_line, self.current_char + self.next_char))
 			self.abs_index_char += 1
 			self.index_char += 2
+			return True
+
+		elif self.current_char in operators:
+			self.tokens.append(Token(self.index_char, self.index_line, self.current_char))
+			self.index_char += 1
 			return True
 
 		return False
@@ -195,6 +191,23 @@ class Tokenizer:
 				self.abs_index_char += 1
 				self.index_char += 2
 				return True
+		return False
+
+	def _check_comments(self) -> bool:
+		if self.current_char + self.next_char == r"//":
+			while self.next_char is not None and self.current_char + self.next_char != r"\n":
+				self.abs_index_char += 1
+				self._update_data()
+			self.abs_index_char += 1
+			return True
+
+		if self.current_char + self.next_char == "/*":
+			while self.next_char is not None and self.current_char + self.next_char != r"*/":
+				self.abs_index_char += 1
+				self._update_data()
+			self.abs_index_char += 1
+			return True
+
 		return False
 
 	def _get_string_literal(self, quote='"') -> str:

@@ -14,3 +14,9 @@ class TestTokenizer(unittest.TestCase):
 		line = "var a = 10;"
 		tokenizer = Tokenizer(CustomList(repr(line)[1:-1]))
 		self.assertEqual([x.value for x in tokenizer.tokens], ["var", " ", "a", " ", "=", " ", "10", ";"])
+
+	def test_file_with_comments(self):
+		with open("../TestFiles/Tokenizer/test_comments.cs", "r", encoding="utf-8") as f:
+			tokenizer = Tokenizer(CustomList(repr(f.read())[1:-1]))
+			self.assertEqual([x.value for x in tokenizer.tokens],
+							 ["var", " ", "полезный", " ", "=", " ", "кусок", " ", "+", " ", "кода", ";", '\\n', '\\n'])

@@ -9,7 +9,7 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/test1.cs'
+cs_file_path = r'TestFiles/Linter/test2.cs'
 
 
 class Mismatch:
@@ -269,9 +269,12 @@ def main():
 
 	linter = Linter(Settings([]))
 
+	testing = False
+
 	if args.file:
 		linter.analyze_file(args.file)
 	else:
+		testing = True
 		linter.analyze_file(cs_file_path)
 
 	if args.save_file:
@@ -281,13 +284,12 @@ def main():
 					print(miss)
 				f.write(f"{miss}\n")
 
+	if testing:
+		for miss in linter.mismatches:
+			print(miss)
+
 	return 0
 
 
 if __name__ == "__main__":
 	main()
-# args = sys.argv[1:]
-# if len(args) == 0:
-#	main([cs_file_path, config_file_path])
-# else:
-#	main(args)
