@@ -3,126 +3,118 @@ graph [
   node [
     id 0
     label "1"
-    pos 138
-    pos 298
+    pos 35
+    pos 187
     name "case"
     data "case"
   ]
   node [
     id 1
     label "2"
-    pos 195
-    pos 295
-    name "_"
-    data " "
+    pos 114
+    pos 245
+    name "default"
+    data "default"
   ]
   node [
     id 2
     label "3"
-    pos 270
-    pos 296
-    name "expression"
-    data "expression"
-  ]
-  node [
-    id 3
-    label "4"
-    pos 333
-    pos 308
+    pos 182
+    pos 187
     name ":"
     data ":"
   ]
   node [
+    id 3
+    label "4"
+    pos 303
+    pos 184
+    name "\n"
+    data "\n"
+  ]
+  node [
     id 4
     label "5"
-    pos 508
-    pos 299
+    pos 240
+    pos 225
     name "increase_offset"
     data "increase_offset"
   ]
   node [
     id 5
     label "6"
-    pos 410
-    pos 300
-    name "\n"
-    data "\n"
+    pos 384
+    pos 193
+    name "case_block"
+    data "case_block"
   ]
   node [
     id 6
     label "7"
-    pos 599
-    pos 296
-    name "caseBlock"
-    data "caseBlock"
-  ]
-  node [
-    id 7
-    label "9"
-    pos 702
-    pos 298
+    pos 454
+    pos 146
     name "break"
     data "break"
   ]
   node [
-    id 8
-    label "10"
-    pos 756
-    pos 302
+    id 7
+    label "8"
+    pos 578
+    pos 185
     name ";"
     data ";"
   ]
   node [
+    id 8
+    label "9"
+    pos 411
+    pos 258
+    name "return"
+    data "return"
+  ]
+  node [
     id 9
-    label "11"
-    pos 817
-    pos 299
-    name "decrease_offset"
-    data "decrease_offset"
+    label "10"
+    pos 529
+    pos 248
+    name "expression"
+    data "expression"
   ]
   node [
     id 10
     label "12"
-    pos 311
-    pos 208
-    name "_"
-    data " "
+    pos 120
+    pos 186
+    name "expression"
+    data "expression"
   ]
   node [
     id 11
     label "13"
-    pos 385
-    pos 204
-    name "when"
-    data "when"
+    pos 647
+    pos 185
+    name "decrease_offset"
+    data "decrease_offset"
   ]
   node [
     id 12
     label "14"
-    pos 473
-    pos 202
+    pos 75
+    pos 187
     name "_"
     data " "
   ]
   node [
     id 13
     label "15"
-    pos 565
-    pos 205
-    name "expression"
-    data "expression"
-  ]
-  node [
-    id 14
-    label "16"
-    pos 892
-    pos 298
-    name "\n"
-    data "\n"
+    pos 475
+    pos 265
+    name "_"
+    data " "
   ]
   edge [
     source 0
-    target 1
+    target 12
   ]
   edge [
     source 1
@@ -130,11 +122,7 @@ graph [
   ]
   edge [
     source 2
-    target 3
-  ]
-  edge [
-    source 2
-    target 10
+    target 4
   ]
   edge [
     source 3
@@ -142,11 +130,15 @@ graph [
   ]
   edge [
     source 4
+    target 3
+  ]
+  edge [
+    source 5
     target 6
   ]
   edge [
     source 5
-    target 4
+    target 8
   ]
   edge [
     source 6
@@ -154,30 +146,26 @@ graph [
   ]
   edge [
     source 7
-    target 8
-  ]
-  edge [
-    source 8
-    target 9
-  ]
-  edge [
-    source 9
-    target 14
-  ]
-  edge [
-    source 10
     target 11
   ]
   edge [
-    source 11
-    target 12
-  ]
-  edge [
-    source 12
+    source 8
     target 13
   ]
   edge [
+    source 9
+    target 7
+  ]
+  edge [
+    source 10
+    target 2
+  ]
+  edge [
+    source 12
+    target 10
+  ]
+  edge [
     source 13
-    target 3
+    target 9
   ]
 ]

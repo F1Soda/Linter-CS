@@ -37,6 +37,7 @@ class GraphEditor:
 		self.pos_mouse = (0, 0)
 		self.scale_factor = 1.0
 		self.master = master
+		self._id_abs = 0
 		self.node_id_to_copy = None
 		self.should_draw_edge_to_mouse = False
 		self.data_same_with_name = True
@@ -80,7 +81,7 @@ class GraphEditor:
 		self.create_inspector()
 
 		self.last_opened_files = []
-		with open("GraphCreatorData", "r") as f:
+		with open("../data/GraphCreatorData", "r") as f:
 			self.current_file = f.readline()
 			for line in f.readline():
 				self.last_opened_files.append(line)
@@ -238,7 +239,8 @@ class GraphEditor:
 				self.draw_graph()
 				return
 
-		node_id = len(self.graph.nodes) + 1
+		self._id_abs += 1
+		node_id = self._id_abs
 		name = "Новая вершина_" + str(node_id)
 		self.graph.add_node(node_id, pos=(x, y), name=name, data=name)
 		# self.graph.add_node(node_id, pos=(x, y), data=data)
@@ -291,11 +293,13 @@ class GraphEditor:
 	def import_graph(self):
 		filename = filedialog.askopenfilename(defaultextension=".gml", filetypes=[("GML files", "*.gml")])
 		self.graph = nx.DiGraph(nx.read_gml(filename), directed=True)
+		self._id_abs = len(self.graph.nodes) + 100
 		self.current_file = filename
 		self.draw_graph()
 
 	def import_graph_by_path(self, filename):
 		self.graph = nx.read_gml(filename)
+		self._id_abs = len(self.graph.nodes) + 100
 		self.draw_graph()
 
 	def on_mousewheel(self, event):
@@ -412,5 +416,5 @@ app = GraphEditor(root)
 app.update_mouse_position()
 root.mainloop()
 
-with open("GraphCreatorData", "w") as file:
+with open("../data/GraphCreatorData", "w") as file:
 	file.writelines([app.current_file] + app.last_opened_files)
