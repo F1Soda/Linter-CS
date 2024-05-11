@@ -52,6 +52,7 @@ class Linter:
 		self.graphs.append(nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml("Graphs/just_block.gml"))))
 		self.graphs.append(nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml("Graphs/switch.gml"))))
 		self.graphs.append(nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml("Graphs/case.gml"))))
+		self.graphs.append(nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml("Graphs/while.gml"))))
 
 	def change_format_rules(self, new_settings: Settings):
 		self.setts = new_settings
@@ -80,6 +81,14 @@ class Linter:
 		while self.index_token < len(self.tokens):
 			# if token.value in conditionals:
 			# 	break
+			if (self.index_token != len(self.tokens) - 1 and token.value == r"\n"
+				and self.tokens[self.index_token + 1].value == r"\t"):
+				temp_index = self.index_token + 1
+				while self.tokens[temp_index].value == r"\t":
+					temp_index += 1
+				if self.tokens[temp_index].value in conditionals:
+					break
+
 			if self.tokens[self.index_token - 1].value == r"\n" and token.value != r"\n":
 				self._check_offset()
 				token = self.tokens[self.index_token]
@@ -135,30 +144,26 @@ class Linter:
 				neighbor = graph.nodes[next_node_id]
 				data = neighbor["data"]
 				# TODO: Возможно как то можно упростить повторяющиеся блоки кода
+
 				if data == "increase_offset":
 					self.current_offset += 1
-					# if token_to_check.value == r"\t":
-					# 	self._check_offset()
 					found = True
 					index_node = next_node_id
 					break
 				if data == "decrease_offset":
 					self.current_offset -= 1
-					# if token_to_check.value == r"\t":
-					# 	self._check_offset()
 					found = True
 					index_node = next_node_id
 					break
-				# Проверка offset
-				if self.tokens[self.index_token - 1].value == r"\n" and token_to_check.value != r"\n":
-					self._check_offset()
-					token_to_check = self.tokens[self.index_token]
-				# if was_enter and token_to_check.value != "\t":
-				# 	self._check_offset()
-				# 	token_to_check = self.tokens[self.index_token]
-				# 	was_enter = False
-				# if token_to_check.value == r"\n":
-				# 	was_enter = True
+				if data != "increase_offset" and data != "decrease_offset" and token_to_check.value == r"\t":
+					temp_index = self.index_token
+					while self.tokens[temp_index].value == r"\t":
+						temp_index += 1
+					if token_to_check.value == r"\t" and data == self.tokens[temp_index].value:
+						if self.tokens[self.index_token - 1].value == r"\n" and token_to_check.value != r"\n":
+							self._check_offset()
+							token_to_check = self.tokens[self.index_token]
+
 				if token_to_check.value == data:
 					index_node = next_node_id
 					self.index_token += 1
@@ -195,16 +200,19 @@ class Linter:
 					found = True
 					index_node = next_node_id
 					break
-				if token_to_check.value == r"\n":
-					found = True
-					self.index_token += 1
-					self._check_offset()
-					break
+				# if token_to_check.value == r"\n":
+				# 	found = True
+				# 	self.index_token += 1
+				# 	self._check_offset()
+				# 	break
 
+			if self.tokens[self.index_token - 1].value == r"\n" and self.tokens[self.index_token].value != r"\n":
+				self._check_offset()
+				token_to_check = self.tokens[self.index_token]
 			if not found:
 				expected = graph.nodes[next_nodes[0]]["data"]
 				self._append_mismatch(token=token_to_check, expected=expected)
-				if token_to_check.value.isspace():
+				if token_to_check.value.isspace() or token_to_check.value == r"\n":
 					self.index_token += 1
 				else:
 					# self.index_token += 1
@@ -292,7 +300,7 @@ class Linter:
 				self.index_token += 1
 				token = self.tokens[self.index_token]
 			elif token.value == "\\n":
-				#	self.index_token += 1
+				# self.index_token += 1
 				break
 			else:
 				break

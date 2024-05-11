@@ -1,8 +1,10 @@
-switch (a > d)
+switch (dobobob)
 {
-	case a == 10:
-		if ((a<c) && (a > b))
+	case 10:
+		if ((a < c) && (a > b))
+		{
 			a = c + b;
+		}
 		break;
 
 	default:

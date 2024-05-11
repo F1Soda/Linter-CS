@@ -91,7 +91,8 @@ class Tokenizer:
 				self._check_white_spaces() or
 				self._check_punctuation() or
 				self._check_operators() or
-				self._check_string_literal()):
+				self._check_string_literal() or
+				self._check_integer_literal()):
 				continue
 
 			raise Exception(
