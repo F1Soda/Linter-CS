@@ -1,28 +1,37 @@
 import argparse
 import networkx as nx
+import enum
 
 from Settings import Settings
 from Utils import CustomList
 from CSFile import CSFile
-from Tokenizer import Token
+from Tokenizer import Token, KindToken
 from Flag import CategoryStyleRule
 
 # temporary
-config_file_path = r'.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/test3.cs'
+config_file_path = r'../data/.EditorConfig'  # не используется
+cs_file_path = r'../TestFiles/Linter/test4.cs'
+
+
+class Graphs(enum.Enum):
+	if_ = "if"
+	switch_ = "switch"
+	just_block_ = "just_block"
+	case_ = "case"
 
 
 class Mismatch:
-	def __init__(self, category: CategoryStyleRule, line: int, index: int, message: str, mismatched_flag):
+	def __init__(self, category: CategoryStyleRule, line: int, index: int, index_line: int, message: str, mismatched_flag):
 		self.category = category
 		self.line = line
 		self.index = index
+		self.index_line = index_line
 		self.message = message
 		self.mismatched_flag = mismatched_flag
 
 	def __str__(self):
 		first_part = f"index = {self.index} "
-		second_part = f"Line : {self.line}"
+		second_part = f"Line {self.index_line}: {self.line}"
 		offset = len(first_part) + 7
 		return first_part + second_part + "\n" + " " * (offset + self.index) + "^" + "\n" + self.message
 
@@ -34,7 +43,7 @@ class Linter:
 	def __init__(self, settings: Settings):
 		self.setts = settings
 		self.mismatches = []
-		self.graphs = []
+		self.graphs = {}
 		self._parse_graphs()
 		self.index_token = 0
 		self.tokens = CustomList()
@@ -42,17 +51,42 @@ class Linter:
 		# TODO: Я сейчас написал специальный класс для хранения данных о файле, который возможно можно просто сократить
 		#  до списка токенов
 		self.file = None  # type: CSFile
+		self._keywords_to_func = {
+			"expression": lambda: self._check_expression_new(),
+			"switch_block": lambda: self._check_switch_block(),
+			"identifier": lambda: self._increment("index_token", self.index_token),
+			"line": lambda: self._check_line(),
+			"block": lambda: self.analyze(conditionals=["}"]),
+			"case_block": lambda: self.analyze(conditionals=["break", "return"]), #TODO: еще нужно рассмотреть case
+			"increase_offset": lambda: self._increment("current_offset", self.current_offset),
+			"decrease_offset": lambda: self._decrement("current_offset", self.current_offset)
+		}
+
+	def _call_func_by_keyword(self, name: str, args):
+		self._keywords_to_func[name](**args)
+
+	# дурацкий питон
+	def _increment(self, name: str, value):
+		self.__setattr__(name, value + 1)
+
+	def _decrement(self, name: str, value):
+		self.__setattr__(name, value - 1)
 
 	def _parse_graphs(self):
 		'''
 		Записывает все графы в список графов для проверки кода. Пока добавление правил происходит вручную
 		:return:
 		'''
-		self.graphs.append(nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml("Graphs/if.gml"))))
-		self.graphs.append(nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml("Graphs/just_block.gml"))))
-		self.graphs.append(nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml("Graphs/switch.gml"))))
-		self.graphs.append(nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml("Graphs/case.gml"))))
-		self.graphs.append(nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml("Graphs/while.gml"))))
+		self.graphs[Graphs.if_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
+			"../Graphs/Standarts/if.gml")))
+		self.graphs[Graphs.just_block_] = nx.DiGraph(
+			nx.convert_node_labels_to_integers(nx.read_gml("../Graphs/Standarts/just_block.gml")))
+		self.graphs[Graphs.switch_] = nx.DiGraph(
+			nx.convert_node_labels_to_integers(nx.read_gml("../Graphs/Standarts/switch.gml")))
+		self.graphs[Graphs.case_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
+			"../Graphs/Standarts/case.gml")))
+		self.graphs[Graphs.case_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
+			"../Graphs/Standarts/while.gml")))
 
 	def change_format_rules(self, new_settings: Settings):
 		self.setts = new_settings
@@ -76,34 +110,28 @@ class Linter:
 		'''
 		if conditionals is None:
 			conditionals = []
-		was_enter = False
-		token = self.tokens[self.index_token]
 		while self.index_token < len(self.tokens):
-			# if token.value in conditionals:
-			# 	break
-			if (self.index_token != len(self.tokens) - 1 and token.value == r"\n"
-				and self.tokens[self.index_token + 1].value == r"\t"):
-				temp_index = self.index_token + 1
-				while self.tokens[temp_index].value == r"\t":
-					temp_index += 1
-				if self.tokens[temp_index].value in conditionals:
-					break
-
-			if self.tokens[self.index_token - 1].value == r"\n" and token.value != r"\n":
-				self._check_offset()
-				token = self.tokens[self.index_token]
 
 			found = False
-			# self._check_offset() # Предполагается, что в этот момент token -- первый токен в строчке
-
+			token = self.tokens[self.index_token]
+			if token.value == r"\n":
+				self.index_token += 1
+				if token.value == r"\t":
+					self._check_offset()
+				else:
+					continue
+			if token.value == r"\t":
+				self._check_offset()
+			token = self.tokens[self.index_token]
 			if token.value in conditionals:
-				break
+				return
 
-			for graph in self.graphs:  # type: nx.DiGraph
-				if graph.nodes[0]["data"] == token.value:
-					self.check_tokens_by_graph(graph)
-					found = True
-					self.index_token += 1
+			for graph in self.graphs.values():  # type: nx.DiGraph
+				for start_node_index in self._get_start_nodes(graph):
+					if graph.nodes[start_node_index]["data"] == token.value:
+						self.check_tokens_by_graph(graph)
+						found = True
+						self.index_token += 1
 			if not found:
 				self._check_line(conditionals=conditionals)
 			token = self.tokens.at(self.index_token)
@@ -119,6 +147,15 @@ class Linter:
 		direct_successors = [n for n in descendants if graph.has_edge(node, n)]
 		return direct_successors
 
+	def _get_start_nodes(self, graph) -> []:
+		'''
+		Возвращает начальные вершины графа, то есть вершины без входящих рёбер
+		:param graph: Граф
+		:return:
+		'''
+		isolated_nodes = [node for node in graph.nodes() if not list(graph.predecessors(node))]
+		return isolated_nodes
+
 	def check_tokens_by_graph(self, graph: nx.DiGraph):
 		'''
 		Проверяет последовательность токенов по графу.
@@ -127,98 +164,65 @@ class Linter:
 		:param graph: граф для сравнения правил и кода
 		:return:
 		'''
-		self.index_token += 1
+
 		index_node = 0
-		# tabs_row = 0
-		was_enter = False
+		for index_start_node in self._get_start_nodes(graph):
+			if self.tokens[self.index_token].value == graph.nodes[index_start_node]["data"]:
+				index_node = index_start_node
+				break
+		self.index_token += 1
 		while self.index_token < len(self.tokens):
 			found = False
 
 			next_nodes = self._direct_successors(graph, index_node)
 			if next_nodes == []:
-				self.index_token -= 1
 				return
 			token_to_check = self.tokens[self.index_token]
-
 			for next_node_id in next_nodes:
 				neighbor = graph.nodes[next_node_id]
 				data = neighbor["data"]
-				# TODO: Возможно как то можно упростить повторяющиеся блоки кода
-
-				if data == "increase_offset":
-					self.current_offset += 1
+				if data in self._keywords_to_func:
+					res = self._keywords_to_func[data]()
 					found = True
 					index_node = next_node_id
-					break
-				if data == "decrease_offset":
-					self.current_offset -= 1
-					found = True
-					index_node = next_node_id
-					break
-				if data != "increase_offset" and data != "decrease_offset" and token_to_check.value == r"\t":
-					temp_index = self.index_token
-					while self.tokens[temp_index].value == r"\t":
-						temp_index += 1
-					if token_to_check.value == r"\t" and data == self.tokens[temp_index].value:
-						if self.tokens[self.index_token - 1].value == r"\n" and token_to_check.value != r"\n":
-							self._check_offset()
-							token_to_check = self.tokens[self.index_token]
-
-				if token_to_check.value == data:
+				elif token_to_check.value == data:
 					index_node = next_node_id
 					self.index_token += 1
+					if data == "\\n":
+						self._check_offset()
+					if data == ";":
+						self._check_new_line_after_semicolon()
 					found = True
-					break
-				if data == "expression":
-					self._check_expression()
+				elif token_to_check.value == r"\n":
 					found = True
-					index_node = next_node_id
-					break
-				if data == "caseList":
-					while self.tokens[self.index_token].value == 'case':
-						self.analyze(conditionals=["default", "}"])
-					found = True
-					index_node = next_node_id
-					break
-				if data == "identifier":
-					index_node = next_node_id
 					self.index_token += 1
-					found = True
-					break
-				if data == "line":
-					self._check_line()
-					found = True
-					index_node = next_node_id
-					break
-				if data == "block":
-					self.analyze(conditionals=["}"])
-					found = True
-					index_node = next_node_id
-					break
-				if data == "caseBlock":
-					self.analyze(conditionals=["break"])
-					found = True
-					index_node = next_node_id
-					break
-				# if token_to_check.value == r"\n":
-				# 	found = True
-				# 	self.index_token += 1
-				# 	self._check_offset()
-				# 	break
+					self._check_offset()
 
-			if self.tokens[self.index_token - 1].value == r"\n" and self.tokens[self.index_token].value != r"\n":
-				self._check_offset()
-				token_to_check = self.tokens[self.index_token]
 			if not found:
 				expected = graph.nodes[next_nodes[0]]["data"]
 				self._append_mismatch(token=token_to_check, expected=expected)
-				if token_to_check.value.isspace() or token_to_check.value == r"\n":
+				if token_to_check.value.isspace():
 					self.index_token += 1
 				else:
 					# self.index_token += 1
 					index_node = next_nodes[0]
 
 	def _check_expression(self, conditionals=None):
+		token = self.tokens[self.index_token]  # type: Token
+		count_spaces = 0
+		while token.value != ")" and token.value != ":" and token.value != ";":
+			if token.value.isspace() or token.value == "\\t":
+				count_spaces += 1
+			elif token.value == "\\n":
+				self._append_mismatch(token, "Not New Line")
+			else:
+				count_spaces = 0
+			if count_spaces > 1:
+				self._append_mismatch(token, "Not white Space")
+			self.index_token += 1
+			token = self.tokens[self.index_token]
+
+	def _check_expression_new(self, conditionals=None):
 		'''
 		Проверяет, что выражение соответствует правилам.
 		Пока правило одно: больше двух пробелов между токенами быть не может
@@ -232,22 +236,14 @@ class Linter:
 		count_spaces = 0
 		symbol_index = 0
 		while not ((token.value == ")" or token.value == ";" or token.value == ":")
-			and self.tokens[self.index_token + 1].value == r"\n"):
+				   and self.tokens[self.index_token + 1].value == r"\n"):
 			if token.value in conditionals:
 				break
 			# Проверка на пробел в начале
 			if symbol_index == 0 and token.value.isspace():
 				self._append_mismatch(token, "Not white Space")
 			# Проверка на пробел между элементами
-			# TODO: не работает на составных операциях типа ==, <=
-			if (not token.value.isspace() and not self.tokens[self.index_token + 1].value.isspace()
-				and self.tokens[self.index_token + 1].value != ":"
-				and self.tokens[self.index_token + 1].value != ")"
-				and self.tokens[self.index_token + 1].value != ";"
-				and self.tokens[self.index_token + 1].value != "."
-				and self.tokens[self.index_token].value != "."
-				and self.tokens[self.index_token].value != "("
-				and self.tokens[self.index_token].value != "\\t"):
+			if (self.conditions_for_space()):
 				self._append_mismatch(token, "Need white Space")
 
 			if token.value.isspace() or token.value == "\\t":
@@ -266,6 +262,23 @@ class Linter:
 				self.index_token - 1].value.isspace():
 				self._append_mismatch(self.tokens[self.index_token - 1], "Not white Space")
 
+	def conditions_for_space(self):
+		current_token = self.tokens[self.index_token]
+		next_token = self.tokens[self.index_token + 1] if self.index_token + 1 < len(self.tokens) else None
+
+		if current_token and next_token:
+			current_kind = current_token.kind
+			next_kind = next_token.kind
+
+			if (current_kind == KindToken.operator and next_kind == KindToken.identifier) or \
+					(current_kind == KindToken.operator and next_kind == KindToken.keyword) or \
+					(current_kind == KindToken.keyword and next_kind == KindToken.operator) or \
+					(current_kind == KindToken.identifier and next_kind == KindToken.operator) or \
+					(current_kind == KindToken.literal and next_kind == KindToken.operator) or \
+					(current_kind == KindToken.operator and next_kind == KindToken.literal):
+				return True
+		return False
+
 	def _check_line(self, conditionals=None):
 		'''
 		Проверяет строчку, если ни один из графов не подошел. Предполагается, что это строчки вызова функции,
@@ -278,32 +291,27 @@ class Linter:
 		token = self.tokens[self.index_token]  # type: Token
 		if token.value == "\\n":
 			self.index_token += 1
+			self._check_offset()
 			return
 
 		# TODO: реализовать. Пока он просто по токенам бежит
+		self._check_expression_new()
 		# while token.value != ";":
 		# 	self.index_token += 1
-		# 	token = self.tokens[self.index_token]]
-		# Пока сделал так, чтобы работало
-		self._check_expression(conditionals=conditionals)
-		token = self.tokens[self.index_token]
-
-		# Чтобы не залез на нужные токены
-		if token.value in conditionals:
-			return
-		# Проверка что после ';' идёт новая строка, а не ещё что то
+		# 	token = self.tokens[self.index_token]
 		self.index_token += 1
+		self._check_new_line_after_semicolon()
+
+	def _check_new_line_after_semicolon(self):
 		token = self.tokens[self.index_token]
-		while True:
-			if token.value.isspace() or token.value == "\\t":
-				self._append_mismatch(token, expected="\\n")
+		while token.kind == KindToken.whiteSpace:
+			if token.value != r'\n':
+				self._append_mismatch(token, expected="new line")
 				self.index_token += 1
 				token = self.tokens[self.index_token]
-			elif token.value == "\\n":
-				# self.index_token += 1
-				break
 			else:
-				break
+				return
+		self._append_mismatch(token, expected="new line")
 
 	def _check_offset(self):
 		'''
@@ -311,8 +319,13 @@ class Linter:
 		# TODO: проверят пока только количество символов табуляции, нужно и для пробела сделать
 		:return:
 		'''
+
 		count_offsets = 0
 		token = self.tokens[self.index_token]  # type: Token
+		if token.value == "\\n":
+			self.index_token += 1
+			return
+
 		while token.value == '\\t':
 			if token.value == '\\t':
 				count_offsets += 1
@@ -323,9 +336,29 @@ class Linter:
 		if count_offsets < self.current_offset:
 			self._append_mismatch(token, "more offset")
 
-	def _append_mismatch(self, token: Token, expected: str):
-		self.mismatches.append(Mismatch(CategoryStyleRule.CR, self.file.lines[token.line_index - 1], token.start_index,
-										f"Expected '{expected}', but was '{token.value}'\n", None))
+	def _check_switch_block(self):
+		while self.index_token < len(self.tokens):
+			token = self.tokens[self.index_token]
+			if token.value == "case" or token.value == "default":
+				self._roll_back(r'\n')
+				self.index_token += 1
+				self._check_offset()
+				self.check_tokens_by_graph(self.graphs[Graphs.case_])
+			if token.value == "}":
+				break
+			self.index_token += 1
+
+	def _roll_back(self, token_value: str):
+		while self.index_token > 0:
+			if self.tokens[self.index_token].value == token_value:
+				return
+			self.index_token -= 1
+
+	def _append_mismatch(self, token: Token, expected: str, qutie_expected=False):
+		if qutie_expected:
+			expected = f"'{expected}'"
+		self.mismatches.append(Mismatch(CategoryStyleRule.CR, self.file.lines[token.line_index - 1], token.start_index, token.line_index,
+										f"Expected {expected}, but was '{token.value}'\n", None))
 
 	def print(self):
 		'''
@@ -361,9 +394,12 @@ def main():
 
 	linter = Linter(Settings([]))
 
+	testing = False
+
 	if args.file:
 		linter.analyze_file(args.file)
 	else:
+		testing = True
 		linter.analyze_file(cs_file_path)
 
 	if args.save_file:
@@ -372,14 +408,12 @@ def main():
 				if args.print:
 					print(miss)
 				f.write(f"{miss}\n")
+	if testing:
+		for miss in linter.mismatches:
+			print(miss)
 
 	return 0
 
 
 if __name__ == "__main__":
 	main()
-# args = sys.argv[1:]
-# if len(args) == 0:
-#	main([cs_file_path, config_file_path])
-# else:
-#	main(args)

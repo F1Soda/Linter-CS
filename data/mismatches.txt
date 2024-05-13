@@ -1,0 +1,8 @@
+index = 4 Line 6: \t\t\tConsole.WriteLine("Вы выбрали Case 1");
+                     ^
+Expected less offset, but was '\t'
+
+index = 0 Line 8: case "case2":
+                 ^
+Expected more offset, but was 'case'
+

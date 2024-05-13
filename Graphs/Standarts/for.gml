@@ -107,16 +107,16 @@ graph [
   node [
     id 13
     label "14"
-    pos 245
-    pos 427
+    pos 240
+    pos 415
     name "\n"
     data "\n"
   ]
   node [
     id 14
     label "15"
-    pos 326
-    pos 408
+    pos 342
+    pos 406
     name "increase_offset"
     data "increase_offset"
   ]

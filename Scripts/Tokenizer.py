@@ -45,7 +45,7 @@ class Token:
 			return KindToken.operator
 		if '\'' in self.value or '"' in self.value or any(oper in self.value for oper in operators):
 			return KindToken.literal
-		if self.value.isspace():
+		if self.value.isspace() or self.value == r"\n" or self.value == r"\t":
 			return KindToken.whiteSpace
 		else:
 			return KindToken.identifier
@@ -200,10 +200,13 @@ class Tokenizer:
 				self.abs_index_char += 1
 				self._update_data()
 			self.abs_index_char += 1
+			self.index_line += 1
 			return True
 
 		if self.current_char + self.next_char == "/*":
 			while self.next_char is not None and self.current_char + self.next_char != r"*/":
+				if self.current_char + self.next_char != r"\n":
+					self.index_line += 1
 				self.abs_index_char += 1
 				self._update_data()
 			self.abs_index_char += 1

@@ -1,0 +1,4 @@
+index = 0 Line 3: }
+                 ^
+Expected more offset, but was '}'
+
