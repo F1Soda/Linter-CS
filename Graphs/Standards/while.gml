@@ -48,8 +48,8 @@ graph [
   node [
     id 5
     label "5"
-    pos 361
-    pos 309
+    pos 359
+    pos 308
     name "\n"
     data "\n"
     should_check_offset "false"

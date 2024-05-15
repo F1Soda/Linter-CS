@@ -120,24 +120,15 @@ graph [
   node [
     id 13
     label "13"
-    pos 367
-    pos 308
-    name "increase_offset"
-    data "increase_offset"
-    should_check_offset "default"
+    pos 369
+    pos 317
+    name "\n"
+    data "\n"
+    should_check_offset "false"
   ]
   node [
     id 14
     label "14"
-    pos 425
-    pos 303
-    name "\n"
-    data "\n"
-    should_check_offset "default"
-  ]
-  node [
-    id 15
-    label "15"
     pos 468
     pos 414
     name "increase_offset"
@@ -145,8 +136,8 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 16
-    label "16"
+    id 15
+    label "15"
     pos 544
     pos 406
     name "\n"
@@ -154,12 +145,21 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 17
-    label "17"
+    id 16
+    label "16"
     pos 354
     pos 373
     name "decrease_offset"
     data "decrease_offset"
+    should_check_offset "default"
+  ]
+  node [
+    id 17
+    label "17"
+    pos 412
+    pos 297
+    name "line_or_block"
+    data "line_or_block"
     should_check_offset "default"
   ]
   edge [
@@ -204,34 +204,26 @@ graph [
   ]
   edge [
     source 12
-    target 15
-  ]
-  edge [
-    source 13
     target 14
   ]
   edge [
-    source 14
-    target 6
-  ]
-  edge [
-    source 14
+    source 13
     target 17
   ]
   edge [
-    source 15
-    target 16
+    source 14
+    target 15
   ]
   edge [
-    source 16
+    source 15
     target 5
   ]
   edge [
-    source 16
+    source 15
     target 9
   ]
   edge [
-    source 17
+    source 16
     target 12
   ]
 ]

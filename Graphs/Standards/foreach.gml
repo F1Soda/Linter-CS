@@ -102,77 +102,14 @@ graph [
   node [
     id 11
     label "11"
-    pos 71
-    pos 321
+    pos 98
+    pos 325
     name "\n"
     data "\n"
-    should_check_offset "default"
+    should_check_offset "false"
   ]
   node [
     id 12
-    label "12"
-    pos 138
-    pos 359
-    name "{"
-    data "{"
-    should_check_offset "default"
-  ]
-  node [
-    id 13
-    label "13"
-    pos 331
-    pos 347
-    name "increase_offset"
-    data "increase_offset"
-    should_check_offset "default"
-  ]
-  node [
-    id 14
-    label "14"
-    pos 421
-    pos 343
-    name "block"
-    data "block"
-    should_check_offset "default"
-  ]
-  node [
-    id 15
-    label "15"
-    pos 227
-    pos 405
-    name "\n"
-    data "\n"
-    should_check_offset "default"
-  ]
-  node [
-    id 16
-    label "16"
-    pos 488
-    pos 336
-    name "decrease_offset"
-    data "decrease_offset"
-    should_check_offset "default"
-  ]
-  node [
-    id 17
-    label "17"
-    pos 549
-    pos 335
-    name "\n"
-    data "\n"
-    should_check_offset "default"
-  ]
-  node [
-    id 18
-    label "18"
-    pos 623
-    pos 335
-    name "}"
-    data "}"
-    should_check_offset "default"
-  ]
-  node [
-    id 19
     label "19"
     pos 243
     pos 146
@@ -181,7 +118,7 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 20
+    id 13
     label "20"
     pos 385
     pos 138
@@ -190,7 +127,7 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 21
+    id 14
     label "21"
     pos 310
     pos 137
@@ -199,12 +136,21 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 22
+    id 15
     label "22"
     pos 483
     pos 142
     name "_"
     data " "
+    should_check_offset "default"
+  ]
+  node [
+    id 16
+    label "124"
+    pos 201
+    pos 352
+    name "line_or_block"
+    data "line_or_block"
     should_check_offset "default"
   ]
   edge [
@@ -221,7 +167,7 @@ graph [
   ]
   edge [
     source 2
-    target 19
+    target 12
   ]
   edge [
     source 3
@@ -257,54 +203,26 @@ graph [
   ]
   edge [
     source 11
-    target 12
-  ]
-  edge [
-    source 12
-    target 15
-  ]
-  edge [
-    source 13
-    target 14
-  ]
-  edge [
-    source 14
     target 16
   ]
   edge [
-    source 15
+    source 12
+    target 14
+  ]
+  edge [
+    source 13
+    target 15
+  ]
+  edge [
+    source 14
+    target 3
+  ]
+  edge [
+    source 14
     target 13
   ]
   edge [
     source 15
-    target 18
-  ]
-  edge [
-    source 16
-    target 17
-  ]
-  edge [
-    source 17
-    target 18
-  ]
-  edge [
-    source 19
-    target 21
-  ]
-  edge [
-    source 20
-    target 22
-  ]
-  edge [
-    source 21
-    target 3
-  ]
-  edge [
-    source 21
-    target 20
-  ]
-  edge [
-    source 22
     target 3
   ]
 ]

@@ -436,5 +436,5 @@ app = GraphEditor(root)
 app.update_mouse_position()
 root.mainloop()
 
-with open("data/GraphCreatorData", "w") as file:
+with open("../data/GraphCreatorData", "w") as file:
     file.writelines([app.current_file] + app.last_opened_files)
