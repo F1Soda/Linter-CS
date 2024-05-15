@@ -32,8 +32,8 @@ graph [
     label "3"
     pos 285
     pos 320
-    name "expression"
-    data "expression"
+    name "expression_;"
+    data "expression_;"
     should_check_offset "default"
   ]
   node [
@@ -59,8 +59,8 @@ graph [
     label "6"
     pos 413
     pos 258
-    name "expression"
-    data "expression"
+    name "expression_;"
+    data "expression_;"
     should_check_offset "default"
   ]
   node [
@@ -75,8 +75,8 @@ graph [
   node [
     id 8
     label "8"
-    pos 585
-    pos 322
+    pos 576
+    pos 321
     name "_"
     data " "
     should_check_offset "default"
@@ -86,15 +86,15 @@ graph [
     label "9"
     pos 579
     pos 248
-    name "expression"
-    data "expression"
+    name "expression_)"
+    data "expression_)"
     should_check_offset "default"
   ]
   node [
     id 10
     label "10"
-    pos 694
-    pos 354
+    pos 757
+    pos 364
     name ")"
     data ")"
     should_check_offset "default"
@@ -102,109 +102,28 @@ graph [
   node [
     id 11
     label "11"
-    pos 106
-    pos 370
+    pos 157
+    pos 363
     name "\n"
     data "\n"
-    should_check_offset "default"
+    should_check_offset "false"
   ]
   node [
     id 12
     label "12"
-    pos 166
-    pos 401
-    name "{"
-    data "{"
+    pos 282
+    pos 247
+    name "_"
+    data " "
     should_check_offset "default"
   ]
   node [
     id 13
     label "13"
-    pos 240
-    pos 415
-    name "\n"
-    data "\n"
-    should_check_offset "default"
-  ]
-  node [
-    id 14
-    label "14"
-    pos 342
-    pos 406
-    name "increase_offset"
-    data "increase_offset"
-    should_check_offset "default"
-  ]
-  node [
-    id 15
-    label "15"
-    pos 416
-    pos 412
-    name "block"
-    data "block"
-    should_check_offset "default"
-  ]
-  node [
-    id 16
-    label "16"
-    pos 492
-    pos 415
-    name "decrease_offset"
-    data "decrease_offset"
-    should_check_offset "default"
-  ]
-  node [
-    id 17
-    label "17"
-    pos 558
-    pos 418
-    name "\n"
-    data "\n"
-    should_check_offset "default"
-  ]
-  node [
-    id 18
-    label "18"
-    pos 611
-    pos 445
-    name "}"
-    data "}"
-    should_check_offset "default"
-  ]
-  node [
-    id 19
-    label "19"
-    pos 148
-    pos 461
-    name "increase_offset"
-    data "increase_offset"
-    should_check_offset "default"
-  ]
-  node [
-    id 20
-    label "20"
-    pos 240
-    pos 466
-    name "line"
-    data "line"
-    should_check_offset "default"
-  ]
-  node [
-    id 21
-    label "21"
-    pos 314
-    pos 472
-    name "decrease_offset"
-    data "decrease_offset"
-    should_check_offset "default"
-  ]
-  node [
-    id 22
-    label "22"
-    pos 282
-    pos 247
-    name "_"
-    data " "
+    pos 228
+    pos 404
+    name "line_or_block"
+    data "line_or_block"
     should_check_offset "default"
   ]
   edge [
@@ -221,7 +140,7 @@ graph [
   ]
   edge [
     source 2
-    target 22
+    target 12
   ]
   edge [
     source 3
@@ -265,50 +184,10 @@ graph [
   ]
   edge [
     source 11
-    target 12
-  ]
-  edge [
-    source 11
-    target 19
-  ]
-  edge [
-    source 12
     target 13
   ]
   edge [
-    source 13
-    target 14
-  ]
-  edge [
-    source 13
-    target 18
-  ]
-  edge [
-    source 14
-    target 15
-  ]
-  edge [
-    source 15
-    target 16
-  ]
-  edge [
-    source 16
-    target 17
-  ]
-  edge [
-    source 17
-    target 18
-  ]
-  edge [
-    source 19
-    target 20
-  ]
-  edge [
-    source 20
-    target 21
-  ]
-  edge [
-    source 22
+    source 12
     target 4
   ]
 ]

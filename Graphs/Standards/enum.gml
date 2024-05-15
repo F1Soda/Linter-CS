@@ -2,43 +2,48 @@ graph [
   directed 1
   node [
     id 0
-    label "115"
+    label "0"
     pos 133
     pos 266
     name "enum"
     data "enum"
+    should_check_offset "default"
   ]
   node [
     id 1
-    label "116"
+    label "1"
     pos 186
     pos 269
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 2
-    label "117"
+    label "2"
     pos 297
     pos 268
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 3
-    label "118"
+    label "3"
     pos 244
     pos 270
     name "identifier"
     data "identifier"
+    should_check_offset "default"
   ]
   node [
     id 4
-    label "122"
+    label "4"
     pos 350
     pos 272
     name "just_block"
     data "just_block"
+    should_check_offset "default"
   ]
   edge [
     source 0

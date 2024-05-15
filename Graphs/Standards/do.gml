@@ -39,7 +39,7 @@ graph [
   node [
     id 4
     label "4"
-    pos 306
+    pos 276
     pos 235
     name "increase_offset"
     data "increase_offset"
@@ -48,8 +48,8 @@ graph [
   node [
     id 5
     label "5"
-    pos 376
-    pos 235
+    pos 366
+    pos 237
     name "block"
     data "block"
     should_check_offset "default"
@@ -57,7 +57,7 @@ graph [
   node [
     id 6
     label "6"
-    pos 450
+    pos 440
     pos 235
     name "decrease_offset"
     data "decrease_offset"
@@ -66,8 +66,8 @@ graph [
   node [
     id 7
     label "7"
-    pos 540
-    pos 237
+    pos 500
+    pos 242
     name "\n"
     data "\n"
     should_check_offset "default"
@@ -75,8 +75,8 @@ graph [
   node [
     id 8
     label "8"
-    pos 624
-    pos 241
+    pos 632
+    pos 247
     name "}"
     data "}"
     should_check_offset "default"
@@ -122,8 +122,8 @@ graph [
     label "13"
     pos 292
     pos 339
-    name "expression"
-    data "expression"
+    name "expression_)"
+    data "expression_)"
     should_check_offset "default"
   ]
   node [

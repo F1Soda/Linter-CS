@@ -1,15 +1,4 @@
-switch (option)
+for (var i = 0; i < 10; i ++)
 {
-	case "case1":
-		if (a > b)
-		{
-			a = a + a;
-		}
-		break;
-	case "case2":
-		Console.WriteLine();
-		break;
-	default:
-		Console.WriteLine("Ни один из вариантов не соответствует");
-		break;
+	a = a + b;
 }
