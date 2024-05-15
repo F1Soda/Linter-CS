@@ -2,107 +2,120 @@ graph [
   directed 1
   node [
     id 0
-    label "1"
+    label "0"
     pos 82
     pos 266
     name "class"
     data "class"
+    should_check_offset "default"
   ]
   node [
     id 1
-    label "2"
+    label "1"
     pos 142
     pos 264
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 2
-    label "3"
+    label "2"
     pos 193
     pos 274
     name "identifier"
     data "identifier"
+    should_check_offset "default"
   ]
   node [
     id 3
-    label "4"
+    label "3"
     pos 278
     pos 278
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 4
-    label "5"
+    label "4"
     pos 348
     pos 275
     name "{"
     data "{"
+    should_check_offset "default"
   ]
   node [
     id 5
-    label "6"
+    label "5"
     pos 470
     pos 246
     name "increase_offset"
     data "increase_offset"
+    should_check_offset "default"
   ]
   node [
     id 6
-    label "7"
+    label "6"
     pos 517
     pos 292
     name "classVars"
     data "classVars"
+    should_check_offset "default"
   ]
   node [
     id 7
-    label "8"
+    label "7"
     pos 712
     pos 239
     name "classSubroutines"
     data "classSubroutines"
+    should_check_offset "default"
   ]
   node [
     id 8
-    label "9"
+    label "8"
     pos 616
     pos 268
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 9
-    label "11"
+    label "9"
     pos 853
     pos 288
     name "decrease_offset"
     data "decrease_offset"
+    should_check_offset "default"
   ]
   node [
     id 10
-    label "12"
+    label "10"
     pos 784
     pos 284
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 11
-    label "14"
+    label "11"
     pos 895
     pos 340
     name "}"
     data "}"
+    should_check_offset "default"
   ]
   node [
     id 12
-    label "13"
+    label "12"
     pos 413
     pos 330
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   edge [
     source 0

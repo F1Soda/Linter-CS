@@ -1,0 +1,90 @@
+graph [
+  directed 1
+  node [
+    id 0
+    label "0"
+    pos 70
+    pos 311
+    name "while"
+    data "while"
+    should_check_offset "default"
+  ]
+  node [
+    id 1
+    label "1"
+    pos 135
+    pos 311
+    name "_"
+    data " "
+    should_check_offset "default"
+  ]
+  node [
+    id 2
+    label "2"
+    pos 198
+    pos 311
+    name "("
+    data "("
+    should_check_offset "default"
+  ]
+  node [
+    id 3
+    label "3"
+    pos 254
+    pos 310
+    name "expression"
+    data "expression"
+    should_check_offset "default"
+  ]
+  node [
+    id 4
+    label "4"
+    pos 311
+    pos 310
+    name ")"
+    data ")"
+    should_check_offset "default"
+  ]
+  node [
+    id 5
+    label "5"
+    pos 361
+    pos 309
+    name "\n"
+    data "\n"
+    should_check_offset "false"
+  ]
+  node [
+    id 6
+    label "6"
+    pos 424
+    pos 312
+    name "line_or_block"
+    data "line_or_block"
+    should_check_offset "default"
+  ]
+  edge [
+    source 0
+    target 1
+  ]
+  edge [
+    source 1
+    target 2
+  ]
+  edge [
+    source 2
+    target 3
+  ]
+  edge [
+    source 3
+    target 4
+  ]
+  edge [
+    source 4
+    target 5
+  ]
+  edge [
+    source 5
+    target 6
+  ]
+]

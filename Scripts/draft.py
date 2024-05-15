@@ -1,24 +1,22 @@
-import argparse
+import tkinter as tk
+from tkinter import ttk
 
+root = tk.Tk()
+root.title("Раскрывающийся список")
 
-def main():
-	parser = argparse.ArgumentParser(description='Простое консольное приложение')
+# Список с вариантами выбора
+options = ["default", "true", "false"]
 
-	parser.add_argument("file", help="Путь до файла", type=str, nargs='?')
-	parser.add_argument("-v", "--verbose", help="Вывести подробный вывод", action="store_true")
-	parser.add_argument("-n", "--name", help="Указать имя")
+# Функция для обработки выбора из списка
+def on_select(event):
+    selected_option = combo.get()
+    print(selected_option)
 
-	args = parser.parse_args()
+# Создание и размещение Combobox на окне
+combo = ttk.Combobox(root, values=options)
+combo.pack()
 
-	if args.verbose:
-		print("Подробный вывод")
+# Привязка функции к событию выбора из списка
+combo.bind("<<ComboboxSelected>>", on_select)
 
-	if args.name:
-		print(f"Привет, {args.name}!")
-
-	if args.file:
-		print(f"Путь до файла: {args.file}")
-
-
-if __name__ == '__main__':
-	main()
+root.mainloop()

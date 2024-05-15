@@ -2,147 +2,165 @@ graph [
   directed 1
   node [
     id 0
-    label "1"
+    label "0"
     pos 20
     pos 88
     name "else"
     data "else"
+    should_check_offset "default"
   ]
   node [
     id 1
-    label "2"
+    label "1"
     pos 31
     pos 282
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 2
-    label "3"
+    label "2"
     pos 80
     pos 151
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 3
-    label "4"
+    label "3"
     pos 157
     pos 152
     name "if"
     data "if"
+    should_check_offset "default"
   ]
   node [
     id 4
-    label "5"
+    label "4"
     pos 241
     pos 141
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 5
-    label "7"
+    label "5"
     pos 374
     pos 142
     name "expression"
     data "expression"
+    should_check_offset "default"
   ]
   node [
     id 6
-    label "8"
+    label "6"
     pos 451
     pos 141
     name ")"
     data ")"
+    should_check_offset "default"
   ]
   node [
     id 7
-    label "9"
+    label "7"
     pos 168
     pos 264
     name "{"
     data "{"
+    should_check_offset "default"
   ]
   node [
     id 8
-    label "10"
+    label "8"
     pos 200
     pos 310
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 9
-    label "11"
+    label "9"
     pos 281
     pos 315
     name "increase_offset"
     data "increase_offset"
+    should_check_offset "default"
   ]
   node [
     id 10
-    label "12"
+    label "10"
     pos 391
     pos 310
     name "block"
     data "block"
+    should_check_offset "default"
   ]
   node [
     id 11
-    label "13"
+    label "11"
     pos 499
     pos 310
     name "decrease_offset"
     data "decrease_offset"
+    should_check_offset "default"
   ]
   node [
     id 12
-    label "14"
+    label "12"
     pos 570
     pos 261
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 13
-    label "19"
+    label "13"
     pos 308
     pos 142
     name "("
     data "("
+    should_check_offset "default"
   ]
   node [
     id 14
-    label "15"
+    label "14"
     pos 99
     pos 369
     name "increase_offset"
     data "increase_offset"
+    should_check_offset "default"
   ]
   node [
     id 15
-    label "16"
+    label "15"
     pos 176
     pos 367
     name "line"
     data "line"
+    should_check_offset "default"
   ]
   node [
     id 16
-    label "17"
+    label "16"
     pos 254
     pos 369
     name "decrease_offset"
     data "decrease_offset"
+    should_check_offset "default"
   ]
   node [
     id 17
-    label "18"
+    label "17"
     pos 680
     pos 258
     name "}"
     data "}"
+    should_check_offset "default"
   ]
   edge [
     source 0
