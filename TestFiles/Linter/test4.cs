@@ -1,5 +1,15 @@
 while (a > b)
-{
-	x = x + 2;
-}
+	while (a > b)
+	{
+		while (true)
+		{
+		}
+		while (false)
+			while (true)
+			{
+			}
+	}
+
+
+
 

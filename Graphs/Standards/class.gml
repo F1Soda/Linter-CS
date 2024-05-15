@@ -2,75 +2,84 @@ graph [
   directed 1
   node [
     id 0
-    label "1"
+    label "0"
     pos 82
     pos 266
     name "class"
     data "class"
+    should_check_offset "default"
   ]
   node [
     id 1
-    label "2"
+    label "1"
     pos 145
     pos 264
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 2
-    label "3"
+    label "2"
     pos 193
     pos 274
     name "identifier"
     data "identifier"
+    should_check_offset "default"
   ]
   node [
     id 3
-    label "4"
+    label "3"
     pos 278
     pos 278
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 4
-    label "114"
+    label "4"
     pos 194
     pos 316
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 5
-    label "115"
-    pos 202
-    pos 359
+    label "5"
+    pos 216
+    pos 366
     name "heritage"
     data "heritage"
+    should_check_offset "default"
   ]
   node [
     id 6
-    label "116"
+    label "6"
     pos 87
     pos 316
     name "struct"
     data "struct"
+    should_check_offset "default"
   ]
   node [
     id 7
-    label "117"
+    label "7"
     pos 78
     pos 210
     name "interface"
     data "interface"
+    should_check_offset "default"
   ]
   node [
     id 8
-    label "118"
+    label "8"
     pos 396
     pos 275
     name "just_block"
     data "just_block"
+    should_check_offset "default"
   ]
   edge [
     source 0

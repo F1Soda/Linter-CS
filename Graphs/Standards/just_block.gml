@@ -2,219 +2,246 @@ graph [
   directed 1
   node [
     id 0
-    label "1"
+    label "0"
     pos 108
     pos 324
     name "{"
     data "{"
+    should_check_offset "default"
   ]
   node [
     id 1
-    label "2"
+    label "1"
     pos 252
     pos 346
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 2
-    label "4"
+    label "2"
     pos 303
     pos 347
     name "block"
     data "block"
+    should_check_offset "default"
   ]
   node [
     id 3
-    label "5"
+    label "3"
     pos 364
     pos 347
     name "decrease_offset"
     data "decrease_offset"
+    should_check_offset "default"
   ]
   node [
     id 4
-    label "6"
+    label "4"
     pos 637
     pos 312
     name "}"
     data "}"
+    should_check_offset "default"
   ]
   node [
     id 5
-    label "107"
+    label "5"
     pos 164
     pos 389
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 6
-    label "108"
+    label "6"
     pos 233
     pos 431
     name "get"
     data "get"
+    should_check_offset "default"
   ]
   node [
     id 7
-    label "109"
+    label "7"
     pos 314
     pos 434
     name ";"
     data ";"
+    should_check_offset "default"
   ]
   node [
     id 8
-    label "110"
+    label "8"
     pos 377
     pos 443
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 9
-    label "111"
+    label "9"
     pos 466
     pos 442
     name "set"
     data "set"
+    should_check_offset "default"
   ]
   node [
     id 10
-    label "112"
+    label "10"
     pos 594
     pos 416
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 11
-    label "113"
+    label "11"
     pos 165
     pos 495
     name "private"
     data "private"
+    should_check_offset "default"
   ]
   node [
     id 12
-    label "114"
+    label "12"
     pos 234
     pos 495
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 13
-    label "115"
+    label "13"
     pos 465
     pos 491
     name "_"
     data " "
+    should_check_offset "default"
   ]
   node [
     id 14
-    label "116"
+    label "14"
     pos 376
     pos 490
     name "private"
     data "private"
+    should_check_offset "default"
   ]
   node [
     id 15
-    label "117"
+    label "15"
     pos 540
     pos 432
     name ";"
     data ";"
+    should_check_offset "default"
   ]
   node [
     id 16
-    label "118"
+    label "16"
     pos 189
     pos 346
     name "increase_offset"
     data "increase_offset"
+    should_check_offset "default"
   ]
   node [
     id 17
-    label "119"
+    label "17"
     pos 384
     pos 187
     name "get"
     data "get"
+    should_check_offset "default"
   ]
   node [
     id 18
-    label "121"
+    label "18"
     pos 425
     pos 186
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 19
-    label "127"
+    label "19"
     pos 449
     pos 347
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 20
-    label "129"
+    label "20"
     pos 424
     pos 227
     name "set"
     data "set"
+    should_check_offset "default"
   ]
   node [
     id 21
-    label "130"
+    label "21"
     pos 481
     pos 242
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 22
-    label "145"
+    label "22"
     pos 582
     pos 207
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 23
-    label "146"
+    label "23"
     pos 876
     pos 182
     name "decrease_offset"
     data "decrease_offset"
+    should_check_offset "default"
   ]
   node [
     id 24
-    label "147"
+    label "24"
     pos 928
     pos 185
     name "\n"
     data "\n"
+    should_check_offset "default"
   ]
   node [
     id 25
-    label "140"
+    label "25"
     pos 497
     pos 184
     name "just_block"
     data "just_block"
+    should_check_offset "default"
   ]
   node [
     id 26
-    label "141"
+    label "26"
     pos 580
     pos 246
     name "just_block"
     data "just_block"
+    should_check_offset "default"
   ]
   edge [
     source 0
