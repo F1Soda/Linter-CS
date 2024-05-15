@@ -10,7 +10,10 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'../data/.EditorConfig'  # не используется
-cs_file_path = r'../TestFiles/Linter/test4.cs'
+cs_file_path = r'../TestFiles/Linter/test3.cs'
+modifiers = [['public', 'private', 'protected', 'internal', 'protected internal', 'private protected', 'file'],
+			 ['abstract', 'virtual'],
+			 ['static'], ['sealed'], ['override'], ['new'], ['extern'], ['unsafe'], ['readonly'], ['volatile']]
 
 
 class Graphs(enum.Enum):
@@ -21,7 +24,8 @@ class Graphs(enum.Enum):
 
 
 class Mismatch:
-	def __init__(self, category: CategoryStyleRule, line: int, index: int, index_line: int, message: str, mismatched_flag):
+	def __init__(self, category: CategoryStyleRule, line: int, index: int, index_line: int, message: str,
+				 mismatched_flag):
 		self.category = category
 		self.line = line
 		self.index = index
@@ -48,6 +52,7 @@ class Linter:
 		self.index_token = 0
 		self.tokens = CustomList()
 		self.current_offset = 0
+		self.prev_modifier_id = -1
 		# TODO: Я сейчас написал специальный класс для хранения данных о файле, который возможно можно просто сократить
 		#  до списка токенов
 		self.file = None  # type: CSFile
@@ -57,7 +62,9 @@ class Linter:
 			"identifier": lambda: self._increment("index_token", self.index_token),
 			"line": lambda: self._check_line(),
 			"block": lambda: self.analyze(conditionals=["}"]),
-			"case_block": lambda: self.analyze(conditionals=["break", "return"]), #TODO: еще нужно рассмотреть case
+			"just_block": lambda: self.check_tokens_by_graph(graph=nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
+			"../Graphs/Standarts/just_block.gml")))),
+			"case_block": lambda: self.analyze(conditionals=["break", "return"]),  # TODO: еще нужно рассмотреть case
 			"increase_offset": lambda: self._increment("current_offset", self.current_offset),
 			"decrease_offset": lambda: self._decrement("current_offset", self.current_offset)
 		}
@@ -85,11 +92,37 @@ class Linter:
 			nx.convert_node_labels_to_integers(nx.read_gml("../Graphs/Standarts/switch.gml")))
 		self.graphs[Graphs.case_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
 			"../Graphs/Standarts/case.gml")))
-		self.graphs[Graphs.case_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
-			"../Graphs/Standarts/while.gml")))
+
+	# self.graphs[Graphs.case_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
+	# 	"../Graphs/Standarts/while.gml")))
 
 	def change_format_rules(self, new_settings: Settings):
 		self.setts = new_settings
+
+	def get_modifier_id(self):
+		for i, row in enumerate(modifiers):
+			if self.tokens[self.index_token].value in row:
+				return i
+
+	def check_modifiers(self):
+		# Проверка порядка
+		curr_id = self.get_modifier_id()
+		if self.prev_modifier_id != -1:
+			if curr_id < self.prev_modifier_id:
+				self._append_mismatch(self.tokens[self.index_token], "Wrong modifiers order")
+
+		self.prev_modifier_id = curr_id
+
+		# Проверка на пробелы
+		space_count = 0
+		while self.tokens[self.index_token + 1].value.isspace():
+			self.index_token += 1
+			space_count += 1
+			if space_count > 1:
+				self._append_mismatch(self.tokens[self.index_token], "Not white Space")
+
+		if space_count == 0:
+			self._append_mismatch(self.tokens[self.index_token], "white space")
 
 	def analyze_file(self, file_path):
 		'''
@@ -125,6 +158,14 @@ class Linter:
 			token = self.tokens[self.index_token]
 			if token.value in conditionals:
 				return
+
+			# Проверка на модификаторы
+			if any(token.value in modifier_list for modifier_list in modifiers):
+				self.check_modifiers()
+				self.index_token += 1
+				continue
+			else:
+				self.prev_modifier_id = -1
 
 			for graph in self.graphs.values():  # type: nx.DiGraph
 				for start_node_index in self._get_start_nodes(graph):
@@ -198,6 +239,7 @@ class Linter:
 					self.index_token += 1
 					self._check_offset()
 
+
 			if not found:
 				expected = graph.nodes[next_nodes[0]]["data"]
 				self._append_mismatch(token=token_to_check, expected=expected)
@@ -244,7 +286,7 @@ class Linter:
 				self._append_mismatch(token, "Not white Space")
 			# Проверка на пробел между элементами
 			if (self.conditions_for_space()):
-				self._append_mismatch(token, "Need white Space")
+				self._append_mismatch(token, "white Space")
 
 			if token.value.isspace() or token.value == "\\t":
 				count_spaces += 1
@@ -295,7 +337,7 @@ class Linter:
 			return
 
 		# TODO: реализовать. Пока он просто по токенам бежит
-		self._check_expression_new()
+		self._check_expression_new(conditionals=conditionals)
 		# while token.value != ";":
 		# 	self.index_token += 1
 		# 	token = self.tokens[self.index_token]
@@ -357,8 +399,9 @@ class Linter:
 	def _append_mismatch(self, token: Token, expected: str, qutie_expected=False):
 		if qutie_expected:
 			expected = f"'{expected}'"
-		self.mismatches.append(Mismatch(CategoryStyleRule.CR, self.file.lines[token.line_index - 1], token.start_index, token.line_index,
-										f"Expected {expected}, but was '{token.value}'\n", None))
+		self.mismatches.append(
+			Mismatch(CategoryStyleRule.CR, self.file.lines[token.line_index - 1], token.start_index, token.line_index,
+					 f"Expected {expected}, but was '{token.value}'\n", None))
 
 	def print(self):
 		'''

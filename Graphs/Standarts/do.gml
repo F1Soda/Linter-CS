@@ -11,122 +11,74 @@ graph [
   node [
     id 1
     label "2"
-    pos 130
-    pos 230
+    pos 129
+    pos 229
     name "\n"
     data "\n"
   ]
   node [
     id 2
-    label "3"
-    pos 193
-    pos 230
-    name "{"
-    data "{"
-  ]
-  node [
-    id 3
-    label "4"
-    pos 248
-    pos 180
-    name "\n"
-    data "\n"
-  ]
-  node [
-    id 4
-    label "5"
-    pos 306
-    pos 235
-    name "increase_offset"
-    data "increase_offset"
-  ]
-  node [
-    id 5
-    label "6"
-    pos 376
-    pos 235
-    name "block"
-    data "block"
-  ]
-  node [
-    id 6
-    label "7"
-    pos 450
-    pos 235
-    name "decrease_offset"
-    data "decrease_offset"
-  ]
-  node [
-    id 7
-    label "8"
-    pos 540
-    pos 237
-    name "\n"
-    data "\n"
-  ]
-  node [
-    id 8
-    label "9"
-    pos 624
-    pos 241
-    name "}"
-    data "}"
-  ]
-  node [
-    id 9
     label "10"
-    pos 60
-    pos 284
+    pos 240
+    pos 237
     name "_"
     data " "
   ]
   node [
-    id 10
+    id 3
     label "11"
-    pos 117
-    pos 334
+    pos 308
+    pos 237
     name "while"
     data "while"
   ]
   node [
-    id 11
+    id 4
     label "12"
-    pos 171
-    pos 338
+    pos 379
+    pos 240
     name "_"
     data " "
   ]
   node [
-    id 12
+    id 5
     label "13"
-    pos 226
-    pos 337
+    pos 437
+    pos 242
     name "("
     data "("
   ]
   node [
-    id 13
+    id 6
     label "14"
-    pos 292
-    pos 339
+    pos 502
+    pos 243
     name "expression"
     data "expression"
   ]
   node [
-    id 14
+    id 7
     label "15"
-    pos 360
-    pos 343
+    pos 556
+    pos 243
     name ")"
     data ")"
   ]
   node [
-    id 15
+    id 8
     label "16"
-    pos 419
-    pos 343
+    pos 611
+    pos 243
     name ";"
     data ";"
+  ]
+  node [
+    id 9
+    label "117"
+    pos 191
+    pos 236
+    name "just_block"
+    data "just_block"
   ]
   edge [
     source 0
@@ -134,7 +86,7 @@ graph [
   ]
   edge [
     source 1
-    target 2
+    target 9
   ]
   edge [
     source 2
@@ -143,10 +95,6 @@ graph [
   edge [
     source 3
     target 4
-  ]
-  edge [
-    source 3
-    target 8
   ]
   edge [
     source 4
@@ -165,31 +113,7 @@ graph [
     target 8
   ]
   edge [
-    source 8
-    target 9
-  ]
-  edge [
     source 9
-    target 10
-  ]
-  edge [
-    source 10
-    target 11
-  ]
-  edge [
-    source 11
-    target 12
-  ]
-  edge [
-    source 12
-    target 13
-  ]
-  edge [
-    source 13
-    target 14
-  ]
-  edge [
-    source 14
-    target 15
+    target 2
   ]
 ]

@@ -1,12 +1,13 @@
-string option = "case2";
-
 switch (option)
 {
 	case "case1":
-		a = a + 4;
+		if (a > b)
+		{
+			a = a + b;
+		}
 		break;
 	case "case2":
-		Console.WriteLine("Вы выбрали Case 2");
+		Console.WriteLine();
 		break;
 	default:
 		Console.WriteLine("Ни один из вариантов не соответствует");

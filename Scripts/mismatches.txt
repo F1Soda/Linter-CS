@@ -1,4 +1,4 @@
-index = 0 Line 3: }
-                 ^
-Expected more offset, but was '}'
+index = 16 Line 1: static volatile unsafe readonly string option = "case2";
+                                  ^
+Expected Wrong modifiers order, but was 'unsafe'
 
