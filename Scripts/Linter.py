@@ -8,9 +8,7 @@ from CSFile import CSFile
 from Tokenizer import Token, KindToken
 from Flag import CategoryStyleRule
 
-# temporary
-config_file_path = r'data/.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/test4.cs'
+cs_file_path = r'TestFiles/Linter/test3.cs'
 
 
 class Graphs(enum.Enum):
@@ -18,6 +16,7 @@ class Graphs(enum.Enum):
     switch_ = "switch"
     just_block_ = "just_block"
     case_ = "case"
+    while_ = "while"
 
 
 class Mismatch:
@@ -52,6 +51,7 @@ class Linter:
         # TODO: Я сейчас написал специальный класс для хранения данных о файле, который возможно можно просто сократить
         #  до списка токенов
         self.file = None  # type: CSFile
+
         # Пока вместо флагов будет вот такая штуковина, так как ну очень нужна
         self.UseTabs = True
 
@@ -67,11 +67,12 @@ class Linter:
             "line_or_block": lambda: self._line_or_block()
         }
 
-    def _call_func_by_keyword(self, name: str, args):
-        self._keywords_to_func[name](**args)
-
-    # дурацкий питон
     def _increment(self, name: str, value):
+        '''
+        Приватный метод для увелечения значениях внутри lambda тела
+        :param name: имя переменной
+        :param value: устанавливаемое значение
+        '''
         self.__setattr__(name, value + 1)
 
     def _decrement(self, name: str, value):
@@ -90,7 +91,7 @@ class Linter:
             nx.convert_node_labels_to_integers(nx.read_gml("Graphs/Standards/switch.gml")))
         self.graphs[Graphs.case_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
             "Graphs/Standards/case.gml")))
-        self.graphs[Graphs.case_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
+        self.graphs[Graphs.while_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
             "Graphs/Standards/while.gml")))
 
     def change_format_rules(self, new_settings: Settings):
@@ -146,7 +147,8 @@ class Linter:
             if self.tokens[index].kind != KindToken.whiteSpace:
                 return
             if self.tokens[index].value == r"\n":
-                self.mismatches.append(self._create_mismatch_by_token(self.tokens[index + 1], expected="Remove useless whitespaces"))
+                self.mismatches.append(
+                    self._create_mismatch_by_token(self.tokens[index + 1], expected="Remove useless whitespaces"))
                 return
             index -= 1
 
@@ -241,6 +243,11 @@ class Linter:
                     found = True
                     self.index_token += 1
                     self._check_offset()
+                elif token_to_check.value == r"\n":
+                    self._check_empty_line()
+                    found = True
+                    self.index_token += 1
+                    self._check_offset()
 
             if not found:
                 expected = graph.nodes[next_nodes[0]]["data"]
@@ -285,7 +292,7 @@ class Linter:
                 break
             # Проверка на пробел в начале
             if symbol_index == 0 and token.value.isspace():
-                self.mismatches.append( self._create_mismatch_by_token(token, "Not white Space"))
+                self.mismatches.append(self._create_mismatch_by_token(token, "Not white Space"))
             # Проверка на пробел между элементами
             if (self.conditions_for_space()):
                 self.mismatches.append(self._create_mismatch_by_token(token, "Need white Space"))
@@ -304,7 +311,8 @@ class Linter:
             # Проверка на пробел в конце
             if (token.value == ":" or token.value == ")" or token.value == ";") and self.tokens[
                 self.index_token - 1].value.isspace():
-                self.mismatches.append(self._create_mismatch_by_token(self.tokens[self.index_token - 1], "Not white Space"))
+                self.mismatches.append(
+                    self._create_mismatch_by_token(self.tokens[self.index_token - 1], "Not white Space"))
 
     def conditions_for_space(self):
         current_token = self.tokens[self.index_token]
@@ -421,24 +429,21 @@ class Linter:
         return Mismatch(CategoryStyleRule.CR, self.file.lines[token.line_index - 1], token.start_index,
                         token.line_index, f"Expected {expected}, but was '{token.value}'\n", None)
 
-
     def _append_mismatch(self, index_line: int, message: str):
         self.mismatches.append(
             Mismatch(CategoryStyleRule.CR, self.file.lines[index_line], 0, index_line, message, None))
-
 
     def _check_switch_block(self):
         while self.index_token < len(self.tokens):
             token = self.tokens[self.index_token]
             if token.value == "case" or token.value == "default":
-                self._roll_back(r'\n')
-                self.index_token += 1
-                self._check_offset()
+                #self._roll_back(r'\n')
+                #self.index_token += 1
+                #self._check_offset()
                 self.check_tokens_by_graph(self.graphs[Graphs.case_])
             if token.value == "}":
                 break
             self.index_token += 1
-
 
     def _roll_back(self, token_value: str):
         while self.index_token > 0:

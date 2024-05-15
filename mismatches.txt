@@ -1,0 +1,4 @@
+index = 2 Line 3: \t\tcase "case1":
+                   ^
+Expected less offset, but was '\t'
+
