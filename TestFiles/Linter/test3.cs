@@ -6,10 +6,4 @@ switch (option)
 			a = a + a;
 		}
 		break;
-	case "case2":
-		Console.WriteLine();
-		break;
-	default:
-		Console.WriteLine("Ни один из вариантов не соответствует");
-		break;
 }

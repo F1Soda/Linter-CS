@@ -276,6 +276,7 @@ class Linter:
 					index_node = next_node_id
 					if should_check_offset == "true":
 						self._check_offset()
+					break
 				elif token_to_check.value == data:
 					index_node = next_node_id
 					checked = False
@@ -290,11 +291,12 @@ class Linter:
 					if data == ";":
 						self._check_new_line_after_semicolon()
 					found = True
-				elif token_to_check.value == r"\n":
-					self._check_empty_line()
-					found = True
-					self.index_token += 1
-					self._check_offset()
+					break
+			if not found and token_to_check.value == r"\n":
+				self._check_empty_line()
+				found = True
+				self.index_token += 1
+				self._check_offset()
 
 			if not found:
 				expected = graph.nodes[next_nodes[0]]["data"]
@@ -404,9 +406,6 @@ class Linter:
 
 		# TODO: реализовать. Пока он просто по токенам бежит
 		self._check_expression_new(conditionals=conditionals)
-		# while token.value != ";":
-		# 	self.index_token += 1
-		# 	token = self.tokens[self.index_token]
 		self.index_token += 1
 		self._check_new_line_after_semicolon()
 
@@ -493,9 +492,9 @@ class Linter:
 		while self.index_token < len(self.tokens):
 			token = self.tokens[self.index_token]
 			if token.value == "case" or token.value == "default":
-				self._roll_back(r'\n')
-				self.index_token += 1
-				self._check_offset()
+				# self._roll_back(r'\n')
+				# self.index_token += 1
+				# self._check_offset()
 				self.check_tokens_by_graph(self.graphs[Graphs.case_])
 			if token.value == "}":
 				break

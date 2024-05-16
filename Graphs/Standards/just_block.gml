@@ -173,15 +173,6 @@ graph [
   ]
   node [
     id 19
-    label "19"
-    pos 449
-    pos 347
-    name "\n"
-    data "\n"
-    should_check_offset "default"
-  ]
-  node [
-    id 20
     label "20"
     pos 424
     pos 227
@@ -190,7 +181,7 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 21
+    id 20
     label "21"
     pos 481
     pos 242
@@ -199,7 +190,7 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 22
+    id 21
     label "22"
     pos 582
     pos 207
@@ -208,7 +199,7 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 23
+    id 22
     label "23"
     pos 876
     pos 182
@@ -217,7 +208,7 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 24
+    id 23
     label "24"
     pos 928
     pos 185
@@ -226,7 +217,7 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 25
+    id 24
     label "25"
     pos 497
     pos 184
@@ -235,7 +226,7 @@ graph [
     should_check_offset "default"
   ]
   node [
-    id 26
+    id 25
     label "26"
     pos 580
     pos 246
@@ -261,7 +252,7 @@ graph [
   ]
   edge [
     source 1
-    target 20
+    target 19
   ]
   edge [
     source 2
@@ -269,7 +260,7 @@ graph [
   ]
   edge [
     source 3
-    target 19
+    target 4
   ]
   edge [
     source 5
@@ -341,42 +332,38 @@ graph [
   ]
   edge [
     source 18
-    target 25
-  ]
-  edge [
-    source 19
-    target 4
-  ]
-  edge [
-    source 20
-    target 21
-  ]
-  edge [
-    source 21
-    target 26
-  ]
-  edge [
-    source 22
-    target 20
-  ]
-  edge [
-    source 23
     target 24
   ]
   edge [
-    source 24
+    source 19
+    target 20
+  ]
+  edge [
+    source 20
+    target 25
+  ]
+  edge [
+    source 21
+    target 19
+  ]
+  edge [
+    source 22
+    target 23
+  ]
+  edge [
+    source 23
     target 4
   ]
   edge [
-    source 25
+    source 24
+    target 21
+  ]
+  edge [
+    source 24
     target 22
   ]
   edge [
     source 25
-    target 23
-  ]
-  edge [
-    source 26
-    target 23
+    target 22
   ]
 ]

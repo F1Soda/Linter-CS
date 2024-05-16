@@ -12,7 +12,7 @@ graph [
   node [
     id 1
     label "1"
-    pos 147
+    pos 148
     pos 306
     name "_"
     data "_"
@@ -21,8 +21,8 @@ graph [
   node [
     id 2
     label "2"
-    pos 216
-    pos 305
+    pos 203
+    pos 302
     name "Ident"
     data "Ident"
     should_check_offset "default"
