@@ -58,6 +58,7 @@ class Linter:
         self.setts = settings
         self.mismatches = []
         self.graphs = {}
+        self.extension_graphs = {}
         self._parse_graphs()
         self.index_token = 0
         self.tokens = CustomList()
@@ -104,6 +105,13 @@ class Linter:
                 graph_path = os.path.join(directory, filename)
                 graph = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(graph_path)))
                 self.graphs[Graphs[graph_name]] = graph
+        directory = "Graphs/Extensions"
+        for filename in os.listdir(directory):
+            if filename.endswith(".gml"):
+                graph_name = os.path.splitext(filename)[0] + "_"
+                graph_path = os.path.join(directory, filename)
+                graph = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(graph_path)))
+                self.extension_graphs[Graphs[graph_name]] = graph
 
     def change_format_rules(self, new_settings: Settings):
         self.setts = new_settings
@@ -397,7 +405,9 @@ class Linter:
             if graph:
                 self.check_tokens_by_graph(graph)
                 token = self.tokens[self.index_token]
-                continue
+                if graph in [self.graphs[Graphs.while_], self.graphs[Graphs.for_], self.graphs[Graphs.foreach_],self.graphs[Graphs.if_]]:
+                    return
+
             # Проверка на пробел между элементами
             if self.conditions_for_space():
                 self.mismatches.append(
@@ -438,7 +448,7 @@ class Linter:
                     #
                     # self.index_token += 1
                     # self._check_offset()
-                    self.check_tokens_by_graph(self.graphs[Graphs.just_block_for_func_])
+                    self.check_tokens_by_graph(self.extension_graphs[Graphs.just_block_for_func_])
                     return
 
         self.index_token += 1
@@ -499,6 +509,10 @@ class Linter:
         #     return
 
         mismatches = []
+        index_next_not_white_space_token = self.first_next_not_whitespace_index()
+        next_nws_token = self.tokens[index_next_not_white_space_token]
+        if next_nws_token.value == "}":
+            self.current_offset -= 1
         while token.value == '\\t' or token.value == ' ':
             if token.value == '\\t':
                 count_tabs += 1
@@ -515,6 +529,8 @@ class Linter:
                 mismatches.append(self._create_mismatch_by_token(token, "less offset", called_from="_check_offset"))
             self.index_token += 1
             token = self.tokens[self.index_token]
+        if next_nws_token.value == "}":
+            self.current_offset += 1
         if token.value == r"\n":
             return
         self.mismatches += mismatches
