@@ -22,6 +22,7 @@ class Graphs(enum.Enum):
 	just_block_ = "just_block"
 	case_ = "case"
 	while_ = "while"
+	for_ = "for"
 
 
 class Mismatch:
@@ -62,7 +63,9 @@ class Linter:
 		# Пока вместо флагов будет вот такая штуковина, так как ну очень нужна
 		self.UseTabs = True
 		self._keywords_to_func = {
-			"expression": lambda: self._check_expression_new(),
+			"expression_)": lambda: self._check_expression_new(conditionals=[")"]),
+			"expression_;": lambda: self._check_expression_new(conditionals=[";"]),
+			"expression_:": lambda: self._check_expression_new(conditionals=[":"]),
 			"switch_block": lambda: self._check_switch_block(),
 			"identifier": lambda: self._increment("index_token", self.index_token),
 			"line": lambda: self._check_line(),
@@ -107,6 +110,8 @@ class Linter:
 			"Graphs/Standards/case.gml")))
 		self.graphs[Graphs.while_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
 			"Graphs/Standards/while.gml")))
+		self.graphs[Graphs.for_] = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(
+			"Graphs/Standards/for.gml")))
 
 
 	def change_format_rules(self, new_settings: Settings):
@@ -288,15 +293,17 @@ class Linter:
 						self._check_empty_line()
 						if not checked and (should_check_offset == "default" or should_check_offset == "true"):
 							self._check_offset()
-					if data == ";":
-						self._check_new_line_after_semicolon()
+					# if data == ";":
+					# 	self._check_new_line_after_semicolon()
 					found = True
-					break
-			if not found and token_to_check.value == r"\n":
-				self._check_empty_line()
-				found = True
-				self.index_token += 1
-				self._check_offset()
+                    break
+
+
+            if not found and token_to_check.value == r"\n":
+                self._check_empty_line()
+                found = True
+                self.index_token += 1
+                self._check_offset()
 
 			if not found:
 				expected = graph.nodes[next_nodes[0]]["data"]
@@ -331,16 +338,11 @@ class Linter:
 		Выражение -- то что обычно заключено в скобках
 		:return:
 		'''
-		if conditionals is None:
-			conditionals = []
 
 		token = self.tokens[self.index_token]  # type: Token
 		count_spaces = 0
 		symbol_index = 0
-		while not ((token.value == ")" or token.value == ";" or token.value == ":") and self.tokens[
-			self.index_token + 1].value == r"\n"):
-			if token.value in conditionals:
-				break
+		while not (token.value in conditionals):
 			# Проверка на пробел в начале
 			if symbol_index == 0 and token.value.isspace():
 				self.mismatches.append(self._create_mismatch_by_token(token, "Not white Space"))
@@ -405,7 +407,10 @@ class Linter:
 			return
 
 		# TODO: реализовать. Пока он просто по токенам бежит
-		self._check_expression_new(conditionals=conditionals)
+		self._check_expression_new(conditionals=[";"])
+		# while token.value != ";":
+		# 	self.index_token += 1
+		# 	token = self.tokens[self.index_token]
 		self.index_token += 1
 		self._check_new_line_after_semicolon()
 

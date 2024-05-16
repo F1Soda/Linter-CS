@@ -1,9 +1,4 @@
-switch (option)
+for (var i = 0; i < 10; i ++)
 {
-	case "case1":
-		if (a > b)
-		{
-			a = a + a;
-		}
-		break;
+	a = a + b;
 }

@@ -1,0 +1,12 @@
+index = 0 Line 3: \ta = a + b;
+                 ^
+Expected less offset, but was '\t'
+
+index = 2 Line 3: \ta = a + b;
+                   ^
+Expected \n, but was 'a'
+
+index = 0 Line 4: }
+                 ^
+Expected \n, but was '}'
+
