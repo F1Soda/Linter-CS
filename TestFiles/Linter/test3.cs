@@ -17,7 +17,6 @@ for (int i = 2; i <= Math.Sqrt(num); i++)
 	{
 		if (1 + 1 == 2)
 		{
-
 			Console.WriteLine("  1 + 1 == 2");
 		}
 		else if (SomeConditional)

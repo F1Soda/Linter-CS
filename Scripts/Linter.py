@@ -11,7 +11,7 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'data/.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/test5.cs'
+cs_file_path = r'TestFiles/Linter/test3.cs'
 modifiers = [['public', 'private', 'protected', 'internal', 'protected internal', 'private protected', 'file'],
              ['abstract', 'virtual'],
              ['static'], ['sealed'], ['override'], ['new'], ['extern'], ['unsafe'], ['readonly'], ['volatile']]
@@ -131,7 +131,7 @@ class Linter:
                 self._append_mismatch(self.tokens[self.index_token], "Not white Space")
 
         if space_count == 0:
-            self._append_mismatch(self.tokens[self.index_token], "white space")
+            self._append_mismatch(self.tokens[self.index_token], "White space")
 
     def analyze_file(self, file_path):
         """
@@ -191,7 +191,7 @@ class Linter:
                 return
             if self.tokens[index].value == r"\n":
                 self.mismatches.append(
-                    self._create_mismatch_by_token(self.tokens[index + 1], expected="Remove useless whitespaces"),
+                    self._create_mismatch_by_token(self.tokens[index + 1], expected="Remove useless white spaces"),
                     called_from="_check_empty_line")
                 return
             index -= 1
@@ -332,7 +332,7 @@ class Linter:
                                                                       called_from="_check_expression"))
             # Проверка на пробел между элементами
             if self.conditions_for_space():
-                self.mismatches.append(self._create_mismatch_by_token(token, "Need white Space",
+                self.mismatches.append(self._create_mismatch_by_token(token, "White Space",
                                                                       called_from="_check_expression"))
 
             if token.value.isspace() or token.value == "\\t":
@@ -366,7 +366,8 @@ class Linter:
             if (current_kind == KindToken.operator and next_kind == KindToken.identifier) or \
                     (current_kind == KindToken.operator and next_kind == KindToken.keyword) or \
                     (current_kind == KindToken.keyword and next_kind == KindToken.operator) or \
-                    (current_kind == KindToken.identifier and next_kind == KindToken.operator) or \
+                    (current_kind == KindToken.identifier and next_kind == KindToken.operator and
+                     (next_token.value != "++" and next_token.value != "--")) or \
                     (current_kind == KindToken.literal and next_kind == KindToken.operator) or \
                     (current_kind == KindToken.operator and next_kind == KindToken.literal):
                 return True
@@ -400,7 +401,7 @@ class Linter:
             # Проверка на пробел между элементами
             if self.conditions_for_space():
                 self.mismatches.append(
-                    self._create_mismatch_by_token(token, "Need white Space", called_from="_check_line"))
+                    self._create_mismatch_by_token(token, "White Space", called_from="_check_line"))
 
             if token.value.isspace() or token.value == "\\t":
                 count_spaces += 1
@@ -421,7 +422,7 @@ class Linter:
                 index_first_not_whitespace_token = self.first_next_not_whitespace_index()
                 first_not_whitespace_token = self.tokens[index_first_not_whitespace_token]
                 if first_not_whitespace_token.value == ";":
-                    self._add_mismatches_in_range(index_first_not_whitespace_token, "not white space")
+                    self._add_mismatches_in_range(index_first_not_whitespace_token, "Not white space")
                     self._check_new_line_after_semicolon()
                     return
                 if first_not_whitespace_token.value == "{":

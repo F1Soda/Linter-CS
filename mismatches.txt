@@ -1,4 +1,0 @@
-index = 41 Line 29: \t\tfor (int i = 2; i <= Math.Sqrt(num); i++)
-                                                             ^
-Expected Need white Space, but was 'i'. Created by _check_expression
-
