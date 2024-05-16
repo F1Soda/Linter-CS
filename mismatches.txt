@@ -1,12 +1,4 @@
-index = 0 Line 3: \ta = a + b;
-                 ^
-Expected less offset, but was '\t'
-
-index = 2 Line 3: \ta = a + b;
-                   ^
-Expected \n, but was 'a'
-
-index = 0 Line 4: }
-                 ^
-Expected \n, but was '}'
+index = 41 Line 29: \t\tfor (int i = 2; i <= Math.Sqrt(num); i++)
+                                                             ^
+Expected Need white Space, but was 'i'. Created by _check_expression
 

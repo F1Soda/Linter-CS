@@ -195,7 +195,7 @@ class Tokenizer:
         return False
 
     def _check_comments(self) -> bool:
-        if self.current_char + self.next_char == r"//":
+        if self.next_char and self.current_char + self.next_char == r"//":
             while self.next_char is not None and self.current_char + self.next_char != r"\n":
                 self.abs_index_char += 1
                 self._update_data()
@@ -203,7 +203,7 @@ class Tokenizer:
             self.index_line += 1
             return True
 
-        if self.current_char + self.next_char == "/*":
+        if self.next_char and self.current_char + self.next_char == "/*":
             while self.next_char is not None and self.current_char + self.next_char != r"*/":
                 if self.current_char + self.next_char != r"\n":
                     self.index_line += 1

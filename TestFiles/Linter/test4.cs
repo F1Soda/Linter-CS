@@ -1,14 +1,6 @@
-while (a > b)
-	while (a > b)
-	{
-		while (true)
-		{
-		}
-		while (false)
-			while (true)
-			{
-			}
-	}
+for (int i = 2; i <= Math.Sqrt(num); i++)
+{
+}
 
 
 
