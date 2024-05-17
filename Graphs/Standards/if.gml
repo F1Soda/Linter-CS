@@ -47,7 +47,7 @@ graph [
   ]
   node [
     id 5
-    label "13"
+    label "5"
     pos 356
     pos 353
     name "\n"
@@ -56,7 +56,7 @@ graph [
   ]
   node [
     id 6
-    label "17"
+    label "6"
     pos 423
     pos 340
     name "line_or_block"
@@ -66,25 +66,31 @@ graph [
   edge [
     source 0
     target 1
+    condition "default"
   ]
   edge [
     source 1
     target 2
+    condition "default"
   ]
   edge [
     source 2
     target 3
+    condition "default"
   ]
   edge [
     source 3
     target 4
+    condition "default"
   ]
   edge [
     source 4
     target 5
+    condition "default"
   ]
   edge [
     source 5
     target 6
+    condition "default"
   ]
 ]

@@ -1,4 +1,0 @@
-index = 22 Line 1: private static string abc(string name)
-                                         ^
-Expected Uppercase first letter, but was 'abc'. Created by analyze
-

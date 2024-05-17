@@ -84,37 +84,46 @@ graph [
   edge [
     source 0
     target 1
+    condition "default"
   ]
   edge [
     source 1
     target 2
+    condition "default"
   ]
   edge [
     source 2
     target 3
+    condition "default"
   ]
   edge [
     source 2
     target 4
+    condition "default"
   ]
   edge [
     source 3
     target 8
+    condition "default"
   ]
   edge [
     source 4
     target 5
+    condition "default"
   ]
   edge [
     source 5
     target 3
+    condition "default"
   ]
   edge [
     source 6
     target 1
+    condition "default"
   ]
   edge [
     source 7
     target 1
+    condition "default"
   ]
 ]

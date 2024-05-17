@@ -1,6 +1,4 @@
-switch (a)
+public MyClass(int value)
 {
-	case "asd":
-		a = a++;
-		break;
+	Value = value;
 }
