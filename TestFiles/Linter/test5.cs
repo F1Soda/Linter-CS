@@ -19,7 +19,7 @@ class Program
 		}
 		for (int i = 2; i <= Math.Sqrt(num); i++)
 		{
-			a = a + b;
+			a = (a + b) + 2 - 5 + (c + d);
 			while (a > b)
 				while (a > b)
 				{

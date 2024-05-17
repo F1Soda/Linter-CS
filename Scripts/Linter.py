@@ -11,7 +11,7 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'data/.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/test5.cs'
+cs_file_path = r'TestFiles/Linter/test4.cs'
 modifiers = [['public', 'private', 'protected', 'internal', 'protected internal', 'private protected', 'file'],
              ['abstract', 'virtual'],
              ['static'], ['sealed'], ['override'], ['new'], ['extern'], ['unsafe'], ['readonly'], ['volatile']]
@@ -70,6 +70,8 @@ class Linter:
         self.tokens = CustomList()
         self.current_offset = 0
         self.prev_modifier_id = -1
+        self.was_public_in_line = False
+        self.was_private_in_line = False
         # TODO: Я сейчас написал специальный класс для хранения данных о файле, который возможно можно просто сократить
         #  до списка токенов
         self.file = None  # type: CSFile|None
@@ -130,7 +132,11 @@ class Linter:
 
     def get_modifier_id(self):
         """
-        Руслан
+        Получает номер модификатора в строке
+        Например: public static readonly
+        public -> 0
+        static -> 1
+        readonly -> 2
         :return:
         """
         for i, row in enumerate(modifiers):
@@ -139,16 +145,21 @@ class Linter:
 
     def check_modifiers(self):
         """
-        Руслан
+        Проверяет порядок постановки модификаторов, а также пробелы между ними
         :return:
         """
         # Проверка порядка
         curr_id = self.get_modifier_id()
         if self.prev_modifier_id != -1:
             if curr_id < self.prev_modifier_id:
-                self._append_mismatch(self.tokens[self.index_token], "Wrong modifiers order")
+                self.mismatches.append(self._create_mismatch_by_token(self.tokens[self.index_token], "Wrong modifiers order", "check_modifiers"))
 
         self.prev_modifier_id = curr_id
+
+        if self.tokens[self.index_token].value == "public":
+            self.was_public_in_line = True
+        if self.tokens[self.index_token].value == "private":
+            self.was_private_in_line = True
 
         # Проверка на пробелы
         space_count = 0
@@ -156,10 +167,10 @@ class Linter:
             self.index_token += 1
             space_count += 1
             if space_count > 1:
-                self._append_mismatch(self.tokens[self.index_token], "Not white Space")
+                self.mismatches.append(self._create_mismatch_by_token(self.tokens[self.index_token], "Not white Space", "check_modifiers"))
 
         if space_count == 0:
-            self._append_mismatch(self.tokens[self.index_token], "White space")
+            self.mismatches.append(self._create_mismatch_by_token(self.tokens[self.index_token], "White space", "check_modifiers"))
 
     def analyze_file(self, file_path):
         """
@@ -209,6 +220,33 @@ class Linter:
 
             if not found:
                 self._check_line(conditionals=conditionals + ["{"])
+
+    def check_naming(self, token_identifier_after_modifiers_id):
+        """
+        Проверяет регистр первой буквы в зависимости от модификатора public, private
+        :param token_identifier_after_modifiers_id: id названия метода(поля)
+        :return:
+        """
+        if self.was_public_in_line and self.tokens[self.index_token].kind == KindToken.identifier:
+            self.was_public_in_line = False
+            if self.tokens[self.index_token].value[0].islower():
+                self.mismatches.append(
+                    self._create_mismatch_by_token(self.tokens[self.index_token], "Uppercase first letter",
+                                                   "analyze"))
+
+        if ((self.tokens[self.index_token].value == "(" or self.tokens[self.index_token].value == ";") and
+            self.was_private_in_line):
+            self.was_private_in_line = False
+            if (self.tokens[token_identifier_after_modifiers_id].value[0].isupper()
+                    and self.tokens[self.index_token].value == ";"):
+                self.mismatches.append(
+                    self._create_mismatch_by_token(self.tokens[token_identifier_after_modifiers_id], "Lowercase first letter",
+                                                   "analyze"))
+            if (self.tokens[token_identifier_after_modifiers_id].value[0].islower()
+                    and self.tokens[self.index_token].value == "("):
+                self.mismatches.append(
+                    self._create_mismatch_by_token(self.tokens[token_identifier_after_modifiers_id], "Uppercase first letter",
+                                                   "analyze"))
 
     def _check_empty_line(self):
         """
@@ -352,6 +390,7 @@ class Linter:
         Пока правило одно: больше двух пробелов между токенами быть не может,
         устанавливает метку на первый токен из conditionals
         Указатель должен быть на выражение, а не на скобки!
+        :param conditionals: условие для остановки работы метода
         :return:
         """
 
@@ -369,9 +408,17 @@ class Linter:
             if symbol_index == 0 and token.value.isspace():
                 self.mismatches.append(self._create_mismatch_by_token(token, "Not white Space",
                                                                       called_from="_check_expression"))
-            # Проверка на пробел между элементами
+            # Проверка, нужен ли пробел между элементами
             if self.conditions_for_space():
                 self.mismatches.append(self._create_mismatch_by_token(token, "White Space",
+                                                                      called_from="_check_expression"))
+
+            # Проверка на исключения, которые не обрабатывает conditions_for_space
+            if (self.tokens[self.index_token - 1].value == "." and self.tokens[self.index_token].value.isspace() or
+                self.tokens[self.index_token].value.isspace() and self.tokens[self.index_token + 1].value == '.' or
+                self.tokens[self.index_token].value.isspace() and (self.tokens[self.index_token + 1].value == '++' or
+                                                                 self.tokens[self.index_token + 1].value == '--')):
+                self.mismatches.append(self._create_mismatch_by_token(token, "Not white Space",
                                                                       called_from="_check_expression"))
 
             if token.value.isspace() or token.value == "\\t":
@@ -396,7 +443,7 @@ class Linter:
 
     def conditions_for_space(self):
         """
-        Руслан 
+        Условие для постановки пробела в expression(строке)
         """
         current_token = self.tokens[self.index_token]
         next_token = self.tokens[self.index_token + 1] if self.index_token + 1 < len(self.tokens) else None
@@ -434,6 +481,7 @@ class Linter:
             return
 
         count_spaces = 0
+        token_identifier_after_modifiers_id = -1;
         while token.value != ";":
             graph = self._try_find_graph(token)
             if graph:
@@ -442,6 +490,9 @@ class Linter:
                 if graph in [self.graphs[Graphs.while_], self.graphs[Graphs.for_], self.graphs[Graphs.foreach_],
                              self.graphs[Graphs.if_]]:
                     return
+
+            if self.was_private_in_line and self.tokens[self.index_token].kind == KindToken.identifier:
+                token_identifier_after_modifiers_id = self.index_token
 
             # Проверка на пробел между элементами
             if self.conditions_for_space():
@@ -460,6 +511,8 @@ class Linter:
             self.index_token += 1
             token = self.tokens[self.index_token]
 
+            self.check_naming(token_identifier_after_modifiers_id)
+
             if token.value == "(":
                 self.index_token += 1
                 self._check_expression(")")
@@ -474,6 +527,7 @@ class Linter:
                     self.check_tokens_by_graph(self.extension_graphs[Graphs.just_block_for_func_])
                     return
 
+        self.check_naming(token_identifier_after_modifiers_id)
         self.index_token += 1
         self._check_new_line_after_semicolon()
 
@@ -564,7 +618,7 @@ class Linter:
         if not self.UseTabs and count_tabs < self.current_offset:
             self.mismatches.append(self._create_mismatch_by_token(token, "more offset", called_from="_check_offset"))
         if count_spaces * count_tabs != 0:
-            self._append_mismatch(token.line_index, "not mixed spaces in offsets", called_from="_check_offset")
+            self._append_mismatch(token.line_index, "_check_offsets", message="not mixed spaces in offsets")
         if token.value == '}':
             self.current_offset += 1
 

@@ -1,2 +1,6 @@
-if ( 1 + 1 == 2 )
-	Console.WriteLine("  1 + 1 == 2");
+switch (a)
+{
+	case "asd":
+		a = a++;
+		break;
+}

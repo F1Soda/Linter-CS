@@ -8,6 +8,8 @@ sys.path.append(parent_dir + '/Scripts')
 
 from Scripts.Linter import Linter
 
+
 class TestLinter(unittest.TestCase):
 	def test_tabs(self):
-		pass
+		with open("../TestFiles/Linter/test1.cs", "r", encoding="utf-8") as f:
+			linter = Linter.analyze_file(Linter, "../TestFiles/Linter/test1.cs")
