@@ -349,7 +349,7 @@ class Linter:
                         if not checked and (should_check_offset == "default" or should_check_offset == "true"):
                             self._check_offset()
                     found = True
-                    break
+                    breakgit
 
             if not found and token_to_check.value == r"\n":
                 self._check_empty_line()
