@@ -1,7 +1,7 @@
-for (int i = 2; i <= Math.Sqrt(num); i++)
+private static string abc(string name)
 {
+	Console.WriteLine(name);
 }
-
 
 
 

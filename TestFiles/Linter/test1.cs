@@ -1,2 +1,4 @@
-if ( 1 + 1 == 2 )
-	Console.WriteLine("  1 + 1 == 2");
+public MyClass(int value)
+{
+	Value = value;
+}

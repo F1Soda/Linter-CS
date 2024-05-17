@@ -47,6 +47,7 @@ class BaseFunctionalNoMistakes(unittest.TestCase):
     def test_for(self):
         self.check_clean_by_filename("for.cs")
 
+    # вары
     def test_foreach(self):
         self.check_clean_by_filename("foreach.cs")
 
