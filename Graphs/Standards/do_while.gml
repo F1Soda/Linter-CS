@@ -75,8 +75,8 @@ graph [
   node [
     id 8
     label "8"
-    pos 258
-    pos 221
+    pos 263
+    pos 218
     name "line_or_block"
     data "line_or_block"
     should_check_offset "default"

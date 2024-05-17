@@ -11,7 +11,7 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'data/.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/test1.cs'
+cs_file_path = r'TestFiles/Linter/Main/Clean/switch_case.cs'
 modifiers = [['public', 'private', 'protected', 'internal', 'protected internal', 'private protected', 'file'],
              ['abstract', 'virtual'],
              ['static'], ['sealed'], ['override'], ['new'], ['extern'], ['unsafe'], ['readonly'], ['volatile']]
@@ -588,7 +588,9 @@ class Linter:
         Вызвать, когда указатель стоит после токена ";" чтобы проверить, 
         что следом за ним сразу идет символ новой строки
         """
-        token = self.tokens[self.index_token]
+        token = self.tokens.at(self.index_token)
+        if not token:
+            return 
         while token.kind == KindToken.whiteSpace:
             if token.value != r'\n':
                 self.mismatches.append(self._create_mismatch_by_token(token, expected="new line",

@@ -18,22 +18,34 @@ def get_link_to_file(file=None, line=None):
 directory_of_tests = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "TestFiles\\Linter")
 
 
-class TestNoMistakes(unittest.TestCase):
+class TestCleanFiles(unittest.TestCase):
+    def test_clean_code_1(self):
+        self.check_clean_by_filename("test_clean_1.cs")
 
-    def test_no_mistakes(self):
-        directory = directory_of_tests + "\\CleanFiles"
+    def test_clean_code_2(self):
+        self.check_clean_by_filename("test_clean_2.cs")
+
+    def test_clean_code_3(self):
+        self.check_clean_by_filename("test_clean_3.cs")
+
+    def check_clean_by_filename(self, filename):
+        directory = directory_of_tests + f"\\CleanFiles\\{filename}"
+        path = os.path.join(directory, directory)
         linter = Linter(Settings([]))
-        for filename in os.listdir(directory):
-            if filename.endswith(".cs"):
-                path = os.path.join(directory, filename)
-                try:
-                    linter.analyze_file(path)
-                except Exception:
-                    self.fail(f"Was error in work linter. Filename: {filename}")
-                else:
-                    self.assertEqual(0, len(linter.mismatches))
-                finally:
-                    linter.mismatches = []
+        try:
+            linter.analyze_file(path)
+        except Exception:
+            self.fail(f"Was error in work linter. Filename: {get_link_to_file(directory.replace("\\", "/"), 1)}")
+        else:
+            msg = f"\n" + "-" * 30 + " FAILED " + "-" * 30 + "\n\nCSharp file: "
+            msg += f"{get_link_to_file(directory.replace("\\", "/"), 1)}\n"
+            msg += f"Mismatches :\n"
+            for mismatch in linter.mismatches:
+                msg += str(mismatch) + "\n"
+            msg += "-" * 70 + "\n\n"
+            self.assertEqual(0, len(linter.mismatches), msg)
+        finally:
+            linter.mismatches = []
 
 
 class BaseFunctionalNoMistakes(unittest.TestCase):
