@@ -45,6 +45,7 @@ class GraphEditor:
         self.master.title("Графовый редактор")
 
         self.selected_node_id = None
+        self.selected_edge = None
         self.drag_data = {"x": 0, "y": 0}
 
         self.graph = nx.DiGraph(directed=True)
@@ -55,6 +56,9 @@ class GraphEditor:
         self.canvas.bind("<Button-1>", self.add_node)
 
         self.canvas.bind("<Motion>", self.draw_temporary_line)
+
+        self.header_label = tk.Label(self.inspector_frame, text="Графовый Редактор", font=("Arial", 22), pady=10)
+        self.header_label.pack()
 
         self.export_button = tk.Button(self.master, text="Экспорт", command=self.export_graph)
         self.export_button.pack()
@@ -171,19 +175,26 @@ class GraphEditor:
         self.inspector_frame = tk.Frame(self.right_parent_frame, width=200, height=200)
         self.inspector_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
+        self.header_label = tk.Label(self.inspector_frame, text="Инспектор", font=("Arial", 18), pady=10)
+        self.header_label.pack()
+
+        self.header_label = tk.Label(self.inspector_frame, text="Вершина", font=("Arial", 13), pady=2)
+        self.header_label.pack()
+
         self.name_label = tk.Label(self.inspector_frame, text="Имя вершины:")
         self.name_label.pack()
 
         self.name_entry_var = tk.StringVar()
         self.name_entry = tk.Entry(self.inspector_frame, textvariable=self.name_entry_var)
         self.name_entry.pack()
-        self.name_entry.bind("<KeyRelease>", self.on_change_in_inspector)
+        self.name_entry.bind("<KeyRelease>", self.on_change_in_inspector_field_name)
 
         self.token_value_label = tk.Label(self.inspector_frame, text="Значение токена")
         self.token_value_label.pack()
 
         self.token_value_entry_var = tk.StringVar()
         self.token_value_entry = tk.Entry(self.inspector_frame, textvariable=self.token_value_entry_var)
+        self.token_value_entry.bind("<KeyRelease>", self.on_change_in_inspector_field_data)
         self.token_value_entry.pack()
 
         self.should_check_offset_label = tk.Label(self.inspector_frame, text="проводить проверку отступов?")
@@ -193,12 +204,12 @@ class GraphEditor:
         self.should_check_offset_combo = ttk.Combobox(self.inspector_frame, values=options)
         self.should_check_offset_combo.pack()
 
-        def on_select(event):
+        def on_select_should_check_offset_combo(event):
             selected_option = self.should_check_offset_combo.get()
             self.graph.nodes[self.selected_node_id]["should_check_offset"] = selected_option
 
         # Привязка функции к событию выбора из списка
-        self.should_check_offset_combo.bind("<<ComboboxSelected>>", on_select)
+        self.should_check_offset_combo.bind("<<ComboboxSelected>>", on_select_should_check_offset_combo)
 
         tk.Label(self.inspector_frame, text="id:").pack()
 
@@ -209,8 +220,21 @@ class GraphEditor:
 
         self.inspector_frame.bind("<Button-1>", self.change_focus)
 
-        #self.apply_button = tk.Button(self.inspector_frame, text="Применить", command=self.apply_changes)
-        #self.apply_button.pack()
+        self.header_label = tk.Label(self.inspector_frame, text="Ребро", font=("Arial", 13), pady=2)
+        self.header_label.pack()
+
+        self.info_edge_label = tk.Label(self.inspector_frame, text="'' → ''")
+        self.info_edge_label.pack()
+
+        self.conditional_combo = ttk.Combobox(self.inspector_frame, values=["default", "True", "False"])
+        self.conditional_combo.pack()
+
+        def on_select_conditional_combo(event):
+            selected_option = self.conditional_combo.get()
+            self.graph.add_edge(self.selected_edge[0], self.selected_edge[1], condition=selected_option)
+
+        # Привязка функции к событию выбора из списка
+        self.conditional_combo.bind("<<ComboboxSelected>>", on_select_conditional_combo)
 
     def create_History(self):
         self.history_frame = tk.Frame(self.right_parent_frame, width=200, height=200)
@@ -225,10 +249,13 @@ class GraphEditor:
         for graph in self.last_opened_files:
             listbox.insert(tk.END, graph)
 
-    def on_change_in_inspector(self, event):
+    def on_change_in_inspector_field_name(self, event):
         if self.data_same_with_name:
             value = self.name_entry_var.get()  # Получаем значение из первого поля
             self.token_value_entry_var.set(value)  # Устанавливаем значение во втором поле
+        self.apply_changes()
+
+    def on_change_in_inspector_field_data(self, event):
         self.apply_changes()
 
     def add_node(self, event):
@@ -242,11 +269,20 @@ class GraphEditor:
 
         for node in self.graph.nodes.items():
             pos_node = node[1]["pos"]
-            if is_inside_circle(x, y, pos_node, 25):
+            if is_inside_circle(x, y, pos_node, 10):
                 self.selected_node_id = node[0]
+                self.selected_edge = None
                 self.on_node_press(event)
                 self.draw_graph()
                 return
+
+        u, v = self.find_edge(event)
+        if u is not None:
+            self.selected_edge = (u, v)
+            self.update_inspector(edge=self.selected_edge)
+            self.selected_node_id = None
+            self.draw_graph()
+            return
 
         self._id_abs += 1
         node_id = self._id_abs
@@ -279,8 +315,14 @@ class GraphEditor:
             self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius, fill=color)
             self.canvas.create_text(x, y - 15, text=info['name'])  # Отображение текста с данными
         for u, v in self.graph.edges:
+            color = "black"
+            width = 1
+            if (u, v) == self.selected_edge:
+                color = "red"
+                width = 2
             self.canvas.create_line(self.graph.nodes[u]['pos'][0], self.graph.nodes[u]['pos'][1],
-                                    self.graph.nodes[v]['pos'][0], self.graph.nodes[v]['pos'][1], fill="black")
+                                    self.graph.nodes[v]['pos'][0], self.graph.nodes[v]['pos'][1], fill=color,
+                                    width=width)
             to_point = self.graph.nodes[v]['pos']
             size_cube = 5
             self.canvas.create_rectangle(to_point[0] - size_cube, to_point[1] - size_cube, to_point[0] + size_cube,
@@ -329,13 +371,15 @@ class GraphEditor:
             self.drag_data["y"] = event.y - self.graph.nodes[node_id]["pos"][1]
             self.update_inspector(node_id)
 
-    def update_inspector(self, node_id=None):
+    def update_inspector(self, node_id=None, edge=None):
         self.name_entry.delete(0, tk.END)
         self.id_field.config(state="normal")
         self.id_field.delete(0, tk.END)
         self.id_field.config(state="readonly")
         self.token_value_entry.delete(0, tk.END)
         self.should_check_offset_combo.set("")
+        self.conditional_combo.set("")
+        self.info_edge_label.config(text="'' → ''")
         if node_id is not None:
             self.name_entry.insert(0, self.graph.nodes[node_id]["name"])
             self.token_value_entry.insert(0, self.graph.nodes[node_id]["data"])
@@ -353,6 +397,19 @@ class GraphEditor:
             self.id_field.delete(0, tk.END)
             self.id_field.insert(0, str(node_id))
             self.id_field.config(state="readonly")
+        elif edge:
+            try:
+                condition = self.graph[edge[0]][edge[1]]['condition']
+                self.conditional_combo.insert(0, condition)
+                self.info_edge_label.config(text=f"'{self.graph.nodes[edge[0]]["name"]}' → '{self.graph.nodes[edge[1]]["name"]}'")
+            except Exception:
+                response = messagebox.askyesnocancel("Предупреждение",
+                                                     f"Возможно в графе не установлены некоторые параметры(condition). Установить их к стандартному значению?")
+                if response is None:
+                    pass
+                elif response:
+                    for source, target in self.graph.edges:
+                        self.graph[source][target]['condition'] = 'default'
 
     def on_node_drag(self, event):
         if self.selected_node_id:
@@ -416,7 +473,7 @@ class GraphEditor:
         self.start_node_id = self.selected_node_id
 
     def create_edge(self, target_node_id):
-        self.graph.add_edge(self.selected_node_id, target_node_id)
+        self.graph.add_edge(self.selected_node_id, target_node_id, condition="default")
         self.draw_graph()
         self.should_draw_edge_to_mouse = False
 

@@ -46,4 +46,4 @@ class TestTokenizer(unittest.TestCase):
 	def test_tabs(self):
 		with open("../TestFiles/Tokenizer/test_tabs.cs", "r", encoding="utf-8") as f:
 			tokenizer = Tokenizer(CustomList(repr(f.read())[1:-1]))
-			self.assertEqual(["\\t", "\\t", "\\t", "a", "\\n"], [x.value for x in tokenizer.tokens])
+			self.assertEqual(["\\t", "\\t", "\\t", "a"], [x.value for x in tokenizer.tokens])

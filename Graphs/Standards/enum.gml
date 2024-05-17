@@ -48,17 +48,21 @@ graph [
   edge [
     source 0
     target 1
+    condition "default"
   ]
   edge [
     source 1
     target 3
+    condition "default"
   ]
   edge [
     source 2
     target 4
+    condition "default"
   ]
   edge [
     source 3
     target 2
+    condition "default"
   ]
 ]

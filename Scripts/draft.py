@@ -1,22 +1,17 @@
-import tkinter as tk
-from tkinter import ttk
+import networkx as nx
 
-root = tk.Tk()
-root.title("Раскрывающийся список")
+# Создаем направленный граф
+G = nx.DiGraph()
 
-# Список с вариантами выбора
-options = ["default", "true", "false"]
+# Добавляем узлы
+G.add_node(1)
+G.add_node(2)
 
-# Функция для обработки выбора из списка
-def on_select(event):
-    selected_option = combo.get()
-    print(selected_option)
+# Добавляем ребра с условиями
+G.add_edge(1, 2, condition=True)
 
-# Создание и размещение Combobox на окне
-combo = ttk.Combobox(root, values=options)
-combo.pack()
+# Выводим данные ребер
+print(G.edges(data=True))
 
-# Привязка функции к событию выбора из списка
-combo.bind("<<ComboboxSelected>>", on_select)
-
-root.mainloop()
+# Выводим атрибуты ребра между вершинами 1 и 2
+print(G.get_edge_data(1, 2))

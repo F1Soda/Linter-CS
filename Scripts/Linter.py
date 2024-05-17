@@ -11,7 +11,7 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'data/.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/test5.cs'
+cs_file_path = r'TestFiles/Linter/Main/Clean/do_while.cs'
 modifiers = [['public', 'private', 'protected', 'internal', 'protected internal', 'private protected', 'file'],
              ['abstract', 'virtual'],
              ['static'], ['sealed'], ['override'], ['new'], ['extern'], ['unsafe'], ['readonly'], ['volatile']]
@@ -27,8 +27,8 @@ class Graphs(enum.Enum):
     just_block_ = "just_block"
     just_block_for_func_ = "just_block_for_func"
     case_ = "case"
-    while_ = "while"
-    for_ = "for"
+    while_ = "while.cs"
+    for_ = "for.cs"
     foreach_ = "foreach"
     namespace_ = "namespace"
     do_while_ = "do_while"
@@ -106,14 +106,15 @@ class Linter:
         Записывает все графы из папки Graphs/Standards в список графов для проверки кода
         :return:
         """
-        directory = "Graphs/Standards"
+        directory = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Graphs\\Standards")
+
         for filename in os.listdir(directory):
             if filename.endswith(".gml"):
                 graph_name = os.path.splitext(filename)[0] + "_"
                 graph_path = os.path.join(directory, filename)
                 graph = nx.DiGraph(nx.convert_node_labels_to_integers(nx.read_gml(graph_path)))
                 self.graphs[Graphs[graph_name]] = graph
-        directory = "Graphs/Extensions"
+        directory = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Graphs\\Extensions")
         for filename in os.listdir(directory):
             if filename.endswith(".gml"):
                 graph_name = os.path.splitext(filename)[0] + "_"
@@ -231,10 +232,11 @@ class Linter:
                 return
             index -= 1
 
-    def _line_or_block(self):
+    def _line_or_block(self) -> bool:
         """
         Метод, который вызывает check_tokens_by_graph. Используется для ветвления и циклов, когда тело может быть 
         из одной строчки или целого блока
+        :return: если была строка, вернёт True
         """
         index = self.index_token
         is_line = False
@@ -254,6 +256,7 @@ class Linter:
             self.current_offset -= 1
         else:
             self.check_tokens_by_graph(self.graphs[Graphs.just_block_])
+        return is_line
 
     @staticmethod
     def _direct_successors(graph, node):
@@ -297,6 +300,10 @@ class Linter:
         # Сделал это для одного графа из Extensions
         first_time = True
 
+        # Некоторые функции могут возвращать True или False, которые будут определять выбор следующей ноды
+        # Потому результат нужно куда то сохранять
+        res_of_keyword_func = None
+
         while self.index_token < len(self.tokens):
             found = False
             next_nodes = self._direct_successors(graph, index_node)
@@ -307,11 +314,24 @@ class Linter:
                 return
             token_to_check = self.tokens[self.index_token]
             for next_node_id in next_nodes:
+                # Тоже колхоз, связанный с тем, что мне нужно для перехода из 0 -> 0 использовать default
+                if index_node == next_node_id:
+                    condition = "default"
+                else:
+                    condition = graph[index_node][next_node_id]['condition']
+
+                if condition == "True" and (res_of_keyword_func is not None and res_of_keyword_func != True):
+                    res_of_keyword_func = None
+                    continue
+                if condition == "False" and (res_of_keyword_func is not None and res_of_keyword_func != False):
+                    res_of_keyword_func = None
+                    continue
+
                 neighbor = graph.nodes[next_node_id]
                 data = neighbor["data"]
                 should_check_offset = neighbor["should_check_offset"]
                 if data in self._keywords_to_func:
-                    self._keywords_to_func[data]()
+                    res_of_keyword_func = self._keywords_to_func[data]()
                     found = True
                     index_node = next_node_id
                     if should_check_offset == "true":
@@ -329,6 +349,7 @@ class Linter:
                         if not checked and (should_check_offset == "default" or should_check_offset == "true"):
                             self._check_offset()
                     found = True
+                    break
 
             if not found and token_to_check.value == r"\n":
                 self._check_empty_line()
@@ -434,13 +455,15 @@ class Linter:
             return
 
         count_spaces = 0
+        was_symbol_equal = False
         while token.value != ";":
             graph = self._try_find_graph(token)
             if graph:
                 self.check_tokens_by_graph(graph)
-                token = self.tokens[self.index_token]
-                if graph in [self.graphs[Graphs.while_], self.graphs[Graphs.for_], self.graphs[Graphs.foreach_],
-                             self.graphs[Graphs.if_]]:
+                token = self.tokens.at(self.index_token)
+                if not token or graph in [self.graphs[Graphs.while_], self.graphs[Graphs.for_],
+                                          self.graphs[Graphs.foreach_],
+                                          self.graphs[Graphs.if_]]:
                     return
 
             # Проверка на пробел между элементами
@@ -473,6 +496,9 @@ class Linter:
                 if first_not_whitespace_token.value == "{":
                     self.check_tokens_by_graph(self.extension_graphs[Graphs.just_block_for_func_])
                     return
+
+            if token.value == "=":
+                was_symbol_equal = True
 
         self.index_token += 1
         self._check_new_line_after_semicolon()
@@ -528,8 +554,6 @@ class Linter:
         count_tabs = 0
         count_spaces = 0
         token = self.tokens[self.index_token]  # type: Token
-
-
 
         mismatches = []
         index_next_not_white_space_token = self.first_next_not_whitespace_index()
@@ -673,6 +697,7 @@ def main():
     if testing:
         for miss in linter.mismatches:
             print(miss)
+        print("Run on file:///" + os.path.abspath(cs_file_path).replace("\\", "/"))
 
     return 0
 
