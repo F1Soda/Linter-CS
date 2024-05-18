@@ -2,6 +2,7 @@ import argparse
 import networkx as nx
 import enum
 import os
+import exceptions
 
 from Settings import Settings
 from Utils import CustomList
@@ -27,13 +28,14 @@ class Graphs(enum.Enum):
     just_block_ = "just_block"
     just_block_for_func_ = "just_block_for_func"
     case_ = "case"
-    while_ = "while.cs"
-    for_ = "for.cs"
+    while_ = "while"
+    for_ = "for"
     foreach_ = "foreach"
     namespace_ = "namespace"
     do_while_ = "do_while"
     class_ = "class"
     enum_ = "enum"
+    new_ = "new"
 
 
 class Mismatch:
@@ -57,6 +59,25 @@ class Mismatch:
 
     def __repr__(self):
         return self.__str__()
+
+
+def _check_passage_allowed(graph: nx.DiGraph, index_node: int, next_node_id: int, res_of_keyword_func) -> bool:
+    """
+    Проверяет, что ребро открыто для прохода по нему
+    :param graph: граф
+    :param index_node: индекс стартовой ноды
+    :param next_node_id: индекс следующей ноды
+    :param res_of_keyword_func: результат работы прошлой функции
+    :return: True, если разрешён проход и False в противном
+    """
+    condition = "default"
+    if index_node != next_node_id:
+        condition = graph[index_node][next_node_id]['condition']
+    if condition == "True" and (res_of_keyword_func is not None and res_of_keyword_func != True):
+        return False
+    if condition == "False" and (res_of_keyword_func is not None and res_of_keyword_func != False):
+        return False
+    return True
 
 
 class Linter:
@@ -83,8 +104,10 @@ class Linter:
             "expression_)": lambda: self._check_expression(conditionals=[")"]),
             "expression_;": lambda: self._check_expression(conditionals=[";"]),
             "expression_:": lambda: self._check_expression(conditionals=[":"]),
+            "expression_>": lambda: self._check_expression(conditionals=[">"]),
+            "expression_]": lambda: self._check_expression(conditionals=["]"]),
             "switch_block": lambda: self._check_switch_block(),
-            "identifier": lambda: self._increment("index_token", self.index_token),
+            "identifier": lambda: self._check_identifier(),
             "line": lambda: self._check_line(),
             "block": lambda: self.analyze(conditionals=["}"]),
             "case_block": lambda: self.analyze(conditionals=["break", "return"]),  # TODO: еще нужно рассмотреть case
@@ -92,7 +115,59 @@ class Linter:
             "decrease_offset": lambda: self._decrement("current_offset", self.current_offset),
             "line_or_block": lambda: self._line_or_block(),
             "just_block": lambda: self.check_tokens_by_graph(graph=self.graphs[Graphs.just_block_]),
+            "initialization": lambda: self._check_initialization()
         }
+
+    def _check_initialization(self):
+        """
+        Проверяет, что происходит инициализация объекта. В случае если инициализации нету, то ничего не делает
+        """
+        first_next_not_whitespace_index = self.first_next_not_whitespace_index()
+        token = self.tokens[first_next_not_whitespace_index]
+        if token.value == ";":
+            self._add_mismatches_in_range(first_next_not_whitespace_index, "not white space")
+            self.index_token = first_next_not_whitespace_index
+            return
+        if token.kind == KindToken.identifier:
+            return
+        self._check_order_token_by_array(order_tokens=["{", " "])
+        token = self.tokens[self.index_token]
+        while token.value != "}":
+            self._check_expression([",", "}"])
+            token = self.tokens[self.index_token]
+            if token.value == "}":
+                break
+            self.index_token += 1
+        self.index_token += 1
+
+    def _check_order_token_by_array(self, order_tokens):
+        """
+        Проверяет последовательность токенов. Используется вместо _check_by_graph, для вызова из кода.
+        :param order_tokens: Последовательность токенов
+        """
+        expected_next_token_index = 0
+        while expected_next_token_index < len(order_tokens):
+            token = self.tokens[self.index_token]
+            self.index_token += 1
+            if token.value == order_tokens[expected_next_token_index]:
+                expected_next_token_index += 1
+                continue
+            self.mismatches.append(
+                self._create_mismatch_by_token(token, order_tokens[expected_next_token_index],
+                                               "_check_order_token_by_array"))
+
+    def _check_identifier(self):
+        """
+        Проверка на идентификатор
+        """
+        token = self.tokens[self.index_token]
+        while token.kind == KindToken.whiteSpace:
+            self.mismatches.append(self._create_mismatch_by_token(token, "not white space", "_check_identifier"))
+            self.index_token += 1
+            token = self.tokens[self.index_token]
+        while token.kind == KindToken.identifier or token.value == ".":
+            self.index_token += 1
+            token = self.tokens[self.index_token]
 
     def _call_func_by_keyword(self, name: str, args):
         self._keywords_to_func[name](**args)
@@ -153,7 +228,9 @@ class Linter:
         curr_id = self.get_modifier_id()
         if self.prev_modifier_id != -1:
             if curr_id < self.prev_modifier_id:
-                self.mismatches.append(self._create_mismatch_by_token(self.tokens[self.index_token], "Wrong modifiers order", "check_modifiers"))
+                self.mismatches.append(
+                    self._create_mismatch_by_token(self.tokens[self.index_token], "Wrong modifiers order",
+                                                   "check_modifiers"))
 
         self.prev_modifier_id = curr_id
 
@@ -168,10 +245,12 @@ class Linter:
             self.index_token += 1
             space_count += 1
             if space_count > 1:
-                self.mismatches.append(self._create_mismatch_by_token(self.tokens[self.index_token], "Not white Space", "check_modifiers"))
+                self.mismatches.append(
+                    self._create_mismatch_by_token(self.tokens[self.index_token], "Not white Space", "check_modifiers"))
 
         if space_count == 0:
-            self.mismatches.append(self._create_mismatch_by_token(self.tokens[self.index_token], "White space", "check_modifiers"))
+            self.mismatches.append(
+                self._create_mismatch_by_token(self.tokens[self.index_token], "White space", "check_modifiers"))
 
     def analyze_file(self, file_path):
         """
@@ -220,7 +299,7 @@ class Linter:
                 self.index_token += 1
 
             if not found:
-                self._check_line(conditionals=conditionals + ["{"])
+                self._check_line()
 
     def check_naming(self, token_identifier_after_modifiers_id):
         """
@@ -236,17 +315,19 @@ class Linter:
                                                    "analyze"))
 
         if ((self.tokens[self.index_token].value == "(" or self.tokens[self.index_token].value == ";") and
-            self.was_private_in_line):
+                self.was_private_in_line):
             self.was_private_in_line = False
             if (self.tokens[token_identifier_after_modifiers_id].value[0].isupper()
                     and self.tokens[self.index_token].value == ";"):
                 self.mismatches.append(
-                    self._create_mismatch_by_token(self.tokens[token_identifier_after_modifiers_id], "Lowercase first letter",
+                    self._create_mismatch_by_token(self.tokens[token_identifier_after_modifiers_id],
+                                                   "Lowercase first letter",
                                                    "analyze"))
             if (self.tokens[token_identifier_after_modifiers_id].value[0].islower()
                     and self.tokens[self.index_token].value == "("):
                 self.mismatches.append(
-                    self._create_mismatch_by_token(self.tokens[token_identifier_after_modifiers_id], "Uppercase first letter",
+                    self._create_mismatch_by_token(self.tokens[token_identifier_after_modifiers_id],
+                                                   "Uppercase first letter",
                                                    "analyze"))
 
     def _check_empty_line(self):
@@ -305,6 +386,8 @@ class Linter:
         :return:
         """
         descendants = nx.descendants(graph, node)
+        if descendants is None:
+            return None
         direct_successors = [n for n in descendants if graph.has_edge(node, n)]
         return direct_successors
 
@@ -326,48 +409,30 @@ class Linter:
         :param graph: граф для сравнения правил и кода
         :return:
         """
-
+        # Определяем стартовый индекс вершины
         index_node = 0
         for index_start_node in self._get_start_nodes(graph):
             if self.tokens[self.index_token].value == graph.nodes[index_start_node]["data"]:
                 index_node = index_start_node
                 break
 
-        # колхоз, но так надо -- этот флаг для того, чтобы первый токен граф все же проверил
-        # В прошлой версии граф скипал первый токен, считая что раз его вызвали, то уже есть совпадение
-        # Сделал это для одного графа из Extensions
-        first_time = True
-
         # Некоторые функции могут возвращать True или False, которые будут определять выбор следующей ноды
-        # Потому результат нужно куда то сохранять
+        # Потому результат нужно куда-то сохранять
         res_of_keyword_func = None
 
-        while self.index_token < len(self.tokens):
+        next_nodes = [index_node]
+
+        while next_nodes:
             found = False
-            next_nodes = self._direct_successors(graph, index_node)
-            if first_time:
-                next_nodes = [index_node]
-                first_time = False
-            if not next_nodes:
-                return
             token_to_check = self.tokens[self.index_token]
             for next_node_id in next_nodes:
-                # Тоже колхоз, связанный с тем, что мне нужно для перехода из 0 -> 0 использовать default
-                if index_node == next_node_id:
-                    condition = "default"
-                else:
-                    condition = graph[index_node][next_node_id]['condition']
-
-                if condition == "True" and (res_of_keyword_func is not None and res_of_keyword_func != True):
-                    res_of_keyword_func = None
-                    continue
-                if condition == "False" and (res_of_keyword_func is not None and res_of_keyword_func != False):
+                if not _check_passage_allowed(graph, index_node, next_node_id, res_of_keyword_func):
                     res_of_keyword_func = None
                     continue
 
-                neighbor = graph.nodes[next_node_id]
-                data = neighbor["data"]
-                should_check_offset = neighbor["should_check_offset"]
+                next_node = graph.nodes[next_node_id]
+                data = next_node["data"]
+                should_check_offset = next_node["should_check_offset"]
                 if data in self._keywords_to_func:
                     res_of_keyword_func = self._keywords_to_func[data]()
                     found = True
@@ -375,19 +440,12 @@ class Linter:
                     if should_check_offset == "true":
                         self._check_offset()
                     break
-                elif token_to_check.value == data:
+                if self._check_token_by_value(data, should_check_offset):
                     index_node = next_node_id
-                    checked = False
-                    if should_check_offset == "true":
-                        self._check_offset()
-                        checked = True
-                    self.index_token += 1
-                    if data == "\\n":
-                        self._check_empty_line()
-                        if not checked and (should_check_offset == "default" or should_check_offset == "true"):
-                            self._check_offset()
                     found = True
                     break
+
+            next_nodes = self._direct_successors(graph, index_node)
 
             if not found and token_to_check.value == r"\n":
                 self._check_empty_line()
@@ -402,8 +460,28 @@ class Linter:
                 if token_to_check.kind == KindToken.whiteSpace:
                     self.index_token += 1
                 else:
-                    self.index_token += 1
-                    index_node = next_nodes[0]
+                    raise exceptions.NodeInGraphNotFound(token_to_check, graph_name=self._define_name_of_graph(graph))
+
+    def _check_token_by_value(self, value: str, should_check_offset) -> bool:
+        token_to_check = self.tokens[self.index_token]
+        if token_to_check.value == value:
+            checked = False
+            if should_check_offset == "true":
+                self._check_offset()
+                checked = True
+            self.index_token += 1
+            if value == "\\n":
+                self._check_empty_line()
+                if not checked and (should_check_offset == "default" or should_check_offset == "true"):
+                    self._check_offset()
+            return True
+        return False
+
+    def _define_name_of_graph(self, graph: nx.DiGraph) -> str:
+        for key, item in self.graphs.items():
+            if item == graph:
+                return key
+        raise exceptions.GraphNotFound(graph)
 
     def _check_expression(self, conditionals=None):
         """
@@ -436,9 +514,10 @@ class Linter:
 
             # Проверка на исключения, которые не обрабатывает conditions_for_space
             if (self.tokens[self.index_token - 1].value == "." and self.tokens[self.index_token].value.isspace() or
-                self.tokens[self.index_token].value.isspace() and self.tokens[self.index_token + 1].value == '.' or
-                self.tokens[self.index_token].value.isspace() and (self.tokens[self.index_token + 1].value == '++' or
-                                                                 self.tokens[self.index_token + 1].value == '--')):
+                    self.tokens[self.index_token].value.isspace() and self.tokens[self.index_token + 1].value == '.' or
+                    self.tokens[self.index_token].value.isspace() and (
+                            self.tokens[self.index_token + 1].value == '++' or
+                            self.tokens[self.index_token + 1].value == '--')):
                 self.mismatches.append(self._create_mismatch_by_token(token, "Not white Space",
                                                                       called_from="_check_expression"))
 
@@ -483,18 +562,14 @@ class Linter:
                 return True
         return False
 
-    def _check_line(self, conditionals=None):
+    def _check_line(self):
         """
         Проверяет строчку, если ни один из графов не подошел. Метод по мере проверки на пробелы распознает, это строка
         вызова функции, её объявления или просто строки
         :return:
         """
-        # TODO: Кажется conditionals нужно убрать из _check_line
-        if conditionals is None:
-            conditionals = []
-
         token = self.tokens[self.index_token]  # type: Token
-
+        was_equal = False
         if token.value == "\\n":
             self.is_current_line_empty = True
             self.index_token += 1
@@ -502,8 +577,7 @@ class Linter:
             return
 
         count_spaces = 0
-        token_identifier_after_modifiers_id = -1;
-        was_symbol_equal = False
+        token_identifier_after_modifiers_id = -1
         while token.value != ";":
             graph = self._try_find_graph(token)
             if graph:
@@ -513,6 +587,11 @@ class Linter:
                                           self.graphs[Graphs.foreach_],
                                           self.graphs[Graphs.if_]]:
                     return
+                if token.value == ";":
+                    break
+
+            if token.value == "=":
+                was_equal = True
 
             if self.was_private_in_line and self.tokens[self.index_token].kind == KindToken.identifier:
                 token_identifier_after_modifiers_id = self.index_token
@@ -536,6 +615,10 @@ class Linter:
             self.index_token += 1
             token = self.tokens[self.index_token]
 
+            if token.value == "{" and was_equal:
+                self._check_initialization()
+                token = self.tokens[self.index_token]
+
             if token.value == "(":
                 self.index_token += 1
                 self._check_expression(")")
@@ -549,9 +632,6 @@ class Linter:
                 if first_not_whitespace_token.value == "{":
                     self.check_tokens_by_graph(self.extension_graphs[Graphs.just_block_for_func_])
                     return
-
-            if token.value == "=":
-                was_symbol_equal = True
 
         self.check_naming(token_identifier_after_modifiers_id)
         self.index_token += 1
@@ -590,7 +670,7 @@ class Linter:
         """
         token = self.tokens.at(self.index_token)
         if not token:
-            return 
+            return
         while token.kind == KindToken.whiteSpace:
             if token.value != r'\n':
                 self.mismatches.append(self._create_mismatch_by_token(token, expected="new line",

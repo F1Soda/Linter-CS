@@ -148,21 +148,22 @@ class GraphEditor:
         root.after(10, self.update_mouse_position)
 
     def _del(self, event):
-        if self.selected_node_id:
+        if self.selected_node_id is not None:
             self.delete_node(self.selected_node_id)
             self.update_inspector()
 
     def copy(self, event):
-        if self.selected_node_id:
+        if self.selected_node_id is not None:
             self.node_id_to_copy = self.selected_node_id
 
     def paste(self, event):
-        if self.node_id_to_copy:
-            node_id = len(self.graph.nodes) + 1
+        if self.node_id_to_copy is not None:
+            self._id_abs += 1
+            node_id = self._id_abs
             node = self.graph.nodes[self.selected_node_id]
             name = node["name"] + str(node_id)
             pos = node["pos"]
-            should_check = node[" should_check_offset"]
+            should_check = node["should_check_offset"]
             self.graph.add_node(node_id, pos=(pos[0] + 40, pos[1] + 40), name=name, data=name,
                                 should_check_offset=should_check)
 
@@ -364,12 +365,10 @@ class GraphEditor:
         self.canvas.scale("all", 0, 0, self.scale_factor, self.scale_factor)
 
     def on_node_press(self, event):
-        node_id = self.find_node(event)
-        if node_id:
-            self.selected_node_id = node_id
+        node_id = self.selected_node_id
+        if node_id is not None:
             self.drag_data["x"] = event.x - self.graph.nodes[node_id]["pos"][0]
             self.drag_data["y"] = event.y - self.graph.nodes[node_id]["pos"][1]
-            self.update_inspector(node_id)
 
     def update_inspector(self, node_id=None, edge=None):
         self.name_entry.delete(0, tk.END)
@@ -412,7 +411,7 @@ class GraphEditor:
                         self.graph[source][target]['condition'] = 'default'
 
     def on_node_drag(self, event):
-        if self.selected_node_id:
+        if self.selected_node_id is not None:
             x = event.x - self.drag_data["x"]
             y = event.y - self.drag_data["y"]
             self.graph.nodes[self.selected_node_id]["pos"] = (x, y)
@@ -430,11 +429,11 @@ class GraphEditor:
 
     def on_node_right_click(self, event):
         node_id = self.find_node(event)
-        if node_id:
+        if node_id is not None:
             # Показать контекстное меню
             self.show_context_menu_node(event, node_id)
         u, v = self.find_edge(event)
-        if u:
+        if u is not None:
             self.show_context_menu_edge(event, u, v)
 
     def find_edge(self, event):

@@ -10,7 +10,7 @@ keywords = ['abstract', 'as', 'base', 'bool', 'break', 'byte', 'case', 'catch', 
             'sizeof', 'stackalloc', 'static', 'string', 'struct', 'switch', 'this', 'throw', 'true', 'try', 'typeof',
             'uint', 'ulong', 'unchecked', 'unsafe', 'ushort', 'using', 'virtual', 'void', 'volatile', 'while']
 
-punctuations = [';', ':', ',', '.', '(', ')', '[', ']', '{', '}', '?']
+punctuations = [';', ':', ',', '.', '(', ')', '[', ']', '{', '}', '?', '<', '>']
 
 operators = ['+', '-', '*', '/', '%', '=', '>>', '<<', '&', '&&', '|', '||', '!', '^', '>', '>=', '<', '<=', '==', '!=',
              '~', '+=', '-=', '/=', '*=', '%=', '++', '--']
@@ -59,10 +59,10 @@ class Token:
         """
         if self.value in keywords:
             return KindToken.keyword
-        if self.value in punctuations:
-            return KindToken.punctuation
         if self.value in operators:
             return KindToken.operator
+        if self.value in punctuations:
+            return KindToken.punctuation
         if '\'' in self.value or '"' in self.value or any(oper in self.value for oper in operators):
             return KindToken.literal
         if self.value.isspace() or self.value == r"\n" or self.value == r"\t":
@@ -101,6 +101,12 @@ class Tokenizer:
         self.next_char = ""
         self._tokenize()
 
+    def __str__(self):
+        return str([token.value for token in self.tokens])
+
+    def __repr__(self):
+        return self.__str__()
+
     def _tokenize(self):
         """
         Выполняет лексический анализ (токенеризацию) исходного кода.
@@ -109,7 +115,7 @@ class Tokenizer:
         while self.abs_index_char < len(self.rfile):
             self._update_data()
             # Token
-            if self.current_char.isalpha():
+            if self.current_char.isalpha() or self.current_char == "_":
                 token += self.current_char
                 continue
             elif token != '':
@@ -119,8 +125,8 @@ class Tokenizer:
 
             if (self._check_comments() or
                     self._check_white_spaces() or
-                    self._check_operators() or
                     self._check_punctuation() or
+                    self._check_operators() or
                     self._check_string_literal() or
                     self._check_integer_literal()):
                 continue
@@ -210,16 +216,26 @@ class Tokenizer:
         :return: True, если удалось прочесть и False в противном случае
         """
         if self.current_char in punctuations:
-            if self.current_char == '<' and self.next_char is not None and self.next_char == '<':
-                self.tokens.append(Token(self.index_char, self.index_line, '<<'))
-                self.abs_index_char += 1
-                self.index_char += 2
-                return True
-            elif self.current_char == '>' and self.next_char is not None and self.next_char == '>':
-                self.tokens.append(Token(self.index_char, self.index_line, '>>'))
-                self.abs_index_char += 1
-                self.index_char += 2
-                return True
+            if self.current_char == '<':
+                if self.next_char is not None and self.next_char == '<':
+                    self.tokens.append(Token(self.index_char, self.index_line, '<<'))
+                    self.abs_index_char += 1
+                    self.index_char += 2
+                    return True
+
+            elif self.current_char == '>':
+                if self._check_punctuation_angle_bracket(len(self.tokens) - 1):
+                    self.tokens.append(
+                        Token(self.index_char, self.index_line, self.current_char, KindToken.punctuation))
+                    self.index_char += 1
+                    return True
+                if self.next_char is not None and self.next_char == '>':
+                    self.tokens.append(Token(self.index_char, self.index_line, '>>'))
+                    self.abs_index_char += 1
+                    self.index_char += 2
+                    return True
+                return False
+
             else:
                 self.tokens.append(Token(self.index_char, self.index_line, self.current_char))
                 self.index_char += 1
@@ -280,13 +296,14 @@ class Tokenizer:
         :return: True, если удалось прочесть и False в противном случае
         """
         literal = quote
-        while True:
+        while self.abs_index_char < len(self.rfile):
             self.current_char = self.rfile[self.abs_index_char]
             if self.current_char == quote:
                 self.abs_index_char += 1
                 return literal + quote
             literal += self.current_char
             self.abs_index_char += 1
+        return literal
 
     def _get_integer_literal(self) -> str:
         """
@@ -294,7 +311,7 @@ class Tokenizer:
         :return: True, если удалось прочесть и False в противном случае
         """
         literal = self.rfile[self.abs_index_char - 1]
-        while True:
+        while self.abs_index_char < len(self.rfile):
             char = self.rfile[self.abs_index_char]  # type: str
             next_char = self.rfile.at(self.abs_index_char + 1)
             if char.isspace() or next_char is not None and char + next_char in backslash_character_literals:
@@ -305,6 +322,7 @@ class Tokenizer:
                 return literal
             literal += char
             self.abs_index_char += 1
+        return literal
 
     def print(self) -> str:
         """
@@ -321,6 +339,83 @@ class Tokenizer:
             else:
                 res += token.value
         return res
+
+    def _check_punctuation_angle_bracket(self, start_index_token: int) -> bool:
+        """
+        Осуществляет проверку, для токена >. Суть заключается в том, что < парсится как оператор, а когда токенайзер
+        встречает >, то запускается проверка, которая при удачном исходе изменяет тип < и возвращает индекс токена <
+        :param start_index_token: Функция может вызываться рекурсивно, для вложенных generic типов.
+        С этого токена начинается проверка на <
+        :return: True если пунктуация, и False если оператор
+        """
+        index_token = start_index_token
+        token = self.tokens[start_index_token]  # type: Token
+        while token is not None and token.value != ";":
+            if token.value == "<" and token.kind != KindToken.punctuation:
+                index_first_not_whitespace_token_back = self._get_index_first_not_whitespace_token_back(index_token - 1)
+                back_token = self.tokens[index_first_not_whitespace_token_back]
+                if back_token.value == ",":
+                    token.kind = KindToken.punctuation
+                    return True
+                if back_token.kind == KindToken.identifier:
+                    next_token = self._get_next_not_space_token_value(self.abs_index_char - 1)
+                    if next_token.kind == KindToken.identifier:
+                        return False
+                    else:
+                        token.kind = KindToken.punctuation
+                        return True
+
+                return False
+
+            if token.value == ">" and token.kind != KindToken.punctuation:
+                if self._check_punctuation_angle_bracket(index_token - 1):
+                    token.kind = KindToken.punctuation
+
+            if token.kind == KindToken.operator:
+                return None
+
+            index_token -= 1
+            token = self.tokens.at(index_token)
+
+    def _get_index_first_not_whitespace_token_back(self, start_index_token: int) -> int | None:
+        """
+        Возвращает индекс первого не пробельного токена в списке существующих токенов
+        :param start_index_token: индекс токена, с которого начинается поиск
+        :return: индекс токена или None, если не нашел
+        """
+        index = start_index_token
+        token = self.tokens[start_index_token]
+        while index >= 0:
+            if token.kind != KindToken.whiteSpace:
+                return index
+            index -= 1
+            token = self.tokens[index]
+        return None
+
+    def _get_next_not_space_token_value(self, start_index: int) -> Token | None:
+        """
+        Получает первый не пробельный токен, начиная поиск с индекса start_index
+        :param start_index: абсолютный индекс символа, с которого начинается поиск.
+        :return: Возвращает токен или None, если не удалось найти.
+        """
+        token = ""
+        index = start_index + 1
+        while index < len(self.rfile):
+            current_char = self.rfile[index]
+            if current_char == " ":
+                index += 1
+                continue
+            if current_char == "\\" and (self.rfile[index + 1] == "n" or self.rfile[index + 1] == "t"):
+                index += 2
+                continue
+            if current_char.isalpha() or current_char == "_":
+                token += current_char
+                index += 1
+                continue
+            elif token != '':
+                return Token(start_index, self.index_line, token)
+            return Token(index, self.index_line, current_char)
+        return None
 
 
 if __name__ == "__main__":

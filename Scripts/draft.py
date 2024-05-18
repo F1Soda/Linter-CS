@@ -1,17 +1,9 @@
-import networkx as nx
+class MyError(Exception):
+    def __init__(self, message):
+        self.message = message
 
-# Создаем направленный граф
-G = nx.DiGraph()
+    def __str__(self):
+        return self.message
 
-# Добавляем узлы
-G.add_node(1)
-G.add_node(2)
 
-# Добавляем ребра с условиями
-G.add_edge(1, 2, condition=True)
-
-# Выводим данные ребер
-print(G.edges(data=True))
-
-# Выводим атрибуты ребра между вершинами 1 и 2
-print(G.get_edge_data(1, 2))
+raise MyError("Error message")
