@@ -32,8 +32,8 @@ graph [
     label "3"
     pos 258
     pos 273
-    name "var"
-    data "var"
+    name "type"
+    data "type"
     should_check_offset "default"
   ]
   node [

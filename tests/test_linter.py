@@ -8,7 +8,7 @@ sys.path.append(parent_dir + '/Scripts')
 
 from Scripts.Linter import Linter
 from Scripts.Settings import Settings
-
+from Scripts.exceptions import ErrorInLinterTest
 
 def get_link_to_file(file=None, line=None):
     """ Print a link in PyCharm to a line in file. Defaults to line where this function was called. """
@@ -22,6 +22,15 @@ class TestCleanFiles(unittest.TestCase):
     def test_clean_code_1(self):
         self.check_clean_by_filename("test_clean_1.cs")
 
+    def test_clean_code_2_method_1(self):
+        self.check_clean_by_filename("test_clean_2_method_1.cs")
+
+    def test_clean_code_2_method_2(self):
+        self.check_clean_by_filename("test_clean_2_method_2.cs")
+
+    def test_clean_code_2_method_3(self):
+        self.check_clean_by_filename("test_clean_2_method_3.cs")
+
     def test_clean_code_2(self):
         self.check_clean_by_filename("test_clean_2.cs")
 
@@ -34,8 +43,8 @@ class TestCleanFiles(unittest.TestCase):
         linter = Linter(Settings([]))
         try:
             linter.analyze_file(path)
-        except Exception:
-            self.fail(f"Was error in work linter. Filename: {get_link_to_file(directory.replace("\\", "/"), 1)}")
+        except Exception as e:
+            raise ErrorInLinterTest(get_link_to_file(directory.replace("\\", "/"), 1)) from e
         else:
             msg = f"\n" + "-" * 30 + " FAILED " + "-" * 30 + "\n\nCSharp file: "
             msg += f"{get_link_to_file(directory.replace("\\", "/"), 1)}\n"
@@ -74,14 +83,17 @@ class BaseFunctionalNoMistakes(unittest.TestCase):
     def test_switch_case(self):
         self.check_clean_by_filename("switch_case.cs")
 
+    def test_new(self):
+        self.check_clean_by_filename("new.cs")
+
     def check_clean_by_filename(self, filename):
         directory = directory_of_tests + f"\\Main\\Clean\\{filename}"
         path = os.path.join(directory, directory)
         linter = Linter(Settings([]))
         try:
             linter.analyze_file(path)
-        except Exception:
-            self.fail(f"Was error in work linter. Filename: {get_link_to_file(directory.replace("\\", "/"), 1)}")
+        except Exception as e:
+            raise ErrorInLinterTest(get_link_to_file(directory.replace("\\", "/"), 1)) from e
         else:
             msg = f"\n" + "-" * 30 + " FAILED " + "-" * 30 + "\n\nCSharp file: "
             msg += f"{get_link_to_file(directory.replace("\\", "/"), 1)}\n"

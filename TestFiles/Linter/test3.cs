@@ -1,1 +1,1 @@
-Console.WriteLine ("Цикл завершен.");
+var student = new { Name = "Александр", Age = new List<int> { 25, 25, 25, 25 } };

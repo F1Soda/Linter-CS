@@ -1,55 +1,59 @@
 using System;
+using System.Numerics;
 
-namespace AnotherExample
+namespace Tickets;
+
+class TicketsTask
 {
-	class Program
+	public static BigInteger Solve(int halfLen, int totalSum)
 	{
-		static void Main()
+		if (totalSum % 2 != 0 || totalSum > halfLen * 18)
+			return 0;
+
+		var halfSum = totalSum / 2;
+		var opt = MakeTable(halfLen, halfSum);
+
+		return BigInteger.Pow(opt[halfLen, halfSum], 2);
+	}
+
+	private static BigInteger[,] MakeTable(int halfLen, int halfSum)
+	{
+		var opt = new BigInteger[halfLen + 1, halfSum + 1];
+
+		PrepareOpt(opt, halfLen, halfSum);
+
+		for (var i = 2; i <= halfLen; ++i)
 		{
-			int x = 10;
-			int y = 5;
-
-			if (x > y)
+			for (var j = 1; j <= halfSum; ++j)
 			{
-				Console.WriteLine("x больше y");
-			}
-			else
-			{
-				Console.WriteLine("x меньше или равно y");
-			}
-
-			for (int i = 0; i < x; i++)
-			{
-				if (i % 2 == 0)
+				var sum = BigInteger.Zero;
+				for (int k = 0; k < 10; k++)
 				{
-					Console.WriteLine($"Число {i} - четное");
+					if (k <= j)
+						sum += opt[i - 1, j - k];
+					else
+						break;
 				}
-				else
-				{
-					Console.WriteLine($"Число {i} - нечетное");
-				}
+
+				opt[i, j] = sum;
 			}
-
-			int result = AddNumbers(x, y);
-			Console.WriteLine($"Сумма чисел x и y: {result}");
-
-			string s = "Пример строки";
-			Console.WriteLine($"Длина строки: {s.Length}");
-
-			PrintMessage();
-
-			var student = new { Name = "Александр", Age = 25 };
-			Console.WriteLine($"Студент: {student.Name}, возраст {student.Age}");
 		}
 
-		static int AddNumbers(int a, int b)
+		return opt;
+	}
+
+	private static void PrepareOpt(BigInteger[,] opt, int halfLen, int halfSum)
+	{
+		for (var i = 0; i <= halfLen; ++i)
+			opt[i, 0] = 1;
+
+		for (var i = 0; i <= halfSum; ++i)
 		{
-			return a + b;
+			if (i >= 10)
+				break;
+			opt[1, i] = 1;
 		}
 
-		static void PrintMessage()
-		{
-			Console.WriteLine("Привет, мир!");
-		}
+		opt[0, 0] = 0;
 	}
 }

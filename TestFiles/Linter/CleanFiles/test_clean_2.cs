@@ -7,15 +7,15 @@ namespace DiskTree
 	public class Node
 	{
 		public string Name;
-		public Node Children = node;
+		public List<Node> Children = new List<Node>();
 	}
 
 	public class DiskTreeTask
 	{
-		public static string Solve(string input)
+		public static List<string> Solve(List<string> input)
 		{
-			var root = new Node;
-			var nodes = new Dictionary();
+			var root = new Node { Name = "" };
+			var nodes = new Dictionary<string, Node>();
 
 			foreach (var path in input)
 			{
@@ -26,7 +26,7 @@ namespace DiskTree
 			return x;
 		}
 
-		private static void ProcessPath(string path, Node root, Dictionary nodes)
+		private static void ProcessPath(string path, Node root, Dictionary<string, Node> nodes)
 		{
 			var parts = path.Split('\\');
 			var currentNode = root;
@@ -37,7 +37,6 @@ namespace DiskTree
 				currentPath += part + '\\';
 				if (!nodes.TryGetValue(currentPath, out var node))
 				{
-					node = new Node;
 					currentNode.Children.Add(node);
 					nodes[currentPath] = node;
 				}
@@ -46,9 +45,9 @@ namespace DiskTree
 			}
 		}
 
-		private static string PrintTree(Node node, int level, Node root)
+		private static List<string> PrintTree(Node node, int level, Node root)
 		{
-			var result = new string();
+			var result = new List<string>();
 
 			if (node.Name != "" && node != root)
 				result.Add(new string(' ', level) + node.Name);
