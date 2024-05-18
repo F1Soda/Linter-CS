@@ -1,4 +1,1 @@
-public MyClass(int value)
-{
-	Value = value;
-}
+var root = new Node;

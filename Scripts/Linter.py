@@ -11,7 +11,7 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'data/.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/Main/Clean/switch_case.cs'
+cs_file_path = r'TestFiles/Linter/Main/WithMistakes/for.cs'
 modifiers = [['public', 'private', 'protected', 'internal', 'protected internal', 'private protected', 'file'],
              ['abstract', 'virtual'],
              ['static'], ['sealed'], ['override'], ['new'], ['extern'], ['unsafe'], ['readonly'], ['volatile']]
@@ -326,7 +326,6 @@ class Linter:
         :param graph: граф для сравнения правил и кода
         :return:
         """
-
         index_node = 0
         for index_start_node in self._get_start_nodes(graph):
             if self.tokens[self.index_token].value == graph.nodes[index_start_node]["data"]:
@@ -435,7 +434,9 @@ class Linter:
                                                                       called_from="_check_expression"))
 
             # Проверка на исключения, которые не обрабатывает conditions_for_space
-            if (self.tokens[self.index_token - 1].value == "." and self.tokens[self.index_token].value.isspace() or
+            if (self.tokens[self.index_token - 1].kind == KindToken.identifier and self.tokens[self.index_token].value.isspace()
+                and self.tokens[self.index_token].value == "(" or
+                self.tokens[self.index_token - 1].value == "." and self.tokens[self.index_token].value.isspace() or
                 self.tokens[self.index_token].value.isspace() and self.tokens[self.index_token + 1].value == '.' or
                 self.tokens[self.index_token].value.isspace() and (self.tokens[self.index_token + 1].value == '++' or
                                                                  self.tokens[self.index_token + 1].value == '--')):
@@ -455,6 +456,11 @@ class Linter:
             self.index_token += 1
             token = self.tokens[self.index_token]
             symbol_index += 1
+            if token.value == "(":
+                self._check_expression(conditionals=')')
+                self.index_token += 1
+                token = self.tokens[self.index_token]
+
             # Проверка на пробел в конце
             value = token.value
             if (value == ":" or value == ")" or value == ";") and self.tokens[self.index_token - 1].value.isspace():
@@ -473,9 +479,11 @@ class Linter:
             current_kind = current_token.kind
             next_kind = next_token.kind
 
-            if (current_kind == KindToken.operator and next_kind == KindToken.identifier) or \
+            if (current_kind == KindToken.operator and next_kind == KindToken.identifier
+                    and current_token.value != "!") or \
                     (current_kind == KindToken.operator and next_kind == KindToken.keyword) or \
                     (current_kind == KindToken.keyword and next_kind == KindToken.operator) or \
+                    (current_token.value == "]" and next_kind == KindToken.operator) or \
                     (current_kind == KindToken.identifier and next_kind == KindToken.operator and
                      (next_token.value != "++" and next_token.value != "--")) or \
                     (current_kind == KindToken.literal and next_kind == KindToken.operator) or \
@@ -489,9 +497,6 @@ class Linter:
         вызова функции, её объявления или просто строки
         :return:
         """
-        # TODO: Кажется conditionals нужно убрать из _check_line
-        if conditionals is None:
-            conditionals = []
 
         token = self.tokens[self.index_token]  # type: Token
 
@@ -521,6 +526,15 @@ class Linter:
             if self.conditions_for_space():
                 self.mismatches.append(
                     self._create_mismatch_by_token(token, "White Space", called_from="_check_line"))
+
+            if ((self.tokens[self.index_token - 1].kind == KindToken.identifier and self.tokens[self.index_token].value.isspace()
+                and self.tokens[self.index_token + 1].value == "(") or
+                self.tokens[self.index_token - 1].value == "." and self.tokens[self.index_token].value.isspace() or
+                self.tokens[self.index_token].value.isspace() and self.tokens[self.index_token + 1].value == '.' or
+                self.tokens[self.index_token].value.isspace() and (self.tokens[self.index_token + 1].value == '++' or
+                                                                 self.tokens[self.index_token + 1].value == '--')):
+                self.mismatches.append(self._create_mismatch_by_token(token, "Not white Space",
+                                                                      called_from="_check_expression"))
 
             if token.value.isspace() or token.value == "\\t":
                 count_spaces += 1
