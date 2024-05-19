@@ -67,3 +67,10 @@ class TestTokenizer(unittest.TestCase):
         self.assertEqual(KindToken.punctuation, tokenizer.tokens[11].kind)
         self.assertEqual(KindToken.operator, tokenizer.tokens[17].kind)
         self.assertEqual(KindToken.operator, tokenizer.tokens[24].kind)
+
+        line = "private static List<string> PrintTree()"
+        tokenizer = Tokenizer(CustomList(repr(line)[1:-1]))
+        self.assertEqual(KindToken.punctuation, tokenizer.tokens[9].kind)
+        self.assertEqual(KindToken.punctuation, tokenizer.tokens[11].kind)
+        self.assertEqual(KindToken.operator, tokenizer.tokens[17].kind)
+        self.assertEqual(KindToken.operator, tokenizer.tokens[24].kind)

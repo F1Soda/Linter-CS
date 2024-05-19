@@ -120,7 +120,7 @@ class Linter:
 
     def _check_initialization(self):
         """
-        Проверяет, что происходит инициализация объекта. В случае если инициализации нету, то ничего не делает
+        Проверяет, что происходит инициализация объекта. В случае если инициализации нет, то ничего не делает
         """
         first_next_not_whitespace_index = self.first_next_not_whitespace_index()
         token = self.tokens[first_next_not_whitespace_index]
@@ -128,7 +128,7 @@ class Linter:
             self._add_mismatches_in_range(first_next_not_whitespace_index, "not white space")
             self.index_token = first_next_not_whitespace_index
             return
-        if token.kind == KindToken.identifier:
+        if token.kind == KindToken.identifier or token.kind == KindToken.keyword:
             return
         self._check_order_token_by_array(order_tokens=["{", " "])
         token = self.tokens[self.index_token]
@@ -334,7 +334,7 @@ class Linter:
         """
         Проверяет, что если есть пустая строчка, то она должна быть пустой 
         Пример :
-        \t\t  \t\n -- выдасть ошибку
+        \t\t \t\n -- выдать ошибку
         \n -- то что надо
         :return: 
         """
@@ -463,6 +463,12 @@ class Linter:
                     raise exceptions.NodeInGraphNotFound(token_to_check, graph_name=self._define_name_of_graph(graph))
 
     def _check_token_by_value(self, value: str, should_check_offset) -> bool:
+        """
+        Проверяет токен, на который указывает указатель index_token.
+        :param value: Значение для сравнения
+        :param should_check_offset: Флаг, которой задается в GraphCreator.
+        :return: True, если значение токена совпало с value, False в противном случае
+        """
         token_to_check = self.tokens[self.index_token]
         if token_to_check.value == value:
             checked = False
@@ -478,6 +484,11 @@ class Linter:
         return False
 
     def _define_name_of_graph(self, graph: nx.DiGraph) -> str:
+        """
+        Определяет имя графа по переданному graph: nx.DiGraph
+        :param graph: Граф.
+        :return: Имя графа
+        """
         for key, item in self.graphs.items():
             if item == graph:
                 return key
@@ -489,10 +500,8 @@ class Linter:
         Пока правило одно: больше двух пробелов между токенами быть не может,
         устанавливает метку на первый токен из conditionals
         Указатель должен быть на выражение, а не на скобки!
-        :param conditionals: условие для остановки работы метода
-        :return:
+        :param conditionals: Условие для остановки работы метода
         """
-
         token = self.tokens[self.index_token]  # type: Token
         count_spaces = 0
         symbol_index = 0
@@ -684,7 +693,7 @@ class Linter:
 
     def _check_offset(self):
         """
-        Проверяет количество отступов в строчке. Для выбора отсупа, нужно установить флаг UseTabs в самом линтере
+        Проверяет количество отступов в строчке. Для выбора отступа, нужно установить флаг UseTabs в самом линтере
         """
 
         count_tabs = 0
@@ -789,7 +798,7 @@ class Linter:
         """
         Возвращает индекс первого токена не пробельного типа впереди указателя.
         Не меняет текущий указатель. 
-        :return: индекс первого не пробельного типа впереди указателя
+        :return: Индекс первого не пробельного типа впереди указателя
         """
         index = self.index_token
         while index < len(self.tokens):
