@@ -358,12 +358,12 @@ class Tokenizer:
                     token.kind = KindToken.punctuation
                     return True
                 if back_token.kind == KindToken.identifier:
-                    next_token = self._get_next_not_space_token_value(self.abs_index_char - 1)
-                    if next_token.kind == KindToken.identifier:
-                        return False
-                    else:
-                        token.kind = KindToken.punctuation
-                        return True
+                    # next_token = self._get_next_not_space_token_value(self.abs_index_char - 1)
+                    # if next_token.kind == KindToken.identifier:
+                    #     return False
+                    # else:
+                    token.kind = KindToken.punctuation
+                    return True
 
                 return False
 

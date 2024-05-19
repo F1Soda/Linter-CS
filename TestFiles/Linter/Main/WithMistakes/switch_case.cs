@@ -1,18 +1,20 @@
 int number = 3;
 string message;
 
-switch (number)
+switch(number)
 {
-	case 1:
+		case 1:
 		message = "Число равно 1";
-		break;
+	break;
 	case 2:
+
 		message = "Число равно 2";
 		break;
-	case 3:
+	case 	3:
 		message = "Число равно 3";
 		break;
-	default:
+	default
+	:
 		message = "Число не равно 1, 2 или 3";
 		break;
 }

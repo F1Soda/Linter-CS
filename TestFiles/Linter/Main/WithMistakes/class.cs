@@ -2,7 +2,7 @@ using System;
 
 public class MyClass
 {
-	public MyClass(int value)
+		public  MyClass(int value)
 	{
 		Value = value;
 	}
@@ -21,9 +21,9 @@ class Program
 
 		do
 		{
-			myObject.DisplayValue();
-			myObject.Value++;
-		} while (myObject.Value < 5);
+			myObject.DisplayValue() ;
+			myObject.Value ++;
+		} while (myObject. Value < 5);
 
 		Console.WriteLine("Цикл завершен.");
 	}

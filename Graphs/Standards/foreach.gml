@@ -30,10 +30,10 @@ graph [
   node [
     id 3
     label "3"
-    pos 258
-    pos 273
-    name "var"
-    data "var"
+    pos 253
+    pos 276
+    name "type"
+    data "type"
     should_check_offset "default"
   ]
   node [
@@ -86,8 +86,8 @@ graph [
     label "9"
     pos 608
     pos 272
-    name "identifier"
-    data "identifier"
+    name "expression_)"
+    data "expression_)"
     should_check_offset "default"
   ]
   node [

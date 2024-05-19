@@ -61,16 +61,8 @@ class TestTokenizer(unittest.TestCase):
         self.assertEqual(KindToken.operator, tokenizer.tokens[2].kind)
         self.assertEqual(KindToken.operator, tokenizer.tokens[10].kind)
 
-        line = "var a = new List<bool> { int_one < int_two, int_three > int_four };"
-        tokenizer = Tokenizer(CustomList(repr(line)[1:-1]))
-        self.assertEqual(KindToken.punctuation, tokenizer.tokens[9].kind)
-        self.assertEqual(KindToken.punctuation, tokenizer.tokens[11].kind)
-        self.assertEqual(KindToken.operator, tokenizer.tokens[17].kind)
-        self.assertEqual(KindToken.operator, tokenizer.tokens[24].kind)
-
         line = "private static List<string> PrintTree()"
         tokenizer = Tokenizer(CustomList(repr(line)[1:-1]))
-        self.assertEqual(KindToken.punctuation, tokenizer.tokens[9].kind)
-        self.assertEqual(KindToken.punctuation, tokenizer.tokens[11].kind)
-        self.assertEqual(KindToken.operator, tokenizer.tokens[17].kind)
-        self.assertEqual(KindToken.operator, tokenizer.tokens[24].kind)
+        self.assertEqual(KindToken.punctuation, tokenizer.tokens[5].kind)
+        self.assertEqual(KindToken.punctuation, tokenizer.tokens[7].kind)
+

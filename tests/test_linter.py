@@ -22,6 +22,15 @@ class TestCleanFiles(unittest.TestCase):
     def test_clean_code_1(self):
         self.check_clean_by_filename("test_clean_1.cs")
 
+    def test_clean_code_2_method_1(self):
+        self.check_clean_by_filename("test_clean_2_method_1.cs")
+
+    def test_clean_code_2_method_2(self):
+        self.check_clean_by_filename("test_clean_2_method_2.cs")
+
+    def test_clean_code_2_method_3(self):
+        self.check_clean_by_filename("test_clean_2_method_3.cs")
+
     def test_clean_code_2(self):
         self.check_clean_by_filename("test_clean_2.cs")
 
@@ -59,7 +68,6 @@ class BaseFunctionalNoMistakes(unittest.TestCase):
     def test_for(self):
         self.check_clean_by_filename("for.cs")
 
-    # вары
     def test_foreach(self):
         self.check_clean_by_filename("foreach.cs")
 
@@ -78,6 +86,9 @@ class BaseFunctionalNoMistakes(unittest.TestCase):
     def test_new(self):
         self.check_clean_by_filename("new.cs")
 
+    def test_get_set(self):
+        self.check_clean_by_filename("get_set.cs")
+
     def check_clean_by_filename(self, filename):
         directory = directory_of_tests + f"\\Main\\Clean\\{filename}"
         path = os.path.join(directory, directory)
@@ -94,5 +105,53 @@ class BaseFunctionalNoMistakes(unittest.TestCase):
                 msg += str(mismatch) + "\n"
             msg += "-" * 70 + "\n\n"
             self.assertEqual(0, len(linter.mismatches), msg)
+        finally:
+            linter.mismatches = []
+
+class BaseFunctionalWithMistakes(unittest.TestCase):
+
+    def test_while(self):
+        self.check_clean_by_filename("while.cs")
+
+    def test_do_while(self):
+        self.check_clean_by_filename("do_while.cs")
+
+    def test_for(self):
+        self.check_clean_by_filename("for.cs")
+
+    def test_foreach(self):
+        self.check_clean_by_filename("foreach.cs")
+
+    def test_if_else(self):
+        self.check_clean_by_filename("if_else.cs")
+
+    def test_namespace(self):
+        self.check_clean_by_filename("namespace.cs")
+
+    def test_class(self):
+        self.check_clean_by_filename("class.cs")
+
+    def test_switch_case(self):
+        self.check_clean_by_filename("switch_case.cs")
+
+    def test_get_set(self):
+        self.check_clean_by_filename("get_set.cs")
+
+    def check_clean_by_filename(self, filename):
+        directory = directory_of_tests + f"\\Main\\WithMistakes\\{filename}"
+        path = os.path.join(directory, directory)
+        linter = Linter(Settings([]))
+        try:
+            linter.analyze_file(path)
+        except Exception:
+            self.fail(f"Was error in work linter. Filename: {get_link_to_file(directory.replace("\\", "/"), 1)}")
+        else:
+            msg = f"\n" + "-" * 30 + " FAILED " + "-" * 30 + "\n\nCSharp file: "
+            msg += f"{get_link_to_file(directory.replace("\\", "/"), 1)}\n"
+            msg += f"Mismatches :\n"
+            for mismatch in linter.mismatches:
+                msg += str(mismatch) + "\n"
+            msg += "-" * 70 + "\n\n"
+            self.assertEqual(5, len(linter.mismatches), msg)
         finally:
             linter.mismatches = []

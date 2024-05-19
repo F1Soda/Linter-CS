@@ -1,6 +1,6 @@
 int num = 0;
 
-while (num < 5)
+while(num < 5)
 {
 	Console.WriteLine("Текущее значение числа: " + num);
 	num++;
@@ -8,8 +8,13 @@ while (num < 5)
 
 
 while (true)
-	Console.WriteLine("Цикл завершен.");
+	while (false)
+	{
+		Console.WriteLine("Текущее значение числа: " + num);
+				while (num< 5)
+		{
+			Console.WriteLine("Текущее значение числа: " + num);
+			num++;
+			}
+	}
 
-while (false)
-{
-}

@@ -1,19 +1,24 @@
-using System.Linq;
-
-namespace _123ver2;
-
-static class Program
+public T Value
 {
-	// one line comment
-	static void Main()
+	get;
+}
+public Node Left
+{
+	get;
+	set;
+}
+
+public Node Left
+{
+	get;
+	set;
+}
+
+public Node Left
+{
+	get
 	{
-		/*
-		multiline
-		comment
-		*/
-		Console.WriteLine("Useless Code!");
-		var a = 1;
-		if (true)
-			a = 1;
+		doSome();
 	}
+	set;
 }

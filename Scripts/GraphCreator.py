@@ -400,7 +400,8 @@ class GraphEditor:
             try:
                 condition = self.graph[edge[0]][edge[1]]['condition']
                 self.conditional_combo.insert(0, condition)
-                self.info_edge_label.config(text=f"'{self.graph.nodes[edge[0]]["name"]}' → '{self.graph.nodes[edge[1]]["name"]}'")
+                self.info_edge_label.config(text=f"'{self.graph.nodes[edge[0]]['name']}' → '{self.graph.nodes[edge[1]]['name']}'")
+
             except Exception:
                 response = messagebox.askyesnocancel("Предупреждение",
                                                      f"Возможно в графе не установлены некоторые параметры(condition). Установить их к стандартному значению?")

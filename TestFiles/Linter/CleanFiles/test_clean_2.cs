@@ -1,57 +1,66 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace KeywordsExample
+namespace DiskTree
 {
-	class Program
+	public class Node
 	{
-		static void Main()
+		public string Name;
+		public List<Node> Children = new List<Node>();
+	}
+
+	public class DiskTreeTask
+	{
+		public static List<string> Solve(List<string> input)
 		{
-			int a = 10;
-			int b = 20;
+			var root = new Node { Name = "" };
+			var nodes = new Dictionary<string, Node>();
 
-			if (a + b > 15)
+			foreach (var path in input)
 			{
-				Console.WriteLine(@"Результат больше 15!");
-			}
-			else
-			{
-				Console.WriteLine(@"Результат меньше или равен 15.");
+				ProcessPath(path, root, nodes);
 			}
 
-			for (int i = 0; i < 5; i++)
+			var x = PrintTree(root, 0, root);
+			return x;
+		}
+
+		private static void ProcessPath(string path, Node root, Dictionary<string, Node> nodes)
+		{
+			var parts = path.Split('\\');
+			var currentNode = root;
+			var currentPath = "";
+
+			foreach (var part in parts)
 			{
-				Console.WriteLine($@"Цикл #{i + 1}");
+				currentPath += part + '\\';
+				if (!nodes.TryGetValue(currentPath, out var node))
+				{
+					currentNode.Children.Add(node);
+					nodes[currentPath] = node;
+				}
+
+				currentNode = node;
+			}
+		}
+
+		private static List<string> PrintTree(Node node, int level, Node root)
+		{
+			var result = new List<string>();
+
+			if (node.Name != "" && node != root)
+				result.Add(new string(' ', level) + node.Name);
+
+			foreach (var child in node.Children.OrderBy(n => n.Name, StringComparer.Ordinal))
+			{
+				var nextLevel = level + 1;
+				if (node == root)
+					nextLevel = 0;
+				result.AddRange(PrintTree(child, nextLevel, root));
 			}
 
-			string[] fruits = { "яблоко", "груша", "банан" };
-			foreach (string fruit in fruits)
-			{
-				Console.WriteLine($@"Фрукт: {fruit}");
-			}
-
-			switch (a)
-			{
-				case 10:
-					Console.WriteLine(@"a равно 10");
-					break;
-				default:
-					Console.WriteLine(@"a не равно 10");
-					break;
-			}
-
-			while (b > 15)
-			{
-				b--;
-			}
-
-			do
-			{
-				b++;
-			}
-			while (b < 20);
-
-			var obj = new { Name = "John", Age = 30 };
-			Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+			return result;
 		}
 	}
 }
