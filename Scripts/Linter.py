@@ -12,7 +12,7 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'data/.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/ERRORS/E7.cs'
+cs_file_path = r'TestFiles/Linter/ERRORS/E2.cs'
 modifiers = [['public', 'private', 'protected', 'internal', 'protected internal', 'private protected', 'file'],
              ['abstract', 'virtual'],
              ['static'], ['sealed'], ['override'], ['new'], ['extern'], ['unsafe'], ['readonly'], ['volatile']]
@@ -530,6 +530,7 @@ class Linter:
         count_spaces = 0
         symbol_index = 0
         enter_count = 0
+        was_enter = False
         while not (token.value in conditionals):
             if token.value == "{":
                 self._check_initialization()
@@ -543,7 +544,7 @@ class Linter:
                 continue
 
             # Проверка на пробел в начале
-            if symbol_index == 0 and token.kind == KindToken.whiteSpace:
+            if symbol_index == 0 and token.kind == KindToken.whiteSpace and token.value != "\\t":
                 if token.value == " ":
                     if not skip_first_white_space:
                         self.mismatches.append(self._create_mismatch_by_token(token, "Not white Space",
@@ -559,15 +560,21 @@ class Linter:
             # Проверка на исключения, которые не обрабатывает conditions_for_space
             self._check_exceptions(skip_first_white_space)
 
-            if token.value.isspace() or token.value == "\\t":
+            if token.value.isspace():
                 count_spaces += 1
             elif token.value == "\\n":
+                was_enter = True
                 enter_count += 1
                 if enter_count == 1:
                     self._increment("current_offset", self.current_offset)
                 if not self._check_correct_enter():
+                    if enter_count == 1:
+                        self._decrement("current_offset", self.current_offset)
                     self.mismatches.append(self._create_mismatch_by_token(token, "Not New Line",
                                                                           called_from="_check_expression"))
+            elif token.value == "\\t":
+                self.mismatches.append(self._create_mismatch_by_token(token, "Not tab",
+                                                                      called_from="_check_expression"))
             else:
                 count_spaces = 0
             if count_spaces > 1:
@@ -579,6 +586,13 @@ class Linter:
 
             if token.value in conditionals and enter_count != 0:
                 self._decrement("current_offset", self.current_offset)
+
+            if token.value not in ["\\n", '\\t']:
+                was_enter = False
+
+            if token.value == "\\t" and was_enter:
+                self._check_offset()
+                token = self.tokens[self.index_token]
 
             if token.value == "(":
                 self.index_token += 1
@@ -690,7 +704,6 @@ class Linter:
         was_attribute = False
         open_square_bracket_id = -1
         while token.value != ";":
-
             if token.value == "{":
                 first_n_tokens = [x.value for x in self._get_first_n_not_white_space_tokens(4)]
                 if "get" in first_n_tokens or "set" in first_n_tokens:
@@ -736,10 +749,17 @@ class Linter:
 
             self._check_exceptions(skip_first_white_space = None)
 
-            if token.value.isspace() or token.value == "\\t":
+
+
+            if token.value.isspace():
                 count_spaces += 1
             elif token.value == "\\n" and not was_class and not was_attribute:
+                count_spaces = 0
                 self.mismatches.append(self._create_mismatch_by_token(token, "Not New Line", called_from="_check_line"))
+            elif token.value == "\\t":
+                self.mismatches.append(self._create_mismatch_by_token(token, "Not tab",
+                                                                      called_from="_check_line"))
+                count_spaces = 0
             else:
                 count_spaces = 0
             if count_spaces > 1:
@@ -752,6 +772,10 @@ class Linter:
             if token is None:
                 return
 
+            if token.value == "\\t" and self.tokens[self.index_token - 1].value == "\\n":
+                self._check_offset()
+                token = self.tokens.at(self.index_token)
+
             if token.value == "{" and was_equal:
                 self._check_initialization()
                 token = self.tokens[self.index_token]
@@ -759,6 +783,7 @@ class Linter:
             if token.value == "(":
                 self.index_token += 1
                 self._check_expression(")")
+                count_spaces = 0
                 self.index_token += 1
                 token = self.tokens[self.index_token]
                 index_first_not_whitespace_token = self.first_next_not_whitespace_index()
