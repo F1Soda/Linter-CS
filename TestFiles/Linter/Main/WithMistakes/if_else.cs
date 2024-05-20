@@ -8,7 +8,7 @@ else
 Console.WriteLine(result);
 
 if (true)
-		if (false)
+	if (false)
 	{
 	if (true)
 			Write();
