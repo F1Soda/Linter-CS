@@ -12,7 +12,7 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'data/.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/ERRORS/E7.cs'
+cs_file_path = r'TestFiles/Linter/Program.cs'
 modifiers = [['public', 'private', 'protected', 'internal', 'protected internal', 'private protected', 'file'],
              ['abstract', 'virtual'],
              ['static'], ['sealed'], ['override'], ['new'], ['extern'], ['unsafe'], ['readonly'], ['volatile']]
@@ -121,6 +121,7 @@ class Linter:
             "initialization": lambda: self._check_initialization()
         }
 
+
     def _check_type(self):
         token = self.tokens[self.index_token]
         while token.kind == KindToken.whiteSpace:
@@ -141,10 +142,15 @@ class Linter:
         if token.value == ";":
             self._add_mismatches_in_range(first_next_not_whitespace_index, "not white space")
             self.index_token = first_next_not_whitespace_index
-            return
+            return False
         if token.kind == KindToken.identifier or token.kind == KindToken.keyword:
-            return
-        self._check_order_token_by_array(order_tokens=["{", " "])
+            return False
+        current_token = self.tokens[self.index_token-1]
+        order_tokens = []
+        if current_token.kind == KindToken.identifier:
+            order_tokens = [" "]
+        order_tokens += ["{", " "]
+        self._check_order_token_by_array(order_tokens=order_tokens)
         token = self.tokens[self.index_token]
         while token.value != "}":
             self._check_expression(["}"])
@@ -153,6 +159,7 @@ class Linter:
                 break
             self.index_token += 1
         self.index_token += 1
+        return True
 
     def _check_order_token_by_array(self, order_tokens):
         """
@@ -302,6 +309,15 @@ class Linter:
             if token.value in conditionals:
                 return
 
+            graph = self._try_find_graph(token)
+            if graph:
+                self.check_tokens_by_graph(graph)
+                found = True
+                self.index_token += 1
+                token = self.tokens.at(self.index_token)
+                if token is None:
+                    return
+
             # Проверка на модификаторы
             if any(token.value in modifier_list for modifier_list in modifiers):
                 self.check_modifiers()
@@ -310,11 +326,7 @@ class Linter:
             else:
                 self.prev_modifier_id = -1
 
-            graph = self._try_find_graph(token)
-            if graph:
-                self.check_tokens_by_graph(graph)
-                found = True
-                self.index_token += 1
+
 
             if not found:
                 self._check_line()
@@ -440,16 +452,21 @@ class Linter:
 
         next_nodes = [index_node]
         data_to_compair = graph.nodes[index_node]["data"]
+        past_node = index_node
         while next_nodes and len(next_nodes) > 0:
             found = False
             token_to_check = self.tokens[self.index_token]
+            is_last_node = True
             for next_node_id in next_nodes:
                 if not _check_passage_allowed(graph, index_node, next_node_id, res_of_keyword_func):
                     res_of_keyword_func = None
                     continue
-
+                is_last_node = False
                 next_node = graph.nodes[next_node_id]
                 data_to_compair = next_node["data"]
+                if data_to_compair == "end_node":
+                    return
+
                 should_check_offset = next_node["should_check_offset"]
                 if data_to_compair in self._keywords_to_func:
                     res_of_keyword_func = self._keywords_to_func[data_to_compair]()
@@ -463,7 +480,11 @@ class Linter:
                     found = True
                     break
 
+            past_node = index_node
             next_nodes = self._direct_successors(graph, index_node)
+
+            if is_last_node:
+                return
 
             if not found and token_to_check.value == r"\n":
                 if not self._check_empty_line():
@@ -481,6 +502,7 @@ class Linter:
                 if token_to_check.kind == KindToken.whiteSpace:
                     self.index_token += 1
                 elif data_to_compair in [" ", "\\n", "\\t"]:
+                    past_node = index_node
                     index_node = next_nodes[0]
                     next_nodes = self._direct_successors(graph, index_node)
                 else:
