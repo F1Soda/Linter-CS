@@ -12,7 +12,7 @@ from Flag import CategoryStyleRule
 
 # temporary
 config_file_path = r'data/.EditorConfig'  # не используется
-cs_file_path = r'TestFiles/Linter/Program.cs'
+cs_file_path = r'TestFiles/Linter/ERRORS/E7.cs'
 modifiers = [['public', 'private', 'protected', 'internal', 'protected internal', 'private protected', 'file'],
              ['abstract', 'virtual'],
              ['static'], ['sealed'], ['override'], ['new'], ['extern'], ['unsafe'], ['readonly'], ['volatile']]
@@ -113,7 +113,7 @@ class Linter:
             "type": lambda: self._check_type(),
             "line": lambda: self._check_line(),
             "block": lambda: self.analyze(conditionals=["}"]),
-            "case_block": lambda: self.analyze(conditionals=["break", "return"]),  # TODO: еще нужно рассмотреть case
+            "case_block": lambda: self.analyze(conditionals=["break", "return"]),
             "increase_offset": lambda: self._increment("current_offset", self.current_offset),
             "decrease_offset": lambda: self._decrement("current_offset", self.current_offset),
             "line_or_block": lambda: self._line_or_block(),
@@ -258,7 +258,7 @@ class Linter:
 
         # Проверка на пробелы
         space_count = 0
-        while self.tokens[self.index_token + 1].value.isspace():
+        while self.tokens[self.index_token + 1].value.isspace() or self.tokens[self.index_token + 1].value == "\\t":
             self.index_token += 1
             space_count += 1
             if space_count > 1:
@@ -529,6 +529,7 @@ class Linter:
         token = self.tokens[self.index_token]  # type: Token
         count_spaces = 0
         symbol_index = 0
+        enter_count = 0
         while not (token.value in conditionals):
             if token.value == "{":
                 self._check_initialization()
@@ -556,23 +557,17 @@ class Linter:
                                                                       called_from="_check_expression"))
 
             # Проверка на исключения, которые не обрабатывает conditions_for_space
-            if (self.tokens[self.index_token - 1].kind == KindToken.identifier and self.tokens[
-                self.index_token].value.isspace()
-                    and self.tokens[self.index_token].value == "(" or
-                    self.tokens[self.index_token - 1].value == "." and self.tokens[self.index_token].value.isspace() or
-                    self.tokens[self.index_token].value.isspace() and self.tokens[self.index_token + 1].value == '.' or
-                    self.tokens[self.index_token].value.isspace() and (
-                            self.tokens[self.index_token + 1].value == '++' or
-                            self.tokens[self.index_token + 1].value == '--')):
-                if not skip_first_white_space:
-                    self.mismatches.append(self._create_mismatch_by_token(token, "Not white Space",
-                                                                          called_from="_check_expression"))
+            self._check_exceptions(skip_first_white_space)
 
             if token.value.isspace() or token.value == "\\t":
                 count_spaces += 1
             elif token.value == "\\n":
-                self.mismatches.append(self._create_mismatch_by_token(token, "Not New Line",
-                                                                      called_from="_check_expression"))
+                enter_count += 1
+                if enter_count == 1:
+                    self._increment("current_offset", self.current_offset)
+                if not self._check_enter_in_if():
+                    self.mismatches.append(self._create_mismatch_by_token(token, "Not New Line",
+                                                                          called_from="_check_expression"))
             else:
                 count_spaces = 0
             if count_spaces > 1:
@@ -581,8 +576,13 @@ class Linter:
             self.index_token += 1
             token = self.tokens[self.index_token]
             symbol_index += 1
+
+            if token.value in conditionals and enter_count != 0:
+                self._decrement("current_offset", self.current_offset)
+
             if token.value == "(":
-                self._check_expression(conditionals=')')
+                self.index_token += 1
+                self._check_expression(")")
                 self.index_token += 1
                 token = self.tokens[self.index_token]
 
@@ -592,6 +592,36 @@ class Linter:
                 self.mismatches.append(
                     self._create_mismatch_by_token(self.tokens[self.index_token - 1], "Not white Space",
                                                    called_from="_check_expression"))
+
+    def _check_enter_in_if(self):
+        allowed_enter_symbols = ["||", "|", "&&", "&", ","]
+        current_index = self.index_token
+
+        # Проверка предыдущего токена
+        while self.index_token > 0:
+            if self.tokens[self.index_token].value not in [" ", "\\n", "\\t"]:
+                break
+            self.index_token -= 1
+
+        prev_token = self.tokens[self.index_token]
+        self.index_token = current_index
+
+        if prev_token.value in allowed_enter_symbols:
+            return True
+
+        # Проверка следующего токена
+        while self.index_token < len(self.tokens):
+            if self.tokens[self.index_token].value not in [" ", "\\n", "\\t"]:
+                break
+            self.index_token += 1
+
+        next_token = self.tokens[self.index_token]
+        self.index_token = current_index
+
+        if next_token.value in allowed_enter_symbols:
+            return True
+
+        return False
 
     def conditions_for_space(self):
         """
@@ -605,17 +635,36 @@ class Linter:
             next_kind = next_token.kind
 
             if (current_kind == KindToken.operator and next_kind == KindToken.identifier
-                and current_token.value != "!" and current_token.value != "--" and
-                current_token.value != "++") or \
-                    (current_kind == KindToken.operator and next_kind == KindToken.keyword) or \
-                    (current_kind == KindToken.keyword and next_kind == KindToken.operator) or \
-                    (current_token.value == "]" and next_kind == KindToken.operator) or \
-                    (current_kind == KindToken.identifier and next_kind == KindToken.operator and
-                     (next_token.value != "++" and next_token.value != "--")) or \
-                    (current_kind == KindToken.literal and next_kind == KindToken.operator) or \
-                    (current_kind == KindToken.operator and next_kind == KindToken.literal):
-                return True
-        return False
+                    and current_token.value != "!" and current_token.value != "--" and
+                    current_token.value != "++") or \
+                        (current_kind == KindToken.operator and next_kind == KindToken.keyword) or \
+                        (current_kind == KindToken.keyword and next_kind == KindToken.operator) or \
+                        (current_token.value == "]" and next_kind == KindToken.operator) or \
+                        (current_kind == KindToken.identifier and next_kind == KindToken.operator and
+                         (next_token.value != "++" and next_token.value != "--")) or \
+                        (current_kind == KindToken.literal and next_kind == KindToken.operator) or \
+                        (current_kind == KindToken.operator and next_kind == KindToken.literal):
+                    if current_token.value == '-' and self._check_unary():
+                        return False
+
+                    return True
+            return False
+
+    def _check_unary(self):
+        """
+        Проверяет, является ли "-" унарным
+        """
+        current_index = self.index_token
+        while self.index_token > 0:
+            if self.tokens[self.index_token].value != ' ':
+                break
+            self.index_token -= 1
+        prev_token = self.tokens[self.index_token]
+        self.index_token = current_index
+        if prev_token.kind == KindToken.identifier:
+            return False
+        else:
+            return True
 
     def _check_line(self):
         """
@@ -634,6 +683,8 @@ class Linter:
         count_spaces = 0
         token_identifier_after_modifiers_id = -1
         was_class = False
+        was_attribute = False
+        open_square_bracket_id = -1
         while token.value != ";":
 
             if token.value == "{":
@@ -661,31 +712,29 @@ class Linter:
             if token.value == "=":
                 was_equal = True
 
-            if token.value == "class":
+            if token.value == "class" or token.value == "struct" or token.value == "interface":
                 was_class = True
 
             if self.was_private_in_line and self.tokens[self.index_token].kind == KindToken.identifier:
                 token_identifier_after_modifiers_id = self.index_token
+
+            if token.value == "[":
+                open_square_bracket_id = self.index_token
+
+            if token.value == "]":
+                was_attribute = self._check_attributes(open_square_bracket_id)
+                open_square_bracket_id = -1
 
             # Проверка на пробел между элементами
             if self.conditions_for_space():
                 self.mismatches.append(
                     self._create_mismatch_by_token(token, "White Space", called_from="_check_line"))
 
-            if ((self.tokens[self.index_token - 1].kind == KindToken.identifier and self.tokens[
-                self.index_token].value.isspace()
-                 and self.tokens[self.index_token + 1].value == "(") or
-                    self.tokens[self.index_token - 1].value == "." and self.tokens[self.index_token].value.isspace() or
-                    self.tokens[self.index_token].value.isspace() and self.tokens[self.index_token + 1].value == '.' or
-                    self.tokens[self.index_token].value.isspace() and (
-                            self.tokens[self.index_token + 1].value == '++' or
-                            self.tokens[self.index_token + 1].value == '--')):
-                self.mismatches.append(self._create_mismatch_by_token(token, "Not white Space",
-                                                                      called_from="_check_expression"))
+            self._check_exceptions(skip_first_white_space = None)
 
             if token.value.isspace() or token.value == "\\t":
                 count_spaces += 1
-            elif token.value == "\\n" and not was_class:
+            elif token.value == "\\n" and not was_class and not was_attribute:
                 self.mismatches.append(self._create_mismatch_by_token(token, "Not New Line", called_from="_check_line"))
             else:
                 count_spaces = 0
@@ -707,6 +756,7 @@ class Linter:
                 self.index_token += 1
                 self._check_expression(")")
                 self.index_token += 1
+                token = self.tokens[self.index_token]
                 index_first_not_whitespace_token = self.first_next_not_whitespace_index()
                 first_not_whitespace_token = self.tokens[index_first_not_whitespace_token]
                 if first_not_whitespace_token.value == ";":
@@ -720,6 +770,31 @@ class Linter:
         self.check_naming(token_identifier_after_modifiers_id)
         self.index_token += 1
         self._check_new_line_after_semicolon()
+
+    def _check_attributes(self, open_square_bracket_id):
+        was_attribute = True
+        open_square_bracket_id -= 1
+        while open_square_bracket_id > 0 and self.tokens[open_square_bracket_id].value != "\\n":
+            if self.tokens[open_square_bracket_id].value != " " and self.tokens[open_square_bracket_id].value != "\\t":
+                was_attribute = False
+                break
+            open_square_bracket_id -= 1
+        return was_attribute
+
+    def _check_exceptions(self, skip_first_white_space):
+        if skip_first_white_space == None:
+            skip_first_white_space = False
+        if (self.tokens[self.index_token - 1].kind == KindToken.identifier and self.tokens[
+            self.index_token].value.isspace()
+                and self.tokens[self.index_token].value == "(" or
+                self.tokens[self.index_token - 1].value == "." and self.tokens[self.index_token].value.isspace() or
+                self.tokens[self.index_token].value.isspace() and self.tokens[self.index_token + 1].value == '.' or
+                self.tokens[self.index_token].value.isspace() and (
+                        self.tokens[self.index_token + 1].value == '++' or
+                        self.tokens[self.index_token + 1].value == '--')):
+            if not skip_first_white_space:
+                self.mismatches.append(self._create_mismatch_by_token(self.tokens[self.index_token], "Not white Space",
+                                                                      called_from="_check_expression"))
 
     def _check_get_set_block(self):
         del self.mismatches[-1]
