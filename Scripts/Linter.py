@@ -565,7 +565,7 @@ class Linter:
                 enter_count += 1
                 if enter_count == 1:
                     self._increment("current_offset", self.current_offset)
-                if not self._check_enter_in_if():
+                if not self._check_correct_enter():
                     self.mismatches.append(self._create_mismatch_by_token(token, "Not New Line",
                                                                           called_from="_check_expression"))
             else:
@@ -593,7 +593,11 @@ class Linter:
                     self._create_mismatch_by_token(self.tokens[self.index_token - 1], "Not white Space",
                                                    called_from="_check_expression"))
 
-    def _check_enter_in_if(self):
+    def _check_correct_enter(self):
+        """
+        Проверяет, можно ли в этом случае сделать \n
+        :return:
+        """
         allowed_enter_symbols = ["||", "|", "&&", "&", ","]
         current_index = self.index_token
 
@@ -772,6 +776,11 @@ class Linter:
         self._check_new_line_after_semicolon()
 
     def _check_attributes(self, open_square_bracket_id):
+        """
+        Проверяет являются ли [] атрибутом
+        :param open_square_bracket_id: id [
+        :return:
+        """
         was_attribute = True
         open_square_bracket_id -= 1
         while open_square_bracket_id > 0 and self.tokens[open_square_bracket_id].value != "\\n":
@@ -782,6 +791,11 @@ class Linter:
         return was_attribute
 
     def _check_exceptions(self, skip_first_white_space):
+        """
+        Проверяет на наличие пробелов (исключения)
+        :param skip_first_white_space: Флаг: нужно ли пропускать первый пробел
+        :return:
+        """
         if skip_first_white_space == None:
             skip_first_white_space = False
         if (self.tokens[self.index_token - 1].kind == KindToken.identifier and self.tokens[
