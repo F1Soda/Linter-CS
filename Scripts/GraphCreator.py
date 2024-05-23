@@ -312,14 +312,21 @@ class GraphEditor:
             radius = 10
             color = "blue"
             if node_id == self.selected_node_id:
-                color = "red"
+                color = "yellow"
             self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius, fill=color)
             self.canvas.create_text(x, y - 15, text=info['name'])  # Отображение текста с данными
         for u, v in self.graph.edges:
             color = "black"
             width = 1
-            if (u, v) == self.selected_edge:
+            condition = self.graph[u][v ]['condition']
+            if condition == "True":
+                color = "green"
+                width = 2
+            if condition == "False":
                 color = "red"
+                width = 2
+            if (u, v) == self.selected_edge:
+                color = "yellow"
                 width = 2
             self.canvas.create_line(self.graph.nodes[u]['pos'][0], self.graph.nodes[u]['pos'][1],
                                     self.graph.nodes[v]['pos'][0], self.graph.nodes[v]['pos'][1], fill=color,

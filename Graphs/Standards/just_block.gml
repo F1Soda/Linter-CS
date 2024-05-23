@@ -39,8 +39,8 @@ graph [
   node [
     id 4
     label "4"
-    pos 503
-    pos 346
+    pos 569
+    pos 443
     name "decrease_offset"
     data "decrease_offset"
     should_check_offset "default"
@@ -52,6 +52,33 @@ graph [
     pos 351
     name "}"
     data "}"
+    should_check_offset "default"
+  ]
+  node [
+    id 6
+    label "6"
+    pos 477
+    pos 435
+    name "\n"
+    data "\n"
+    should_check_offset "default"
+  ]
+  node [
+    id 7
+    label "7"
+    pos 550
+    pos 297
+    name "\n"
+    data "\n"
+    should_check_offset "default"
+  ]
+  node [
+    id 8
+    label "8"
+    pos 477
+    pos 297
+    name "decrease_offset"
+    data "decrease_offset"
     should_check_offset "default"
   ]
   edge [
@@ -71,12 +98,17 @@ graph [
   ]
   edge [
     source 3
-    target 4
+    target 8
     condition "default"
   ]
   edge [
-    source 4
+    source 7
     target 5
+    condition "default"
+  ]
+  edge [
+    source 8
+    target 7
     condition "default"
   ]
 ]

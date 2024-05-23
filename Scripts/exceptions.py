@@ -1,6 +1,5 @@
 import networkx as nx
-
-from Tokenizer import Token
+from Utils import Token
 
 
 class NodeInGraphNotFound(Exception):
@@ -16,6 +15,12 @@ class GraphNotFound(Exception):
 
 
 class ErrorInLinterTest(Exception):
-    def __init__(self, link_to_file):
+    def __init__(self, link_to_file: str):
         message = f"Was error in linter. File: {link_to_file}"
+        super().__init__(message)
+
+
+class UnexpectedChar(Exception):
+    def __init__(self, char: str, excerpt: str):
+        message = "Undefined char = " + f'"{char}"\nLine was:' + f"...{excerpt}..."
         super().__init__(message)

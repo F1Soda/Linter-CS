@@ -5,7 +5,7 @@ public T Value
 {
 		asasas();
 		}
-	set ;
+	set;
 }
 
 public int A

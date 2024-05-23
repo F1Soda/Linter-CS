@@ -1,8 +1,0 @@
-index = 17 Line 1: new OwnedLocation (playerIndex, point, 0) ;
-                                    ^
-Expected <, but was ' '. Created by check_tokens_by_graph
-
-index = 41 Line 1: new OwnedLocation (playerIndex, point, 0) ;
-                                                            ^
-Expected not white space, but was ' '. Created by _add_mismatches_in_range
-

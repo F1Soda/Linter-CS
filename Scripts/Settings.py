@@ -2,19 +2,26 @@ from Flag import Flag, CategoryStyleRule
 
 
 class Settings:
-	def __init__(self, flags):
-		# GENERAL
-		types = CategoryStyleRule
-		self.indent_style = Flag("tab", types.FR, "spaces")
-		self.indent_size = Flag(4, types.FR, 4)
-		self.trim_trailing_whitespace = Flag(True, types.FR, True)
-		self.insert_final_newline = Flag(True, types.FR, True)
+    def __init__(self):
+        # GENERAL
+        types = CategoryStyleRule
+        self.indent_style = Flag("tab", types.FR)
+        self.indent_size = Flag(4, types.FR)
+        self.insert_final_newline = Flag(True, types.FR)
+        self.hard_wrap_at = Flag(120, types.FR)
 
-		# CUSTOM
-		self.remove_whitespaces_between_tokens = Flag(True, types.FR, True)
-		self.end_line_with_semicolon = Flag(True, types.FR, True)
-		self.after_if_whitespace = Flag(True, types.FR, True)
-
-		# USING AND NAMESPACESk
-		self.csharp_using_directive_placement = Flag("outside_namespace", types.CR, "outside_namespace")
-		self.csharp_prefer_simple_using_statement = Flag(True, types.LanguageAndUnnecessaryCodeRules, True)
+    def read_flags_from_file(self, file):
+        with open(file, 'r') as f:
+            for line in f:
+                if "#" in line or line == "\n":
+                    continue
+                name, value = line.strip().split(' = ')
+                if value.isdigit():
+                    value = int(value)
+                elif value in ["True", "true"]:
+                    value = True
+                elif value in ["False", "false"]:
+                    value = False
+                if hasattr(self, name):
+                    flag = getattr(self, name)
+                    flag.value = value

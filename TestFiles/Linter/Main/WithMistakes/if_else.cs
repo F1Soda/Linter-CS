@@ -12,7 +12,8 @@ if (true)
 	{
 	if (true)
 			Write();
-		else if (false)
+		else if (
+	false)
 		{
 			Write();
 		}

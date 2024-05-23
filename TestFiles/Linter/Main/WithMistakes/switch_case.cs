@@ -13,8 +13,7 @@ switch(number)
 	case 	3:
 		message = "Число равно 3";
 		break;
-	default
-	:
+	default:
 		message = "Число не равно 1, 2 или 3";
 		break;
 }

@@ -1,0 +1,5 @@
+# GENERAL
+indent_style = tab
+indent_size = 4
+insert_final_newline = True
+hard_wrap_at = 120

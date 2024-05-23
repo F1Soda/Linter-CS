@@ -2,3 +2,2995 @@ index = 16 Line 1: static volatile unsafe readonly string option = "case2";
                                   ^
 Expected Wrong modifiers order, but was 'unsafe'
 
+----------------------------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs----------------------------------------
+
+Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+------------------------------------------------------------------------------------------
+
+----------------------------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs----------------------------------------
+
+Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+------------------------------------------------------------------------------------------
+
+----------------------------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs----------------------------------------
+
+Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+------------------------------------------------------------------------------------------
+
+---C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs----Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+----------------------------------------------------------------------
+
+---C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs----Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+----------------------------------------------------------------------
+
+-------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs--------------
+
+Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+------------------------------------------------------------------------------------------
+
+
+-------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs--------------
+
+Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+------------------------------------------------------------------------------------------
+
+
+-------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs--------------
+
+Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+------------------------------------------------------------------------------------------
+
+
+-----------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs------------------------
+
+Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+--------------------------------------------------------------------------------------------------------------
+
+
+-----------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs------------------------
+
+Mismatches:
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected less offset, but was '\t'. Created by _check_offset
+
+--------------------------------------------------------------------------------------------------------------
+
+
+------------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\test1.cs-------------------------
+
+Mismatches:
+index = 0 Line 5:     class Program
+                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 5:     class Program
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 5:     class Program
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 5:     class Program
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 5:     class Program
+                      ^
+Expected more offset, but was 'class'. Created by _check_offset
+
+index = 1 Line 6:     {
+                   ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+index = 2 Line 6:     {
+                    ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+index = 3 Line 6:     {
+                     ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+index = 0 Line 7:         static void Main()
+                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 7:         static void Main()
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 7:         static void Main()
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 7:         static void Main()
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 7:         static void Main()
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 7:         static void Main()
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 7:         static void Main()
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 7:         static void Main()
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 7:         static void Main()
+                          ^
+Expected more offset, but was 'static'. Created by _check_offset
+
+index = 0 Line 8:         {
+                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 8:         {
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 8:         {
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 8:         {
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 8:         {
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 8:         {
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 8:         {
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 8:         {
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 8:         {
+                          ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 0 Line 9:             int a = 10;
+                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 9:             int a = 10;
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 9:             int a = 10;
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 9:             int a = 10;
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 9:             int a = 10;
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 9:             int a = 10;
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 9:             int a = 10;
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 9:             int a = 10;
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 9:             int a = 10;
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 9:             int a = 10;
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 9:             int a = 10;
+                             ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 9:             int a = 10;
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 9:             int a = 10;
+                               ^
+Expected more offset, but was 'int'. Created by _check_offset
+
+index = 0 Line 10:             int b = 20;
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 10:             int b = 20;
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 10:             int b = 20;
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 10:             int b = 20;
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 10:             int b = 20;
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 10:             int b = 20;
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 10:             int b = 20;
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 10:             int b = 20;
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 10:             int b = 20;
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 10:             int b = 20;
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 10:             int b = 20;
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 10:             int b = 20;
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 10:             int b = 20;
+                                ^
+Expected more offset, but was 'int'. Created by _check_offset
+
+index = 0 Line 12:             if (a + b > 15)
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 12:             if (a + b > 15)
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 12:             if (a + b > 15)
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 12:             if (a + b > 15)
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 12:             if (a + b > 15)
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 12:             if (a + b > 15)
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 12:             if (a + b > 15)
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 12:             if (a + b > 15)
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 12:             if (a + b > 15)
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 12:             if (a + b > 15)
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 12:             if (a + b > 15)
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 12:             if (a + b > 15)
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 12:             if (a + b > 15)
+                                ^
+Expected more offset, but was 'if'. Created by _check_offset
+
+index = 0 Line 13:             {
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 13:             {
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 13:             {
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 13:             {
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 13:             {
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 13:             {
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 13:             {
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 13:             {
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 13:             {
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 13:             {
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 13:             {
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 13:             {
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 13:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 0 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 0 Line 15:             }
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 15:             }
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 15:             }
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 15:             }
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 15:             }
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 15:             }
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 15:             }
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 15:             }
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 15:             }
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 15:             }
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 15:             }
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 15:             }
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 15:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 0 Line 16:             else
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 16:             else
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 16:             else
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 16:             else
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 16:             else
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 16:             else
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 16:             else
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 16:             else
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 16:             else
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 16:             else
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 16:             else
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 16:             else
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 16:             else
+                                ^
+Expected more offset, but was 'else'. Created by _check_offset
+
+index = 0 Line 17:             {
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 17:             {
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 17:             {
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 17:             {
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 17:             {
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 17:             {
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 17:             {
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 17:             {
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 17:             {
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 17:             {
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 17:             {
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 17:             {
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 17:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 0 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 0 Line 19:             }
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 19:             }
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 19:             }
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 19:             }
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 19:             }
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 19:             }
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 19:             }
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 19:             }
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 19:             }
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 19:             }
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 19:             }
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 19:             }
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 19:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 0 Line 21:             for (int i = 0; i < 5; i++)
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 21:             for (int i = 0; i < 5; i++)
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 21:             for (int i = 0; i < 5; i++)
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 21:             for (int i = 0; i < 5; i++)
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 21:             for (int i = 0; i < 5; i++)
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 21:             for (int i = 0; i < 5; i++)
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 21:             for (int i = 0; i < 5; i++)
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 21:             for (int i = 0; i < 5; i++)
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 21:             for (int i = 0; i < 5; i++)
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 21:             for (int i = 0; i < 5; i++)
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 21:             for (int i = 0; i < 5; i++)
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 21:             for (int i = 0; i < 5; i++)
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 21:             for (int i = 0; i < 5; i++)
+                                ^
+Expected more offset, but was 'for'. Created by _check_offset
+
+index = 0 Line 22:             {
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 22:             {
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 22:             {
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 22:             {
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 22:             {
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 22:             {
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 22:             {
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 22:             {
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 22:             {
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 22:             {
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 22:             {
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 22:             {
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 22:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 0 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 0 Line 24:             }
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 24:             }
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 24:             }
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 24:             }
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 24:             }
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 24:             }
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 24:             }
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 24:             }
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 24:             }
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 24:             }
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 24:             }
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 24:             }
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 24:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 0 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                                ^
+Expected more offset, but was 'string'. Created by _check_offset
+
+index = 0 Line 27:             foreach (string fruit in fruits)
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 27:             foreach (string fruit in fruits)
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 27:             foreach (string fruit in fruits)
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 27:             foreach (string fruit in fruits)
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 27:             foreach (string fruit in fruits)
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 27:             foreach (string fruit in fruits)
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 27:             foreach (string fruit in fruits)
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 27:             foreach (string fruit in fruits)
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 27:             foreach (string fruit in fruits)
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 27:             foreach (string fruit in fruits)
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 27:             foreach (string fruit in fruits)
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 27:             foreach (string fruit in fruits)
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 27:             foreach (string fruit in fruits)
+                                ^
+Expected more offset, but was 'foreach'. Created by _check_offset
+
+index = 0 Line 28:             {
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 28:             {
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 28:             {
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 28:             {
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 28:             {
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 28:             {
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 28:             {
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 28:             {
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 28:             {
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 28:             {
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 28:             {
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 28:             {
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 28:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 0 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 0 Line 30:             }
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 30:             }
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 30:             }
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 30:             }
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 30:             }
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 30:             }
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 30:             }
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 30:             }
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 30:             }
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 30:             }
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 30:             }
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 30:             }
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 30:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 0 Line 32:             switch (a)
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 32:             switch (a)
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 32:             switch (a)
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 32:             switch (a)
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 32:             switch (a)
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 32:             switch (a)
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 32:             switch (a)
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 32:             switch (a)
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 32:             switch (a)
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 32:             switch (a)
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 32:             switch (a)
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 32:             switch (a)
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 32:             switch (a)
+                                ^
+Expected more offset, but was 'switch'. Created by _check_offset
+
+index = 0 Line 33:             {
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 33:             {
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 33:             {
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 33:             {
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 33:             {
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 33:             {
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 33:             {
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 33:             {
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 33:             {
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 33:             {
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 33:             {
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 33:             {
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 33:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 0 Line 34:                 case 10:
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 34:                 case 10:
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 34:                 case 10:
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 34:                 case 10:
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 34:                 case 10:
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 34:                 case 10:
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 34:                 case 10:
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 34:                 case 10:
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 34:                 case 10:
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 34:                 case 10:
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 34:                 case 10:
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 34:                 case 10:
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 34:                 case 10:
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 34:                 case 10:
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 34:                 case 10:
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 34:                 case 10:
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 34:                 case 10:
+                                    ^
+Expected more offset, but was 'case'. Created by _check_offset
+
+index = 0 Line 35:                     Console.WriteLine(@"a равно 10");
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 35:                     Console.WriteLine(@"a равно 10");
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 35:                     Console.WriteLine(@"a равно 10");
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 35:                     Console.WriteLine(@"a равно 10");
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 35:                     Console.WriteLine(@"a равно 10");
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 35:                     Console.WriteLine(@"a равно 10");
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 35:                     Console.WriteLine(@"a равно 10");
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 35:                     Console.WriteLine(@"a равно 10");
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 35:                     Console.WriteLine(@"a равно 10");
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 35:                     Console.WriteLine(@"a равно 10");
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 35:                     Console.WriteLine(@"a равно 10");
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 35:                     Console.WriteLine(@"a равно 10");
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 35:                     Console.WriteLine(@"a равно 10");
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 35:                     Console.WriteLine(@"a равно 10");
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 35:                     Console.WriteLine(@"a равно 10");
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 35:                     Console.WriteLine(@"a равно 10");
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 35:                     Console.WriteLine(@"a равно 10");
+                                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 17 Line 35:                     Console.WriteLine(@"a равно 10");
+                                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 18 Line 35:                     Console.WriteLine(@"a равно 10");
+                                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 19 Line 35:                     Console.WriteLine(@"a равно 10");
+                                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 20 Line 35:                     Console.WriteLine(@"a равно 10");
+                                        ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 0 Line 36:                     break;
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 36:                     break;
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 36:                     break;
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 36:                     break;
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 36:                     break;
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 36:                     break;
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 36:                     break;
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 36:                     break;
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 36:                     break;
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 36:                     break;
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 36:                     break;
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 36:                     break;
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 36:                     break;
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 36:                     break;
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 36:                     break;
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 36:                     break;
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 36:                     break;
+                                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 17 Line 36:                     break;
+                                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 18 Line 36:                     break;
+                                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 19 Line 36:                     break;
+                                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 20 Line 36:                     break;
+                                        ^
+Expected more offset, but was 'break'. Created by _check_offset
+
+index = 0 Line 38:                     Console.WriteLine(@"a не равно 10");
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 38:                     Console.WriteLine(@"a не равно 10");
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 38:                     Console.WriteLine(@"a не равно 10");
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 38:                     Console.WriteLine(@"a не равно 10");
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 38:                     Console.WriteLine(@"a не равно 10");
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 38:                     Console.WriteLine(@"a не равно 10");
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 38:                     Console.WriteLine(@"a не равно 10");
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 38:                     Console.WriteLine(@"a не равно 10");
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 38:                     Console.WriteLine(@"a не равно 10");
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 38:                     Console.WriteLine(@"a не равно 10");
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 38:                     Console.WriteLine(@"a не равно 10");
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 38:                     Console.WriteLine(@"a не равно 10");
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 17 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 18 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 19 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 20 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                        ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 0 Line 39:                     break;
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 39:                     break;
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 39:                     break;
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 39:                     break;
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 39:                     break;
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 39:                     break;
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 39:                     break;
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 39:                     break;
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 39:                     break;
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 39:                     break;
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 39:                     break;
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 39:                     break;
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 39:                     break;
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 39:                     break;
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 39:                     break;
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 39:                     break;
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 39:                     break;
+                                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 17 Line 39:                     break;
+                                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 18 Line 39:                     break;
+                                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 19 Line 39:                     break;
+                                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 20 Line 39:                     break;
+                                        ^
+Expected more offset, but was 'break'. Created by _check_offset
+
+index = 0 Line 42:             while (b > 15)
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 42:             while (b > 15)
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 42:             while (b > 15)
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 42:             while (b > 15)
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 42:             while (b > 15)
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 42:             while (b > 15)
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 42:             while (b > 15)
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 42:             while (b > 15)
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 42:             while (b > 15)
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 42:             while (b > 15)
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 42:             while (b > 15)
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 42:             while (b > 15)
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 42:             while (b > 15)
+                                ^
+Expected more offset, but was 'while'. Created by _check_offset
+
+index = 0 Line 43:             {
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 43:             {
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 43:             {
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 43:             {
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 43:             {
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 43:             {
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 43:             {
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 43:             {
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 43:             {
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 43:             {
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 43:             {
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 43:             {
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 43:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 0 Line 44:                 b--;
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 44:                 b--;
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 44:                 b--;
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 44:                 b--;
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 44:                 b--;
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 44:                 b--;
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 44:                 b--;
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 44:                 b--;
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 44:                 b--;
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 44:                 b--;
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 44:                 b--;
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 44:                 b--;
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 44:                 b--;
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 44:                 b--;
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 44:                 b--;
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 44:                 b--;
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 44:                 b--;
+                                    ^
+Expected more offset, but was 'b'. Created by _check_offset
+
+index = 0 Line 45:             }
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 45:             }
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 45:             }
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 45:             }
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 45:             }
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 45:             }
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 45:             }
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 45:             }
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 45:             }
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 45:             }
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 45:             }
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 45:             }
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 45:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 0 Line 47:             do
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 47:             do
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 47:             do
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 47:             do
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 47:             do
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 47:             do
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 47:             do
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 47:             do
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 47:             do
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 47:             do
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 47:             do
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 47:             do
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 47:             do
+                                ^
+Expected more offset, but was 'do'. Created by _check_offset
+
+index = 0 Line 48:             {
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 48:             {
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 48:             {
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 48:             {
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 48:             {
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 48:             {
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 48:             {
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 48:             {
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 48:             {
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 48:             {
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 48:             {
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 48:             {
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 48:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 0 Line 49:                 b++;
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 49:                 b++;
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 49:                 b++;
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 49:                 b++;
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 49:                 b++;
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 49:                 b++;
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 49:                 b++;
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 49:                 b++;
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 49:                 b++;
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 49:                 b++;
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 49:                 b++;
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 49:                 b++;
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 49:                 b++;
+                                ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 13 Line 49:                 b++;
+                                 ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 14 Line 49:                 b++;
+                                  ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 15 Line 49:                 b++;
+                                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 16 Line 49:                 b++;
+                                    ^
+Expected more offset, but was 'b'. Created by _check_offset
+
+index = 0 Line 50:             }
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 50:             }
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 50:             }
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 50:             }
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 50:             }
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 50:             }
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 50:             }
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 50:             }
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 50:             }
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 50:             }
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 50:             }
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 50:             }
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 50:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 13 Line 50:             }
+                                 ^
+Expected Not new line, but was '\n'. Created by check_tokens_by_graph
+
+index = 0 Line 51:             while (b < 20);
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 51:             while (b < 20);
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 51:             while (b < 20);
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 51:             while (b < 20);
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 51:             while (b < 20);
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 51:             while (b < 20);
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 51:             while (b < 20);
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 51:             while (b < 20);
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 51:             while (b < 20);
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 51:             while (b < 20);
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 51:             while (b < 20);
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 51:             while (b < 20);
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 51:             while (b < 20);
+                                ^
+Expected more offset, but was 'while'. Created by _check_offset
+
+index = 0 Line 53:             var obj = new { Name = "John", Age = 30 };
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 53:             var obj = new { Name = "John", Age = 30 };
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 53:             var obj = new { Name = "John", Age = 30 };
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 53:             var obj = new { Name = "John", Age = 30 };
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 53:             var obj = new { Name = "John", Age = 30 };
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 53:             var obj = new { Name = "John", Age = 30 };
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 53:             var obj = new { Name = "John", Age = 30 };
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 53:             var obj = new { Name = "John", Age = 30 };
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 53:             var obj = new { Name = "John", Age = 30 };
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 53:             var obj = new { Name = "John", Age = 30 };
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 53:             var obj = new { Name = "John", Age = 30 };
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 53:             var obj = new { Name = "John", Age = 30 };
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 53:             var obj = new { Name = "John", Age = 30 };
+                                ^
+Expected more offset, but was 'var'. Created by _check_offset
+
+index = 0 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                           ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 9 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                            ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 10 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                              ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 11 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                               ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 12 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                                ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 0 Line 55:         }
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 55:         }
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 55:         }
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 55:         }
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 55:         }
+                       ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 5 Line 55:         }
+                        ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 6 Line 55:         }
+                         ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 7 Line 55:         }
+                          ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 8 Line 55:         }
+                           ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 0 Line 56:     }
+                   ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 1 Line 56:     }
+                    ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 2 Line 56:     }
+                     ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 3 Line 56:     }
+                      ^
+Expected Should use only tabs, but was ' '. Created by _check_offset
+
+index = 4 Line 56:     }
+                       ^
+Expected more offset, but was '}'. Created by _check_offset
+
+--------------------------------------------------------------------------------------------------------------
+
+
+-----------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs------------------------
+
+Mismatches:
+index = 0 Line 10: \tprivate object lockObject = new object();
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 0 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 16: \tprivate int GetNextSeed()
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 17: \t{
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 18: \t\tlock (lockObject)
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 18: \t\tlock (lockObject)
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 19: \t\t{
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 19: \t\t{
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 20: \t\t\treturn random.Next();
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 20: \t\t\treturn random.Next();
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 4 Line 20: \t\t\treturn random.Next();
+                       ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 21: \t\t}
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 21: \t\t}
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 22: \t}
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+--------------------------------------------------------------------------------------------------------------
+
+
+------------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\test1.cs-------------------------
+
+Mismatches:
+index = 4 Line 5:     class Program
+                      ^
+Expected more offset, but was 'class'. Created by _check_offset
+
+index = 1 Line 6:     {
+                   ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+index = 2 Line 6:     {
+                    ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+index = 3 Line 6:     {
+                     ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+index = 8 Line 7:         static void Main()
+                          ^
+Expected more offset, but was 'static'. Created by _check_offset
+
+index = 8 Line 8:         {
+                          ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 12 Line 9:             int a = 10;
+                               ^
+Expected more offset, but was 'int'. Created by _check_offset
+
+index = 12 Line 10:             int b = 20;
+                                ^
+Expected more offset, but was 'int'. Created by _check_offset
+
+index = 12 Line 12:             if (a + b > 15)
+                                ^
+Expected more offset, but was 'if'. Created by _check_offset
+
+index = 12 Line 13:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 12 Line 15:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 16:             else
+                                ^
+Expected more offset, but was 'else'. Created by _check_offset
+
+index = 12 Line 17:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 12 Line 19:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 21:             for (int i = 0; i < 5; i++)
+                                ^
+Expected more offset, but was 'for'. Created by _check_offset
+
+index = 12 Line 22:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 12 Line 24:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                                ^
+Expected more offset, but was 'string'. Created by _check_offset
+
+index = 12 Line 27:             foreach (string fruit in fruits)
+                                ^
+Expected more offset, but was 'foreach'. Created by _check_offset
+
+index = 12 Line 28:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 12 Line 30:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 32:             switch (a)
+                                ^
+Expected more offset, but was 'switch'. Created by _check_offset
+
+index = 12 Line 33:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 34:                 case 10:
+                                    ^
+Expected more offset, but was 'case'. Created by _check_offset
+
+index = 20 Line 35:                     Console.WriteLine(@"a равно 10");
+                                        ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 20 Line 36:                     break;
+                                        ^
+Expected more offset, but was 'break'. Created by _check_offset
+
+index = 20 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                        ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 20 Line 39:                     break;
+                                        ^
+Expected more offset, but was 'break'. Created by _check_offset
+
+index = 12 Line 42:             while (b > 15)
+                                ^
+Expected more offset, but was 'while'. Created by _check_offset
+
+index = 12 Line 43:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 44:                 b--;
+                                    ^
+Expected more offset, but was 'b'. Created by _check_offset
+
+index = 12 Line 45:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 47:             do
+                                ^
+Expected more offset, but was 'do'. Created by _check_offset
+
+index = 12 Line 48:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 49:                 b++;
+                                    ^
+Expected more offset, but was 'b'. Created by _check_offset
+
+index = 12 Line 50:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 13 Line 50:             }
+                                 ^
+Expected Not new line, but was '\n'. Created by check_tokens_by_graph
+
+index = 12 Line 51:             while (b < 20);
+                                ^
+Expected more offset, but was 'while'. Created by _check_offset
+
+index = 12 Line 53:             var obj = new { Name = "John", Age = 30 };
+                                ^
+Expected more offset, but was 'var'. Created by _check_offset
+
+index = 12 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                                ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 8 Line 55:         }
+                           ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 4 Line 56:     }
+                       ^
+Expected more offset, but was '}'. Created by _check_offset
+
+--------------------------------------------------------------------------------------------------------------
+
+
+-----------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\Program.cs------------------------
+
+Mismatches:
+index = 0 Line 10: \tprivate object lockObject = new object();
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 45 Line 12: \tpublic Rocket GetNextMove(Rocket rocket) =>
+                                                                 ^
+Expected Not New Line, but was '\n'. Created by _check_line
+
+index = 0 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 13: \t\trocket.Move(Task.WhenAll(CreateTasks(rocket)).Result.MaxBy(x => x.Score).Turn, level);
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 16: \tprivate int GetNextSeed()
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 17: \t{
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 18: \t\tlock (lockObject)
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 18: \t\tlock (lockObject)
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 19: \t\t{
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 19: \t\t{
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 20: \t\t\treturn random.Next();
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 20: \t\t\treturn random.Next();
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 4 Line 20: \t\t\treturn random.Next();
+                       ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 21: \t\t}
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 2 Line 21: \t\t}
+                     ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+index = 0 Line 22: \t}
+                   ^
+Expected Should use spaces, but was '\t'. Created by _check_offset
+
+--------------------------------------------------------------------------------------------------------------
+
+
+------------------------C:\Users\TIm\PycharmProjects\linter\TestFiles\Linter\test1.cs-------------------------
+
+Mismatches:
+index = 4 Line 5:     class Program
+                      ^
+Expected more offset, but was 'class'. Created by _check_offset
+
+index = 1 Line 6:     {
+                   ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+index = 2 Line 6:     {
+                    ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+index = 3 Line 6:     {
+                     ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+index = 8 Line 7:         static void Main()
+                          ^
+Expected more offset, but was 'static'. Created by _check_offset
+
+index = 8 Line 8:         {
+                          ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 12 Line 9:             int a = 10;
+                               ^
+Expected more offset, but was 'int'. Created by _check_offset
+
+index = 12 Line 10:             int b = 20;
+                                ^
+Expected more offset, but was 'int'. Created by _check_offset
+
+index = 12 Line 12:             if (a + b > 15)
+                                ^
+Expected more offset, but was 'if'. Created by _check_offset
+
+index = 12 Line 13:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 14:                 Console.WriteLine(@"Результат больше 15!");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 12 Line 15:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 16:             else
+                                ^
+Expected more offset, but was 'else'. Created by _check_offset
+
+index = 12 Line 17:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 18:                 Console.WriteLine(@"Результат меньше или равен 15.");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 12 Line 19:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 21:             for (int i = 0; i < 5; i++)
+                                ^
+Expected more offset, but was 'for'. Created by _check_offset
+
+index = 12 Line 22:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 23:                 Console.WriteLine($@"Цикл #{i + 1}");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 12 Line 24:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 26:             string[] fruits = { "яблоко", "груша", "банан" };
+                                ^
+Expected more offset, but was 'string'. Created by _check_offset
+
+index = 12 Line 27:             foreach (string fruit in fruits)
+                                ^
+Expected more offset, but was 'foreach'. Created by _check_offset
+
+index = 12 Line 28:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 29:                 Console.WriteLine($@"Фрукт: {fruit}");
+                                    ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 12 Line 30:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 32:             switch (a)
+                                ^
+Expected more offset, but was 'switch'. Created by _check_offset
+
+index = 12 Line 33:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 34:                 case 10:
+                                    ^
+Expected more offset, but was 'case'. Created by _check_offset
+
+index = 20 Line 35:                     Console.WriteLine(@"a равно 10");
+                                        ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 20 Line 36:                     break;
+                                        ^
+Expected more offset, but was 'break'. Created by _check_offset
+
+index = 20 Line 38:                     Console.WriteLine(@"a не равно 10");
+                                        ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 20 Line 39:                     break;
+                                        ^
+Expected more offset, but was 'break'. Created by _check_offset
+
+index = 12 Line 42:             while (b > 15)
+                                ^
+Expected more offset, but was 'while'. Created by _check_offset
+
+index = 12 Line 43:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 44:                 b--;
+                                    ^
+Expected more offset, but was 'b'. Created by _check_offset
+
+index = 12 Line 45:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 12 Line 47:             do
+                                ^
+Expected more offset, but was 'do'. Created by _check_offset
+
+index = 12 Line 48:             {
+                                ^
+Expected more offset, but was '{'. Created by _check_offset
+
+index = 16 Line 49:                 b++;
+                                    ^
+Expected more offset, but was 'b'. Created by _check_offset
+
+index = 12 Line 50:             }
+                                ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 13 Line 50:             }
+                                 ^
+Expected Not new line, but was '\n'. Created by check_tokens_by_graph
+
+index = 12 Line 51:             while (b < 20);
+                                ^
+Expected more offset, but was 'while'. Created by _check_offset
+
+index = 12 Line 53:             var obj = new { Name = "John", Age = 30 };
+                                ^
+Expected more offset, but was 'var'. Created by _check_offset
+
+index = 12 Line 54:             Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
+                                ^
+Expected more offset, but was 'Console'. Created by _check_offset
+
+index = 8 Line 55:         }
+                           ^
+Expected more offset, but was '}'. Created by _check_offset
+
+index = 4 Line 56:     }
+                       ^
+Expected more offset, but was '}'. Created by _check_offset
+
+--------------------------------------------------------------------------------------------------------------
+
