@@ -1,3 +1,4 @@
+import os.path
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
@@ -86,7 +87,7 @@ class GraphEditor:
         self.create_inspector()
 
         self.last_opened_files = []
-        with open("data/GraphCreatorData", "r") as f:
+        with open("data/GraphCreatorData", "a+") as f:
             self.current_file = f.readline()
             for line in f.readline():
                 self.last_opened_files.append(line)
@@ -355,6 +356,8 @@ class GraphEditor:
         self.import_graph_by_path(filename)
 
     def import_graph_by_path(self, filename):
+        if not os.path.exists(filename):
+            return
         self.graph = nx.convert_node_labels_to_integers(nx.read_gml(filename))  # type: nx.DiGraph
 
         self._id_abs = len(self.graph.nodes) + 100
@@ -500,5 +503,5 @@ app = GraphEditor(root)
 app.update_mouse_position()
 root.mainloop()
 
-with open("data/GraphCreatorData", "w") as file:
+with open("data/GraphCreatorData", "w+") as file:
     file.writelines([app.current_file] + app.last_opened_files)

@@ -1,0 +1,10 @@
+
+------------------------------.\TestFiles\Linter\Simple\test_offsets_in_block.cs------------------------------
+
+Mismatches:
+index = 11 Line 9:     return  1;
+                              ^
+Expected Not white Space, but was ' '. Created by _check_line
+
+--------------------------------------------------------------------------------------------------------------
+

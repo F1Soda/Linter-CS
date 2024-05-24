@@ -11,6 +11,8 @@ from Scripts.Utils import CustomList
 from Scripts.Settings import Settings
 
 
+directory_of_tests = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "TestFiles/Tokenizer")
+
 class TestTokenizer(unittest.TestCase):
     def test_simple_line(self):
         line = "var a = 10;"
@@ -18,7 +20,7 @@ class TestTokenizer(unittest.TestCase):
         self.assertEqual([x.value for x in tokenizer.tokens], ["var", " ", "a", " ", "=", " ", "10", ";"])
 
     def test_file_with_comments(self):
-        with open("../TestFiles/Tokenizer/test_comments.cs", "r", encoding="utf-8") as f:
+        with open(directory_of_tests + "/test_comments.cs", "r", encoding="utf-8") as f:
             data = f.read()
             temp = data.split("\n")
             line_count = len(temp)
@@ -31,7 +33,7 @@ class TestTokenizer(unittest.TestCase):
                               '\\n', '\\n', '\\n', '\\n', '\\n'])
 
     def test_case(self):
-        with open("../TestFiles/Tokenizer/test_case.cs", "r", encoding="utf-8") as f:
+        with open(directory_of_tests + "/test_case.cs", "r", encoding="utf-8") as f:
             data = f.read()
             temp = data.split("\n")
             line_count = len(temp)
@@ -42,7 +44,7 @@ class TestTokenizer(unittest.TestCase):
             pass
 
     def test_multiple_lines(self):
-        with open("../TestFiles/Tokenizer/test_multiple_lines.cs", "r", encoding="utf-8") as f:
+        with open(directory_of_tests + "/test_multiple_lines.cs", "r", encoding="utf-8") as f:
             data = f.read()
             temp = data.split("\n")
             line_count = len(temp)
@@ -64,7 +66,7 @@ class TestTokenizer(unittest.TestCase):
              KindToken.identifier, KindToken.punctuation], [x.kind for x in tokenizer.tokens])
 
     def test_tabs(self):
-        with open("../TestFiles/Tokenizer/test_tabs.cs", "r", encoding="utf-8") as f:
+        with open(directory_of_tests + "/test_tabs.cs", "r", encoding="utf-8") as f:
             data = f.read()
             temp = data.split("\n")
             line_count = len(temp)
@@ -75,7 +77,7 @@ class TestTokenizer(unittest.TestCase):
             self.assertEqual(["\\t", "\\t", "\\t", "a"], [x.value for x in tokenizer.tokens])
 
     def test_angle_brackets(self):
-        with open("../TestFiles/Tokenizer/test_angle_brackets.cs", "r", encoding="utf-8") as f:
+        with open(directory_of_tests + "/test_angle_brackets.cs", "r", encoding="utf-8") as f:
             data = f.read()
             temp = data.split("\n")
             line_count = len(temp)

@@ -2,12 +2,22 @@ import unittest
 import sys
 import os
 
-current_dir = os.path.dirname(__file__)
-parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
-sys.path.append(parent_dir + '/Scripts')
+# parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+# scripts_path = os.path.join(parent_dir, 'Scripts')
+# sys.path.append(scripts_path)
 
-from Scripts.Linter import Linter
-from Scripts.Settings import Settings
+# Get the current file's directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Go up one directory to the 'linter' directory
+parent_dir = os.path.dirname(current_dir)
+
+# Define the 'Scripts' directory
+scripts_path = os.path.join(parent_dir, 'Scripts')
+
+# Add the 'Scripts' directory to the search path
+sys.path.append(scripts_path)
+from Scripts.Linter import Linter, Settings
 from Scripts.exceptions import ErrorInLinterTest
 
 
@@ -16,17 +26,20 @@ def get_link_to_file(file=None, line=None):
     return f"file:///{file}"
 
 
-directory_of_tests = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "TestFiles\\Linter")
+directory_of_tests = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "TestFiles/Linter")
+
 
 class TestSimple(unittest.TestCase):
 
     def test_offsets_in_block(self):
-        self._test("test_offsets_in_block.cs")
+        settings = Settings()
+        settings.read_flags_from_file(directory_of_tests + "/Simple/ttt.txt")
+        self._test("test_offsets_in_block.cs", settings)
 
-    def _test(self, filename):
-        directory = directory_of_tests + f"\\Simple\\{filename}"
+    def _test(self, filename, settings: Settings):
+        directory = directory_of_tests + f"/Simple/{filename}"
         path = os.path.join(directory, directory)
-        linter = Linter(Settings())
+        linter = Linter(settings)
         try:
             linter._analyze_file(path)
         except Exception as e:
@@ -38,7 +51,7 @@ class TestSimple(unittest.TestCase):
             for mismatch in linter.mismatches:
                 msg += str(mismatch) + "\n"
             msg += "-" * 70 + "\n\n"
-            self.assertEqual(0, len(linter.mismatches), msg)
+            self.assertEqual(1, len(linter.mismatches), msg)
         finally:
             linter.mismatches = []
 
@@ -62,10 +75,18 @@ class TestCleanFiles(unittest.TestCase):
     def test_clean_code_3(self):
         self._test("test_clean_3.cs")
 
-    def _test(self, filename):
-        directory = directory_of_tests + f"\\CleanFiles\\{filename}"
+    def test_clean_code_4(self):
+        self._test("test_clean_4.cs")
+
+    def test_clean_code_5(self):
+        settings = Settings()
+        settings.indent_style.value = "space"
+        self._test("test_clean_5_spaces.cs", settings)
+
+    def _test(self, filename, settings=Settings()):
+        directory = directory_of_tests + f"/CleanFiles/{filename}"
         path = os.path.join(directory, directory)
-        linter = Linter(Settings())
+        linter = Linter(settings)
         try:
             linter._analyze_file(path)
         except Exception as e:
@@ -118,7 +139,7 @@ class BaseFunctionalNoMistakes(unittest.TestCase):
         self._test("get_set.cs")
 
     def _test(self, filename):
-        directory = directory_of_tests + f"\\Main\\Clean\\{filename}"
+        directory = directory_of_tests + f"/Main/Clean/{filename}"
         path = os.path.join(directory, directory)
         linter = Linter(Settings())
         try:
@@ -170,7 +191,7 @@ class BaseFunctionalWithMistakes(unittest.TestCase):
         self._test("get_set.cs")
 
     def _test(self, filename):
-        directory = directory_of_tests + f"\\Main\\WithMistakes\\{filename}"
+        directory = directory_of_tests + f"/Main/WithMistakes/{filename}"
         path = os.path.join(directory, directory)
         linter = Linter(Settings())
         try:
@@ -196,14 +217,40 @@ class TestTabsAndSpaces(unittest.TestCase):
         settings.indent_style.value = "space"
         self._test("Spaces.cs", settings)
 
-
     def test_tab(self):
         settings = Settings()
         settings.indent_style.value = "tab"
         self._test("Tabs.cs", settings)
 
     def _test(self, filename: str, settings: Settings):
-        directory = directory_of_tests + f"\\Whitespaces\\{filename}"
+        directory = directory_of_tests + f"/Whitespaces/{filename}"
+        path = os.path.join(directory, directory)
+        linter = Linter(settings)
+        try:
+            linter._analyze_file(path)
+        except Exception:
+            self.fail(f"Was error in work linter. Filename: {get_link_to_file(directory.replace("\\", "/"), 1)}")
+        else:
+            msg = f"\n" + "-" * 30 + " FAILED " + "-" * 30 + "\n\nCSharp file: "
+            msg += f"{get_link_to_file(directory.replace("\\", "/"), 1)}\n"
+            msg += f"Mismatches :\n"
+            for mismatch in linter.mismatches:
+                msg += str(mismatch) + "\n"
+            msg += "-" * 70 + "\n\n"
+            self.assertEqual(0, len(linter.mismatches), msg)
+        finally:
+            linter.mismatches = []
+
+
+class TestLinterOffOn(unittest.TestCase):
+
+    def test_first_case(self):
+        settings = Settings()
+        settings.indent_style.value = "space"
+        self._test("Program.cs", settings)
+
+    def _test(self, filename: str, settings=Settings()):
+        directory = directory_of_tests + f"/LinterOffOn/{filename}"
         path = os.path.join(directory, directory)
         linter = Linter(settings)
         try:

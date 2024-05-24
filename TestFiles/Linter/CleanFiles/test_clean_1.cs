@@ -1,56 +1,122 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace KeywordsExample
+namespace BinaryTrees;
+
+public class BinaryTree<T> : IEnumerable<T> where T : IComparable
 {
-	class Program
+	private class Node
 	{
-		static void Main()
-		{
-			int a = 10;
-			int b = 20;
+		public T Value { get; }
+		public Node Left { get; set; }
+		public Node Right { get; set; }
 
-			if (a + b > 15)
+		public int CountLeftNodes { get; set; }
+
+		public int CountRightNodes { get; set; }
+
+		public Node(T value)
+		{
+			Value = value;
+		}
+	}
+
+
+	private Node root;
+
+	public void Add(T value)
+	{
+		var newNode = new Node(value);
+		if (root is null)
+		{
+			root = newNode;
+			return;
+		}
+		var current = root;
+		while (current is { } parent)
+		{
+			if (value.CompareTo(current.Value) < 0)
 			{
-				Console.WriteLine(@"Результат больше 15!");
+				current.CountLeftNodes += 1;
+				current = current.Left;
+				if (current is null) parent.Left = newNode;
 			}
 			else
 			{
-				Console.WriteLine(@"Результат меньше или равен 15.");
+				current.CountRightNodes += 1;
+				current = current.Right;
+				if (current is null) parent.Right = newNode;
 			}
-
-			for (int i = 0; i < 5; i++)
-			{
-				Console.WriteLine($@"Цикл #{i + 1}");
-			}
-
-			string[] fruits = { "яблоко", "груша", "банан" };
-			foreach (string fruit in fruits)
-			{
-				Console.WriteLine($@"Фрукт: {fruit}");
-			}
-
-			switch (a)
-			{
-				case 10:
-					Console.WriteLine(@"a равно 10");
-					break;
-				default:
-					Console.WriteLine(@"a не равно 10");
-					break;
-			}
-
-			while (b > 15)
-			{
-				b--;
-			}
-
-			do
-			{
-				b++;
-			} while (b < 20);
-
-			var obj = new { Name = "John", Age = 30 };
-			Console.WriteLine($@"Name: {obj.Name}, Age: {obj.Age}");
 		}
 	}
+
+	public bool Contains(T value)
+	{
+		var current = root;
+		while (current != null)
+		{
+			if (current.Value.CompareTo(value) == 0)
+				return true;
+			current = value.CompareTo(current.Value) < 0 ? current.Left : current.Right;
+		}
+		return false;
+	}
+
+	public IEnumerator<T> GetEnumerator()
+	{
+		if (root is null)
+			yield break;
+
+		if (root.Left is not null)
+		{
+			foreach (var node in GetRecursiveNodes(root.Left))
+				yield return node.Value;
+		}
+
+		yield return root.Value;
+
+		if (root.Right is not null)
+		{
+			foreach (var node in GetRecursiveNodes(root.Right))
+				yield return node.Value;
+		}
+	}
+
+	public T this[int index]
+	{
+		get
+		{
+			var current = root;
+			var currentIndex = index;
+			while (true)
+			{
+				if (current.CountLeftNodes == currentIndex)
+					return current.Value;
+				if (current.CountLeftNodes > currentIndex)
+					current = current.Left;
+				else
+				{
+					currentIndex -= current.CountLeftNodes + 1;
+					current = current.Right;
+				}
+			}
+		}
+	}
+
+	private IEnumerable<Node> GetRecursiveNodes(Node currentNode)
+	{
+		if (currentNode is null)
+			yield break;
+
+		foreach (var node in GetRecursiveNodes(currentNode.Left))
+			yield return node;
+
+		yield return currentNode;
+
+		foreach (var node in GetRecursiveNodes(currentNode.Right))
+			yield return node;
+	}
+
+	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

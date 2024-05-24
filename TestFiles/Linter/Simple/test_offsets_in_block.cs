@@ -1,4 +1,10 @@
-catch ()
+// LINTER:OFF
+public int AA()
 {
-	Console.WriteLine("Ошибка деления на ноль");
+	return 					1;
+}
+// LINTER:ON
+public int AA()
+{
+    return  1;
 }

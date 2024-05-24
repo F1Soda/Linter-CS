@@ -192,14 +192,23 @@ class Tokenizer:
         Проверяет, является ли текущий символ началом комментария, и выполняет его чтение.
         :return: True, если удалось прочесть и False в противном случае
         """
-        if self.next_char and self.current_char + self.next_char == r"//":
+        if self.next_char and self.current_char + self.next_char == "//":
             self.lines_with_comments.append(self.index_line)
-            while self.next_char is not None and self.current_char + self.next_char != r"\n":
-                self.index_char += 1
-                self._update_data()
-            self.tokens.append(Token(self.index_char, self.index_line, r'\n'))
-            self.abs_index_char += 1
-            self.index_line += 1
+            if "LINTER:OFF" in self.lines[self.index_line-1]:
+                self.abs_index_char += len(self.lines[self.index_line-1][(self.index_char+2):]) + 3
+                self.index_char = 0
+                self.index_line += 1
+                while "LINTER:ON" not in self.lines[self.index_line-1]:
+                    self.abs_index_char += len(self.lines[self.index_line-1]) + 2
+                    self.index_line += 1
+                self.abs_index_char += len(self.lines[self.index_line-1])
+            else:
+                while self.next_char is not None and self.current_char + self.next_char != r"\n":
+                    self._update_data()
+                self.tokens.append(Token(self.index_char, self.index_line, r'\n'))
+                self.abs_index_char += 1
+                self.index_line += 1
+                self.index_char = 0
             return True
 
         if self.next_char and self.current_char + self.next_char == "/*":
@@ -304,7 +313,7 @@ class Tokenizer:
             index_token -= 1
             token = self.tokens.at(index_token)
 
-    def _get_index_first_not_whitespace_token_back(self, start_index_token: int) -> int | None:
+    def _get_index_first_not_whitespace_token_back(self, start_index_token: int) -> int:
         """
         Возвращает индекс первого не пробельного токена в списке существующих токенов
         :param start_index_token: индекс токена, с которого начинается поиск
@@ -317,9 +326,9 @@ class Tokenizer:
                 return index
             index -= 1
             token = self.tokens[index]
-        return None
+        return -1
 
-    def _get_next_not_space_token_value(self, start_index: int) -> Token | None:
+    def _get_next_not_space_token_value(self, start_index: int) -> Token:
         """
         Получает первый не пробельный токен, начиная поиск с индекса start_index
         :param start_index: абсолютный индекс символа, с которого начинается поиск.
@@ -346,7 +355,7 @@ class Tokenizer:
 
     def _processing_new_line(self):
         count_chars = self.index_char + 1 + self.lines[self.index_line - 1].count("\t") * (
-                    self.settings.indent_size.value - 2)
+                self.settings.indent_size.value - 2)
         self.line_lengths.append(count_chars)
         if count_chars > self.settings.hard_wrap_at.value:
             self.too_long_lines.append((self.index_line, count_chars))

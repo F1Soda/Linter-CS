@@ -9,7 +9,7 @@ keywords = ['abstract', 'as', 'base', 'bool', 'break', 'byte', 'case', 'catch', 
             'sizeof', 'stackalloc', 'static', 'string', 'struct', 'switch', 'this', 'throw', 'true', 'try', 'typeof',
             'uint', 'ulong', 'unchecked', 'unsafe', 'ushort', 'using', 'virtual', 'void', 'volatile', 'while']
 
-punctuations = [';', ':', ',', '.', '(', ')', '[', ']', '{', '}', '?', '<', '>']
+punctuations = [';', ':', ',', '.', '(', ')', '[', ']', '{', '}', '?', '<', '>', '#']
 
 operators = ['+', '-', '*', '/', '%', '=', '>>', '<<', '&', '&&', '|', '||', '!', '^', '>', '>=', '<', '<=', '==', '!=',
              '~', '+=', '-=', '/=', '*=', '%=', '++', '--']

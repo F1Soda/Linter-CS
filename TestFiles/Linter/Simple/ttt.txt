@@ -1,0 +1,6 @@
+# GENERAL 
+# Если что это просто комментарии
+indent_style = space
+indent_size = 4
+insert_final_newline = False
+hard_wrap_at = 60
